@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 - Django Web Development Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+    <style>
+        :root {
+            --main-color: #42affa;
+            --accent-color: #e7ad52;
+            --bg-color: #1a1a1a;
+            --text-color: #eee;
+        }
+
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 32px;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--main-color);
+            text-transform: none;
+            margin-top: 0;
+        }
+
+        .reveal h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-bottom: 0.3em;
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            padding: 15px 30px;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .reveal .title-slide {
+            text-align: center;
+        }
+
+        .reveal ul {
+            margin-left: 0;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal ol {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal li {
+            margin-bottom: 0.3em;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .reveal p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #42affa;
+        }
+
+        .reveal pre {
+            background-color: #2d2d2d;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .reveal pre code {
+            background-color: transparent;
+            padding: 0;
+            max-height: 400px;
+            font-size: 0.75em;
+            line-height: 1.3;
+        }
+
+        .trainer-note {
+            background-color: rgba(231, 173, 82, 0.2);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 12px;
+            margin-top: 12px;
+            font-size: 0.75em;
+            border-radius: 5px;
+        }
+
+        .trainer-note strong {
+            color: var(--accent-color);
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .warning {
+            color: #ff9800;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        .diagram {
+            text-align: center;
+            font-family: monospace;
+            font-size: 1em;
+            margin: 15px 0;
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            margin: 10px 0;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+
+        table th {
+            background-color: var(--main-color);
+            color: white;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .contact-info {
+            background-color: rgba(66, 175, 250, 0.1);
+            border: 2px solid var(--main-color);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .contact-info ul {
+            margin: 5px 0;
+        }
+
+        .contact-info li {
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .slide-number {
+            font-size: 0.6em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SLIDE 1: Title -->
+            <section class="title-slide">
+                <h1>Django Web Development Training</h1>
+                <h2>Week 1: Introduction to Web & Python Fundamentals</h2>
+                <p style="margin-top: 50px;">
+                    <strong>Instructor:</strong> Waleed Truman<br>
+                    <strong>Date:</strong> 22/12/2025
+                </p>
+            </section>
+
+            <!-- SLIDE 2: Agenda -->
+            <section>
+                <h2>Week 1 Agenda</h2>
+                <h3>What We'll Cover This Week</h3>
+                <ul>
+                    <li><strong>Day 1:</strong> How the Web Works + Environment Setup</li>
+                    <li><strong>Day 2:</strong> Python Basics (Variables, Input/Output)</li>
+                    <li><strong>Day 3:</strong> Control Flow (if/else statements)</li>
+                    <li><strong>Day 4:</strong> Loops (for and while)</li>
+                    <li><strong>Day 5:</strong> Mini-Project (Student Grades Calculator)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Set expectations that this is an intensive week building foundations
+                </div>
+            </section>
+
+            <!-- SLIDE 3: About Your Trainer -->
+            <section>
+                <h2>About Your Trainer</h2>
+                <h3>Introduction</h3>
+                <ul>
+                    <li>Started as Junior Python Developer in 2009 (16 years of coding experience)</li>
+                    <li>Bachelor's in Communication Engineering from Mansoura University</li>
+                    <li>Specialized in Full Stack Web Development (Python/Django & .NET)</li>
+                    <li>Former Team Lead at Mansoura University's IT Center (10 years)</li>
+                    <li>Currently: Senior Software Engineer & Team Lead at ITPS Corporate, Riyadh</li>
+                    <li>Built university systems used by thousands: Student Affairs, Graduates Affairs, Online Exams</li>
+                    <li>Expert in Django, Python, .NET Core, React, and web technologies</li>
+                    <li>Passionate about teaching the same technologies that transformed my career</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Keep it brief (2-3 minutes), focus on relatability and enthusiasm
+                </div>
+            </section>
+
+            <!-- SLIDE 4: Program Overview -->
+            <section>
+                <h2>Program Overview - 9 Weeks</h2>
+                <h3>The Journey Ahead</h3>
+                <ul>
+                    <li><strong>Weeks 1-2:</strong> Python Fundamentals (Our Foundation)</li>
+                    <li><strong>Week 3:</strong> Web Basics + HTML/CSS + Git</li>
+                    <li><strong>Weeks 4-6:</strong> Django Framework (Building Dynamic Sites)</li>
+                    <li><strong>Week 7:</strong> APIs and JavaScript</li>
+                    <li><strong>Week 8:</strong> Final Project</li>
+                    <li><strong>Week 9:</strong> Testing and Deployment</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Emphasize that everything builds on Week 1
+                </div>
+            </section>
+
+            <!-- SLIDE 5: Course Expectations -->
+            <section>
+                <h2>Course Expectations</h2>
+                <h3>What to Expect</h3>
+                <ul>
+                    <li>Weekly sessions: Every Monday, 10:00 AM - 11:30 AM (1.5 hours)</li>
+                    <li>Additional online session available (same time, flexible day)</li>
+                    <li>Theory + Live Demos + Hands-on Practice</li>
+                    <li>Real projects throughout the program</li>
+                    <li>Portfolio of work by the end</li>
+                </ul>
+                <h3>What We Expect From You</h3>
+                <ul>
+                    <li>Attend all sessions</li>
+                    <li>Practice daily (even 30 minutes helps!)</li>
+                    <li>Ask questions - NO stupid questions</li>
+                    <li>Help each other</li>
+                    <li>Be patient with yourself</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Make eye contact, be warm and encouraging
+                </div>
+            </section>
+
+            <!-- SLIDE 6: Ice Breaker -->
+            <section>
+                <h2>Ice Breaker Activity</h2>
+                <h3>Let's Get to Know Each Other</h3>
+                <p>Each person shares:</p>
+                <ol>
+                    <li>Your name</li>
+                    <li>Your background (education/work)</li>
+                    <li>Why you want to learn web development</li>
+                    <li>One thing you're excited about</li>
+                    <li>One thing you're nervous about</li>
+                </ol>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Write down nervous points to address during the program. Go first to model!
+                </div>
+            </section>
+
+            <!-- SLIDE 7: How the Web Works -->
+            <section>
+                <h2>How the Web Works</h2>
+                <h3>The Restaurant Analogy</h3>
+                <div class="diagram">
+                    <pre>
+YOU (Customer) → WAITER → KITCHEN
+    ↑                        ↓
+    ←←←←←←←  FOOD  ←←←←←←←←←←
+                    </pre>
+                </div>
+                <h3>In the Web World:</h3>
+                <ul>
+                    <li><strong class="highlight">YOU</strong> = Browser (Chrome, Firefox, Safari)</li>
+                    <li><strong class="highlight">WAITER</strong> = HTTP (the language/protocol)</li>
+                    <li><strong class="highlight">KITCHEN</strong> = Server (powerful computer hosting websites)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Draw this on whiteboard/screen. Make it interactive!
+                </div>
+            </section>
+
+            <!-- SLIDE 8: Request-Response Cycle -->
+            <section>
+                <h2>The Web Request-Response Cycle</h2>
+                <h3>What Happens When You Visit a Website?</h3>
+                <ol>
+                    <li>You type <code>www.google.com</code> in browser</li>
+                    <li>Browser sends HTTP <strong class="highlight">REQUEST</strong> (placing your order)</li>
+                    <li>Server receives request (kitchen gets order)</li>
+                    <li>Server prepares response (kitchen cooks food)</li>
+                    <li>Server sends HTTP <strong class="highlight">RESPONSE</strong> back (waiter brings food)</li>
+                    <li>Browser displays webpage (you enjoy your meal!)</li>
+                </ol>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> After explaining, do LIVE DEMO with browser DevTools
+                </div>
+            </section>
+
+            <!-- SLIDE 9: Live Demo -->
+            <section>
+                <h2>Live Demo - Browser DevTools</h2>
+                <h3>Let's See This in Action!</h3>
+                <p><strong>Demo Steps:</strong></p>
+                <ol>
+                    <li>Open your browser</li>
+                    <li>Press F12 (Developer Tools)</li>
+                    <li>Click "Network" tab</li>
+                    <li>Visit google.com</li>
+                    <li>Observe:
+                        <ul>
+                            <li>Requests being sent</li>
+                            <li>Responses coming back</li>
+                            <li>Status codes (200 OK)</li>
+                            <li>Files downloaded (HTML, CSS, JS, images)</li>
+                        </ul>
+                    </li>
+                </ol>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Have everyone follow along on their computers. Ask: "What do you see?"
+                </div>
+            </section>
+
+            <!-- SLIDE 10: Browser vs Server -->
+            <section>
+                <h2>Key Terms - Browser vs Server</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h3>Browser</h3>
+                        <ul>
+                            <li>Lives on YOUR computer</li>
+                            <li>Sends requests</li>
+                            <li>Displays web pages</li>
+                            <li>Examples: Chrome, Firefox, Safari, Edge</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Server</h3>
+                        <ul>
+                            <li>Lives somewhere else (anywhere in the world)</li>
+                            <li>Receives requests</li>
+                            <li>Sends back web pages</li>
+                            <li>Always running, always waiting</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Use simple language, avoid technical jargon
+                </div>
+            </section>
+
+            <!-- SLIDE 11: HTTP Methods -->
+            <section>
+                <h2>HTTP Methods</h2>
+                <h3>How We Talk to Servers</h3>
+                <ul>
+                    <li><strong class="highlight">GET</strong> - "Please SHOW me something"
+                        <ul><li>Example: Loading a webpage, viewing a profile</li></ul>
+                    </li>
+                    <li><strong class="highlight">POST</strong> - "I want to SEND you something"
+                        <ul><li>Example: Submitting a form, creating a post</li></ul>
+                    </li>
+                </ul>
+                <h3>Restaurant Analogy:</h3>
+                <ul>
+                    <li>GET = "What's on the menu?"</li>
+                    <li>POST = "Here's my custom order"</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Don't go too deep - just introduce concepts
+                </div>
+            </section>
+
+            <!-- SLIDE 12: Status Codes -->
+            <section>
+                <h2>HTTP Status Codes</h2>
+                <h3>Server Response Codes</h3>
+                <ul>
+                    <li><strong class="success">200</strong> - OK, everything worked!</li>
+                    <li><strong class="warning">404</strong> - Not Found (page doesn't exist)</li>
+                    <li><strong class="error">500</strong> - Server Error (something broke)</li>
+                </ul>
+                <h3>Restaurant Analogy:</h3>
+                <ul>
+                    <li>200 = Your order is ready!</li>
+                    <li>404 = We don't have that dish</li>
+                    <li>500 = Kitchen is on fire!</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Students will see these errors often - normalize them!
+                </div>
+            </section>
+
+            <!-- SLIDE 13: Tools We Need -->
+            <section>
+                <h2>Tools We Need</h2>
+                <h3>Your Chef's Tools</h3>
+                <ol>
+                    <li><strong class="highlight">Python</strong> - The programming language (the oven)</li>
+                    <li><strong class="highlight">VS Code</strong> - Where you write code (your cutting board)</li>
+                    <li><strong class="highlight">Git</strong> - Tracks code changes (your recipe book)</li>
+                    <li><strong class="highlight">GitHub</strong> - Stores code online (cloud backup of recipes)</li>
+                </ol>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain each tool's purpose before installation
+                </div>
+            </section>
+
+            <!-- SLIDE 14: Python Installation -->
+            <section>
+                <h2>Python Installation</h2>
+                <h3>Critical Step!</h3>
+                <div style="background-color: rgba(255, 152, 0, 0.2); padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <p style="font-size: 1.2em;"><strong class="warning">IMPORTANT: Add Python to PATH</strong></p>
+                    <p>☑️ Check "Add Python to PATH" during installation</p>
+                    <p>This is CRITICAL for Python to work from command line</p>
+                </div>
+                <h3>Verify Installation:</h3>
+                <pre><code>python --version</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show this step SLOWLY. Common mistake: forgetting PATH checkbox
+                </div>
+            </section>
+
+            <!-- SLIDE 15: VS Code -->
+            <section>
+                <h2>VS Code Installation</h2>
+                <h3>Your Code Editor</h3>
+                <p><strong>Why VS Code?</strong></p>
+                <ul>
+                    <li>Free and powerful</li>
+                    <li>Great for Python and web development</li>
+                    <li>Extensions for everything</li>
+                    <li>Industry standard</li>
+                </ul>
+                <p><strong>After Installing:</strong></p>
+                <ul>
+                    <li>Install Python extension</li>
+                    <li>Configure settings (optional)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Keep it simple, don't overwhelm with extensions yet
+                </div>
+            </section>
+
+            <!-- SLIDE 16: Git Installation -->
+            <section>
+                <h2>Git Installation</h2>
+                <h3>Version Control System</h3>
+                <p><strong>What is Git?</strong></p>
+                <ul>
+                    <li>Tracks changes in your code</li>
+                    <li>Like "Track Changes" in Word, but for code</li>
+                    <li>Lets you go back in time</li>
+                    <li>Collaborate with others</li>
+                </ul>
+                <p><strong>Verify Installation:</strong></p>
+                <pre><code>git --version</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Brief intro only - Week 3 covers Git in depth
+                </div>
+            </section>
+
+            <!-- SLIDE 17: Hello World -->
+            <section>
+                <h2>Your First Program - Hello World</h2>
+                <h3>Let's Write Code!</h3>
+                <p><strong>Steps:</strong></p>
+                <ol>
+                    <li>Open VS Code</li>
+                    <li>Create new file: <code>hello.py</code></li>
+                    <li>Type: <code>print("Hello, World!")</code></li>
+                    <li>Save the file</li>
+                    <li>Run it: <code>python hello.py</code></li>
+                </ol>
+                <pre><code class="language-python">print("Hello, World!")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Do this together, step by step. Celebrate when it works!
+                </div>
+            </section>
+
+            <!-- SLIDE 18: Variables -->
+            <section>
+                <h2>Day 2 - Python Basics</h2>
+                <h3>Variables and Data Types</h3>
+                <p><strong>What is a Variable?</strong></p>
+                <ul>
+                    <li>Like a labeled box that stores a value</li>
+                    <li>The label = variable name</li>
+                    <li>What's inside = the value</li>
+                </ul>
+                <p><strong>Example:</strong></p>
+                <pre><code class="language-python">name = "Ahmed"
+age = 25
+height = 5.9
+is_student = True</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Use box analogy. Show each data type with examples.
+                </div>
+            </section>
+
+            <!-- SLIDE 19: Variable Naming -->
+            <section>
+                <h2>Variable Naming Rules</h2>
+                <h3>How to Name Variables</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <p><strong class="highlight">Rules (must follow):</strong></p>
+                        <ul>
+                            <li>Start with letter or underscore</li>
+                            <li>Can contain letters, numbers, underscores</li>
+                            <li>Case sensitive (<code>name</code> ≠ <code>Name</code>)</li>
+                            <li>No spaces or special characters</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p><strong class="highlight">Best Practices:</strong></p>
+                        <ul>
+                            <li>Use descriptive names: <code>student_age</code> not <code>sa</code></li>
+                            <li>Use lowercase with underscores: <code>first_name</code></li>
+                            <li>Avoid Python keywords: <code>for</code>, <code>if</code>, <code>class</code></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show examples of good vs bad variable names
+                </div>
+            </section>
+
+            <!-- SLIDE 20: Data Types -->
+            <section>
+                <h2>Data Types</h2>
+                <h3>Common Python Data Types</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Example</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>str</code></td>
+                            <td><code>"Ahmed"</code></td>
+                            <td>Text/String</td>
+                        </tr>
+                        <tr>
+                            <td><code>int</code></td>
+                            <td><code>25</code></td>
+                            <td>Whole number</td>
+                        </tr>
+                        <tr>
+                            <td><code>float</code></td>
+                            <td><code>5.9</code></td>
+                            <td>Decimal number</td>
+                        </tr>
+                        <tr>
+                            <td><code>bool</code></td>
+                            <td><code>True</code></td>
+                            <td>True/False</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><strong>Check Type:</strong></p>
+                <pre><code class="language-python">type(name)  # &lt;class 'str'&gt;</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Live demo with type() function
+                </div>
+            </section>
+
+            <!-- SLIDE 21: Input/Output -->
+            <section>
+                <h2>Input and Output</h2>
+                <h3>Interacting with Users</h3>
+                <p><strong>Output - print():</strong></p>
+                <pre><code class="language-python">print("Hello, World!")
+print("My age is:", age)</code></pre>
+                <p><strong>Input - input():</strong></p>
+                <pre><code class="language-python">name = input("What is your name? ")
+print("Hello,", name)</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show interactive program example
+                </div>
+            </section>
+
+            <!-- SLIDE 22: Type Conversion -->
+            <section>
+                <h2>Type Conversion</h2>
+                <h3>Converting Between Types</h3>
+                <p><strong class="warning">Why?</strong> Input is always a string!</p>
+                <pre><code class="language-python">age = input("Enter your age: ")  # Returns string "25"
+age = int(age)                    # Convert to integer 25
+
+# Or do it in one line:
+age = int(input("Enter your age: "))</code></pre>
+                <p><strong>Common Conversions:</strong></p>
+                <ul>
+                    <li><code>int()</code> - Convert to integer</li>
+                    <li><code>float()</code> - Convert to decimal</li>
+                    <li><code>str()</code> - Convert to string</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show what happens without conversion (type error)
+                </div>
+            </section>
+
+            <!-- SLIDE 23: Operators -->
+            <section>
+                <h2>Operators</h2>
+                <h3>Arithmetic Operations</h3>
+                <pre><code class="language-python"># Basic Math
+10 + 5    # Addition = 15
+10 - 5    # Subtraction = 5
+10 * 5    # Multiplication = 50
+10 / 5    # Division = 2.0
+10 // 5   # Integer Division = 2
+10 % 3    # Modulus (remainder) = 1
+10 ** 2   # Exponent = 100</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Live demo each operator with different numbers
+                </div>
+            </section>
+
+            <!-- SLIDE 24: String Operations -->
+            <section>
+                <h2>String Operations</h2>
+                <h3>Working with Text</h3>
+                <pre><code class="language-python">first_name = "Ahmed"
+last_name = "Ali"
+
+# Concatenation
+full_name = first_name + " " + last_name  # "Ahmed Ali"
+
+# Repetition
+stars = "*" * 10  # "**********"
+
+# String formatting (f-strings)
+message = f"My name is {full_name}"</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> f-strings are modern and easiest to understand
+                </div>
+            </section>
+
+            <!-- SLIDE 25: Practice Exercise 1 -->
+            <section>
+                <h2>Practice Exercise 1</h2>
+                <h3>Simple Calculator</h3>
+                <pre><code class="language-python"># Get two numbers from user
+num1 = float(input("Enter first number: "))
+num2 = float(input("Enter second number: "))
+
+# Perform calculations
+sum = num1 + num2
+difference = num1 - num2
+product = num1 * num2
+quotient = num1 / num2
+
+# Display results
+print(f"{num1} + {num2} = {sum}")
+print(f"{num1} - {num2} = {difference}")
+print(f"{num1} * {num2} = {product}")
+print(f"{num1} / {num2} = {quotient}")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Code this together, explaining each line
+                </div>
+            </section>
+
+            <!-- SLIDE 26: Control Flow -->
+            <section>
+                <h2>Day 3 - Control Flow</h2>
+                <h3>Making Decisions in Code</h3>
+                <p><strong>Why?</strong> Programs need to make choices based on conditions</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                    <div>
+                        <p><strong>Real Life Example:</strong></p>
+                        <pre>If it's raining:
+    Take an umbrella
+Else:
+    Wear sunglasses</pre>
+                    </div>
+                    <div>
+                        <p><strong>In Python:</strong></p>
+                        <pre><code class="language-python">weather = "rainy"
+if weather == "rainy":
+    print("Take an umbrella")
+else:
+    print("Wear sunglasses")</code></pre>
+                    </div>
+                </div>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Start with real-life examples before code
+                </div>
+            </section>
+
+            <!-- SLIDE 27: Boolean Expressions -->
+            <section>
+                <h2>Boolean Expressions</h2>
+                <h3>True or False?</h3>
+                <p><strong>Comparison Operators:</strong></p>
+                <pre><code class="language-python">5 == 5    # Equal to (True)
+5 != 3    # Not equal to (True)
+5 > 3     # Greater than (True)
+5 < 3     # Less than (False)
+5 >= 5    # Greater than or equal (True)
+5 <= 3    # Less than or equal (False)</code></pre>
+                <p style="margin-top: 30px;"><strong class="warning">Important:</strong> <code>==</code> (comparison) vs <code>=</code> (assignment)</p>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show common mistake of using = instead of ==
+                </div>
+            </section>
+
+            <!-- SLIDE 28: if Statements -->
+            <section>
+                <h2>if Statements</h2>
+                <h3>Basic Decision Making</h3>
+                <p><strong>Syntax:</strong></p>
+                <pre><code class="language-python">if condition:
+    # code to run if True
+    # indent is IMPORTANT</code></pre>
+                <p><strong>Example:</strong></p>
+                <pre><code class="language-python">age = 18
+if age >= 18:
+    print("You can vote!")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Emphasize indentation importance in Python
+                </div>
+            </section>
+
+            <!-- SLIDE 29: if-else -->
+            <section>
+                <h2>if-else Statements</h2>
+                <h3>Two Paths</h3>
+                <pre><code class="language-python">age = 16
+if age >= 18:
+    print("You can vote!")
+else:
+    print("You're too young to vote")</code></pre>
+                <p style="margin-top: 30px;"><strong>Think of it as:</strong></p>
+                <ul>
+                    <li>if condition is True → do this</li>
+                    <li>else (if False) → do that</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Draw flowchart diagram for visual learners
+                </div>
+            </section>
+
+            <!-- SLIDE 30: if-elif-else -->
+            <section>
+                <h2>if-elif-else Statements</h2>
+                <h3>Multiple Conditions</h3>
+                <pre><code class="language-python">score = 85
+
+if score >= 90:
+    print("Grade: A")
+elif score >= 80:
+    print("Grade: B")
+elif score >= 70:
+    print("Grade: C")
+elif score >= 60:
+    print("Grade: D")
+else:
+    print("Grade: F")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain that it checks conditions in order, stops at first True
+                </div>
+            </section>
+
+            <!-- SLIDE 31: Logical Operators -->
+            <section>
+                <h2>Logical Operators</h2>
+                <h3>Combining Conditions</h3>
+                <p><strong class="highlight">AND</strong> - Both must be True:</p>
+                <pre><code class="language-python">age = 25
+has_license = True
+if age >= 18 and has_license:
+    print("You can drive!")</code></pre>
+                <p><strong class="highlight">OR</strong> - At least one must be True:</p>
+                <pre><code class="language-python">if day == "Saturday" or day == "Sunday":
+    print("It's the weekend!")</code></pre>
+                <p><strong class="highlight">NOT</strong> - Reverses the condition:</p>
+                <pre><code class="language-python">if not is_raining:
+    print("No umbrella needed")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Use truth tables if students are struggling
+                </div>
+            </section>
+
+            <!-- SLIDE 32: Day 4 - Loops -->
+            <section>
+                <h2>Day 4 - Loops</h2>
+                <h3>Why Loops?</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <p><strong class="error">Without Loops (repetitive):</strong></p>
+                        <pre><code class="language-python">print("Hello 1")
+print("Hello 2")
+print("Hello 3")
+print("Hello 4")
+print("Hello 5")</code></pre>
+                    </div>
+                    <div>
+                        <p><strong class="success">With Loops (elegant):</strong></p>
+                        <pre><code class="language-python">for i in range(1, 6):
+    print(f"Hello {i}")</code></pre>
+                    </div>
+                </div>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show the power of loops with this contrast
+                </div>
+            </section>
+
+            <!-- SLIDE 33: for Loops -->
+            <section>
+                <h2>for Loops</h2>
+                <h3>Repeating Code a Specific Number of Times</h3>
+                <p><strong>Basic Syntax:</strong></p>
+                <pre><code class="language-python">for variable in range(start, stop, step):
+    # code to repeat</code></pre>
+                <p><strong>Examples:</strong></p>
+                <pre><code class="language-python"># Print 0 to 4
+for i in range(5):
+    print(i)
+
+# Print 1 to 5
+for i in range(1, 6):
+    print(i)
+
+# Print even numbers 0 to 10
+for i in range(0, 11, 2):
+    print(i)</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain range(stop), range(start, stop), range(start, stop, step)
+                </div>
+            </section>
+
+            <!-- SLIDE 34: while Loops -->
+            <section>
+                <h2>while Loops</h2>
+                <h3>Repeat While Condition is True</h3>
+                <p><strong>Syntax:</strong></p>
+                <pre><code class="language-python">while condition:
+    # code to repeat
+    # make sure condition becomes False eventually!</code></pre>
+                <p><strong>Example:</strong></p>
+                <pre><code class="language-python">count = 1
+while count <= 5:
+    print(f"Count: {count}")
+    count += 1  # Important! Update the counter</code></pre>
+                <p style="margin-top: 20px;"><strong class="warning">Warning:</strong> Infinite loops if you forget to update!</p>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show infinite loop example (Ctrl+C to stop)
+                </div>
+            </section>
+
+            <!-- SLIDE 35: break and continue -->
+            <section>
+                <h2>break and continue</h2>
+                <h3>Controlling Loop Flow</h3>
+                <p><strong class="highlight">break</strong> - Exit loop immediately:</p>
+                <pre><code class="language-python">for i in range(1, 11):
+    if i == 5:
+        break
+    print(i)
+# Output: 1, 2, 3, 4</code></pre>
+                <p><strong class="highlight">continue</strong> - Skip to next iteration:</p>
+                <pre><code class="language-python">for i in range(1, 6):
+    if i == 3:
+        continue
+    print(i)
+# Output: 1, 2, 4, 5</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Use real-world examples (break = emergency exit, continue = skip song)
+                </div>
+            </section>
+
+            <!-- SLIDE 36: Day 5 - Mini Project -->
+            <section>
+                <h2>Day 5 - Mini Project</h2>
+                <h3>Student Grades Calculator</h3>
+                <p><strong>Project Requirements:</strong></p>
+                <ul>
+                    <li>Ask for student name</li>
+                    <li>Ask for number of subjects</li>
+                    <li>Input grade for each subject</li>
+                    <li>Calculate average</li>
+                    <li>Display grade letter</li>
+                    <li>Ask if user wants to enter another student</li>
+                </ul>
+                <p style="margin-top: 30px;"><strong class="highlight">Combines Everything:</strong></p>
+                <ul class="checklist">
+                    <li>Variables & Input/Output</li>
+                    <li>Type conversion</li>
+                    <li>if-elif-else</li>
+                    <li>Loops</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> This is the culmination of Week 1!
+                </div>
+            </section>
+
+            <!-- SLIDE 37: Week Review -->
+            <section>
+                <h2>Week 1 Review</h2>
+                <h3>What We Learned</h3>
+                <ul class="checklist">
+                    <li>How the web works (client-server model)</li>
+                    <li>Setting up Python development environment</li>
+                    <li>Variables and data types</li>
+                    <li>Input/output operations</li>
+                    <li>Operators (arithmetic, comparison, logical)</li>
+                    <li>Control flow (if-elif-else)</li>
+                    <li>Loops (for and while)</li>
+                    <li>Built a complete program!</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Celebrate this achievement - it's a LOT for Week 1!
+                </div>
+            </section>
+
+            <!-- SLIDE 38: Common Mistakes -->
+            <section>
+                <h2>Common Mistakes This Week</h2>
+                <h3>Learn From These</h3>
+                <ol>
+                    <li><span class="error">❌</span> Forgetting indentation</li>
+                    <li><span class="error">❌</span> Using <code>=</code> instead of <code>==</code></li>
+                    <li><span class="error">❌</span> Forgetting to convert input to int/float</li>
+                    <li><span class="error">❌</span> Infinite loops (forgetting to update condition)</li>
+                    <li><span class="error">❌</span> Forgetting colon <code>:</code> after if/for/while</li>
+                </ol>
+                <p style="margin-top: 30px; font-size: 1.2em;"><strong class="highlight">Remember:</strong> Errors are learning opportunities!</p>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show actual error messages, explain how to read them
+                </div>
+            </section>
+
+            <!-- SLIDE 39: Tips for Success -->
+            <section>
+                <h2>Tips for Success</h2>
+                <h3>How to Excel in This Program</h3>
+                <ol>
+                    <li><strong class="highlight">Practice Daily</strong> - Even 30 minutes helps</li>
+                    <li><strong class="highlight">Type Code Yourself</strong> - Don't copy-paste</li>
+                    <li><strong class="highlight">Make Mistakes</strong> - Best way to learn</li>
+                    <li><strong class="highlight">Ask Questions</strong> - We're here to help</li>
+                    <li><strong class="highlight">Help Others</strong> - Teaching reinforces learning</li>
+                    <li><strong class="highlight">Review Notes</strong> - Go back over concepts</li>
+                    <li><strong class="highlight">Build Small Projects</strong> - Apply what you learn</li>
+                </ol>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Share your own learning journey
+                </div>
+            </section>
+
+            <!-- SLIDE 40: Next Week Preview -->
+            <section>
+                <h2>Next Week Preview</h2>
+                <h3>Week 2: Advanced Python</h3>
+                <ul>
+                    <li>Lists and tuples</li>
+                    <li>Dictionaries and sets</li>
+                    <li>Functions</li>
+                    <li>String methods</li>
+                    <li>File handling</li>
+                    <li>More practice!</li>
+                </ul>
+                <p style="margin-top: 30px;"><strong class="highlight">Get Ready:</strong></p>
+                <ul>
+                    <li>Review Week 1 concepts</li>
+                    <li>Practice the exercises</li>
+                    <li>Come with questions!</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Build excitement for what's coming
+                </div>
+            </section>
+
+            <!-- SLIDE 41: Resources -->
+            <section>
+                <h2>Resources</h2>
+                <h3>Continue Learning</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <p><strong>Official Documentation:</strong></p>
+                        <ul>
+                            <li>Python.org/docs</li>
+                            <li>W3Schools Python Tutorial</li>
+                            <li>Real Python (blog)</li>
+                        </ul>
+                        <p style="margin-top: 20px;"><strong>Practice Platforms:</strong></p>
+                        <ul>
+                            <li>Codecademy</li>
+                            <li>HackerRank</li>
+                            <li>LeetCode (beginner problems)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="contact-info">
+                            <p><strong>Communication:</strong></p>
+                            <ul style="list-style: none; padding-left: 0;">
+                                <li>📧 Email: waledmet@gmail.com</li>
+                                <li>📱 Phone: +966536037348 (Saudi)</li>
+                                <li>📱 Phone: +201111564174 (Egypt)</li>
+                                <li>🕐 Office hours: After each Monday session (11:30 AM+) and by appointment</li>
+                                <li>💻 Additional online sessions can be scheduled as needed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Share these resources in the group chat
+                </div>
+            </section>
+
+            <!-- SLIDE 42: Final Words -->
+            <section class="title-slide">
+                <h1>You Did It!</h1>
+                <blockquote style="font-size: 1.3em; font-style: italic; margin: 40px 0;">
+                    "Learning to code is a journey, not a destination."
+                </blockquote>
+                <h3>Remember:</h3>
+                <ul style="text-align: left; display: inline-block; margin: 30px auto;">
+                    <li>Every expert was once a beginner</li>
+                    <li>Mistakes are proof you're trying</li>
+                    <li>Progress > Perfection</li>
+                    <li>You're capable of more than you think</li>
+                </ul>
+                <h2 style="margin-top: 50px; color: var(--accent-color);">See you next week!</h2>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> End on an encouraging, energetic note. Thank them for their effort!
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            width: 1280,
+            height: 800,
+            margin: 0.02,
+            minScale: 0.5,
+            maxScale: 2.0,
+            plugins: []
+        });
+
+        // Keyboard shortcuts info
+        console.log('%c Presentation Controls:', 'font-size: 16px; font-weight: bold; color: #42affa;');
+        console.log('%c → or Space: Next slide', 'font-size: 14px;');
+        console.log('%c ← : Previous slide', 'font-size: 14px;');
+        console.log('%c F : Fullscreen', 'font-size: 14px;');
+        console.log('%c ESC : Overview mode', 'font-size: 14px;');
+        console.log('%c S : Speaker notes (if available)', 'font-size: 14px;');
+    </script>
+</body>
+</html>
