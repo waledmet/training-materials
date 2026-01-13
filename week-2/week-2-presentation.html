@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 - Django Web Development Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+    <style>
+        :root {
+            --main-color: #42affa;
+            --accent-color: #e7ad52;
+            --bg-color: #1a1a1a;
+            --text-color: #eee;
+        }
+
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 32px;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--main-color);
+            text-transform: none;
+            margin-top: 0;
+        }
+
+        .reveal h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-bottom: 0.3em;
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            padding: 15px 30px;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .reveal .title-slide {
+            text-align: center;
+        }
+
+        .reveal ul {
+            margin-left: 0;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal ol {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal li {
+            margin-bottom: 0.3em;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .reveal p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #42affa;
+        }
+
+        .reveal pre {
+            background-color: #2d2d2d;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .reveal pre code {
+            background-color: transparent;
+            padding: 0;
+            max-height: 400px;
+            font-size: 0.75em;
+            line-height: 1.3;
+        }
+
+        .trainer-note {
+            background-color: rgba(231, 173, 82, 0.2);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 12px;
+            margin-top: 12px;
+            font-size: 0.75em;
+            border-radius: 5px;
+        }
+
+        .trainer-note strong {
+            color: var(--accent-color);
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .warning {
+            color: #ff9800;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        .diagram {
+            text-align: center;
+            font-family: monospace;
+            font-size: 1em;
+            margin: 15px 0;
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            margin: 10px 0;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+
+        table th {
+            background-color: var(--main-color);
+            color: white;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .contact-info {
+            background-color: rgba(66, 175, 250, 0.1);
+            border: 2px solid var(--main-color);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .contact-info ul {
+            margin: 5px 0;
+        }
+
+        .contact-info li {
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .slide-number {
+            font-size: 0.6em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SLIDE 1: Title -->
+            <section class="title-slide">
+                <h1>Django Web Development Training</h1>
+                <h2>Week 2: Python Foundations (Deepening Skills)</h2>
+                <p style="margin-top: 50px;">
+                    <strong>Instructor:</strong> Waleed Truman<br>
+                    <strong>Date:</strong> 29/12/2025
+                </p>
+            </section>
+
+            <!-- SLIDE 2: Agenda -->
+            <section>
+                <h2>Week 2 Agenda</h2>
+                <h3>What We'll Cover This Week</h3>
+                <ul>
+                    <li><strong>Day 1:</strong> Data Structures (Lists, Tuples, Dictionaries, Sets)</li>
+                    <li><strong>Day 2:</strong> Functions (Defining, Parameters, Return Values, Scope)</li>
+                    <li><strong>Day 3:</strong> Modules & Packages + Error Handling</li>
+                    <li><strong>Day 4:</strong> Virtual Environments + Best Practices</li>
+                    <li><strong>Day 5:</strong> Mini-Project (To-Do List App)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Building on Week 1 foundations - everything gets more powerful!
+                </div>
+            </section>
+
+            <!-- SLIDE 3: About Your Trainer -->
+            <section>
+                <h2>About Your Trainer</h2>
+                <h3>Introduction</h3>
+                <ul>
+                    <li>Started as Junior Python Developer in 2009 (16 years of coding experience)</li>
+                    <li>Bachelor's in Communication Engineering from Mansoura University</li>
+                    <li>Specialized in Full Stack Web Development (Python/Django & .NET)</li>
+                    <li>Former Team Lead at Mansoura University's IT Center (10 years)</li>
+                    <li>Currently: Senior Software Engineer & Team Lead at ITPS Corporate, Riyadh</li>
+                    <li>Built university systems used by thousands: Student Affairs, Graduates Affairs, Online Exams</li>
+                    <li>Expert in Django, Python, .NET Core, React, and web technologies</li>
+                    <li>Passionate about teaching the same technologies that transformed my career</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Keep it brief (2-3 minutes), focus on relatability and enthusiasm
+                </div>
+            </section>
+
+            <!-- SLIDE 4: Week 1 Quick Review -->
+            <section>
+                <h2>Week 1 Quick Review</h2>
+                <h3>What We Built Last Week</h3>
+                <ul class="checklist">
+                    <li>Web fundamentals (client-server, HTTP)</li>
+                    <li>Python basics (variables, data types, I/O)</li>
+                    <li>Control flow (if/elif/else, logical operators)</li>
+                    <li>Loops (for, while, break, continue)</li>
+                    <li>Student Grades Calculator project</li>
+                </ul>
+                <h3 style="margin-top: 20px;">What Changes This Week:</h3>
+                <ul>
+                    <li>No longer limited to single values</li>
+                    <li>Can work with collections of data</li>
+                    <li>Can write reusable code (functions)</li>
+                    <li>Can organize code better (modules)</li>
+                    <li>Can handle errors gracefully</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Quick confidence boost - they learned A LOT!
+                </div>
+            </section>
+
+            <!-- SLIDE 5: Day 1 - Data Structures -->
+            <section>
+                <h2>Day 1 - Data Structures</h2>
+                <h3>Why Data Structures Matter</h3>
+                <ul>
+                    <li><strong>Week 1:</strong> Work with single values (<code>age = 25</code>)</li>
+                    <li><strong>Week 2+:</strong> Work with collections of values</li>
+                    <li>Data structures organize data efficiently</li>
+                    <li>Essential for building real applications</li>
+                    <li>Foundation for everything else</li>
+                </ul>
+                <h3 style="margin-top: 20px;">Real World Example:</h3>
+                <ul>
+                    <li>Shopping list app: Need to store MULTIPLE items</li>
+                    <li>Student system: Need to store MULTIPLE students</li>
+                    <li>Game: Need to store scores of MULTIPLE players</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Emphasize that single variables aren't enough for real problems
+                </div>
+            </section>
+
+            <!-- SLIDE 6: Lists - Introduction -->
+            <section>
+                <h2>Lists - Introduction</h2>
+                <h3>What is a List?</h3>
+                <ul>
+                    <li>Ordered collection of items</li>
+                    <li>Can contain any data type</li>
+                    <li>Items can be mixed types</li>
+                    <li>Mutable (can change after creation)</li>
+                    <li>Each item has an index (position)</li>
+                </ul>
+                <div class="diagram">
+                    <pre>Shopping List:
+[0]     [1]      [2]     [3]
+["milk", "eggs", "bread", "butter"]</pre>
+                </div>
+                <h3>Creating Lists:</h3>
+                <pre><code class="language-python"># Empty list
+shopping = []
+
+# List with items
+numbers = [1, 2, 3, 4, 5]
+fruits = ["apple", "banana", "cherry"]
+mixed = [1, "hello", 3.14, True]</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Draw the index visualization on whiteboard
+                </div>
+            </section>
+
+            <!-- SLIDE 7: Lists - Accessing Elements -->
+            <section>
+                <h2>Lists - Accessing Elements</h2>
+                <h3>Index Position</h3>
+                <div class="diagram">
+                    <pre>fruits = ["apple", "banana", "cherry"]
+          0       1         2         (forward index)
+         -3      -2        -1        (backward index)</pre>
+                </div>
+                <h3>Accessing Items:</h3>
+                <pre><code class="language-python">fruits = ["apple", "banana", "cherry"]
+
+# Forward indexing (0-based)
+print(fruits[0])    # "apple"
+print(fruits[1])    # "banana"
+print(fruits[2])    # "cherry"
+
+# Negative indexing (from end)
+print(fruits[-1])   # "cherry"
+print(fruits[-2])   # "banana"</code></pre>
+                <p style="margin-top: 20px;"><strong class="error">Common Error:</strong></p>
+                <pre><code class="language-python">print(fruits[5])    # IndexError: list index out of range</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Emphasize 0-based indexing - most common beginner mistake!
+                </div>
+            </section>
+
+            <!-- SLIDE 8: Lists - Slicing -->
+            <section>
+                <h2>Lists - Slicing</h2>
+                <h3>Get Multiple Elements</h3>
+                <pre><code class="language-python">fruits = ["apple", "banana", "cherry", "date", "elderberry"]
+
+# Get elements from index 1 to 3 (3 NOT included)
+print(fruits[1:3])      # ["banana", "cherry"]
+
+# Get first 3 elements
+print(fruits[:3])       # ["apple", "banana", "cherry"]
+
+# Get last 2 elements
+print(fruits[-2:])      # ["date", "elderberry"]
+
+# Get with step
+print(fruits[::2])      # ["apple", "cherry", "elderberry"]
+
+# Reverse list
+print(fruits[::-1])     # ["elderberry", "date", "cherry", "banana", "apple"]</code></pre>
+                <p style="margin-top: 15px;"><strong class="highlight">Syntax:</strong> <code>list[start:stop:step]</code></p>
+                <ul style="font-size: 0.85em;">
+                    <li>start: where to begin (default 0)</li>
+                    <li>stop: where to end (NOT included)</li>
+                    <li>step: jump size (default 1)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Live demo each example, show output visually
+                </div>
+            </section>
+
+            <!-- SLIDE 9: Lists - Modifying Elements -->
+            <section>
+                <h2>Lists - Modifying Elements</h2>
+                <h3>Changing Items in a List</h3>
+                <pre><code class="language-python">fruits = ["apple", "banana", "cherry"]
+
+# Change single item
+fruits[1] = "blueberry"
+print(fruits)  # ["apple", "blueberry", "cherry"]
+
+# Change multiple items (slice assignment)
+fruits[0:2] = ["orange", "grape"]
+print(fruits)  # ["orange", "grape", "cherry"]</code></pre>
+                <h3 style="margin-top: 20px;">Adding Items:</h3>
+                <pre><code class="language-python">fruits = ["apple", "banana"]
+
+# Add to end
+fruits.append("cherry")
+# Result: ["apple", "banana", "cherry"]
+
+# Insert at specific position
+fruits.insert(1, "blueberry")
+# Result: ["apple", "blueberry", "banana", "cherry"]
+
+# Add multiple items
+fruits.extend(["date", "elderberry"])
+# Result: ["apple", "blueberry", "banana", "cherry", "date", "elderberry"]</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show append vs extend difference clearly
+                </div>
+            </section>
+
+            <!-- SLIDE 10: Lists - Removing Elements -->
+            <section>
+                <h2>Lists - Removing Elements</h2>
+                <h3>Delete Items</h3>
+                <pre><code class="language-python">fruits = ["apple", "banana", "cherry", "date"]
+
+# Remove by index
+fruits.pop(1)      # Removes "banana", returns it
+print(fruits)      # ["apple", "cherry", "date"]
+
+# Remove last item
+fruits.pop()       # Removes "date"
+print(fruits)      # ["apple", "cherry"]
+
+# Remove by value
+fruits.remove("cherry")
+print(fruits)      # ["apple"]
+
+# Clear entire list
+fruits.clear()
+print(fruits)      # []
+
+# Delete at index (del statement)
+numbers = [1, 2, 3, 4, 5]
+del numbers[2]
+print(numbers)     # [1, 2, 4, 5]</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain pop() returns the value (useful!), remove() searches by value
+                </div>
+            </section>
+
+            <!-- SLIDE 11: Lists - Useful Methods -->
+            <section>
+                <h2>Lists - Useful Methods</h2>
+                <h3>Common List Operations</h3>
+                <pre><code class="language-python">numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+
+# Length
+print(len(numbers))         # 8
+
+# Sum and Average
+print(sum(numbers))         # 31
+print(sum(numbers) / len(numbers))  # 3.875
+
+# Find minimum and maximum
+print(min(numbers))         # 1
+print(max(numbers))         # 9
+
+# Count occurrences
+print(numbers.count(1))     # 2
+
+# Find index of item
+print(numbers.index(4))     # 2
+
+# Sort list
+sorted_nums = sorted(numbers)
+print(sorted_nums)          # [1, 1, 2, 3, 4, 5, 6, 9]
+
+# Reverse list
+numbers.reverse()
+print(numbers)              # [6, 2, 9, 5, 1, 4, 1, 3]</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Live demo with different data sets
+                </div>
+            </section>
+
+            <!-- SLIDE 12: Practice Exercise 1 -->
+            <section>
+                <h2>Practice Exercise 1</h2>
+                <h3>Working with Lists</h3>
+                <p><strong>Create a program that:</strong></p>
+                <ol>
+                    <li>Creates an empty shopping list</li>
+                    <li>Adds 5 items to the list</li>
+                    <li>Displays the list</li>
+                    <li>Changes the 3rd item</li>
+                    <li>Removes an item</li>
+                    <li>Shows the final list</li>
+                </ol>
+                <h3 style="margin-top: 20px;">Starter Code:</h3>
+                <pre><code class="language-python"># Create shopping list
+shopping_list = []
+
+# Add items
+shopping_list.append("milk")
+shopping_list.append("eggs")
+# ... add 3 more items
+
+# Display
+print("Shopping List:")
+print(shopping_list)
+
+# Change 3rd item (index 2)
+shopping_list[2] = "bread"
+
+# Remove an item
+shopping_list.remove("eggs")
+
+# Display final
+print("Final List:")
+print(shopping_list)</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Let students do this independently first, then review together
+                </div>
+            </section>
+
+            <!-- SLIDE 13: Tuples - Introduction -->
+            <section>
+                <h2>Tuples - Introduction</h2>
+                <h3>Immutable Lists</h3>
+                <p><strong>What is a Tuple?</strong></p>
+                <ul>
+                    <li>Like a list but CANNOT be changed after creation</li>
+                    <li>Immutable (fixed, unchangeable)</li>
+                    <li>Slightly faster and use less memory than lists</li>
+                    <li>Can be used as dictionary keys (lists cannot)</li>
+                </ul>
+                <h3 style="margin-top: 20px;">Creating Tuples:</h3>
+                <pre><code class="language-python"># Empty tuple
+empty = ()
+
+# Single item tuple (note the comma!)
+single = (42,)
+
+# Multiple items
+coordinates = (10, 20)
+rgb = (255, 128, 0)
+person = ("Ahmed", 25, "Cairo")</code></pre>
+                <h3>Accessing Items (same as lists):</h3>
+                <pre><code class="language-python">person = ("Ahmed", 25, "Cairo")
+print(person[0])      # "Ahmed"
+print(person[-1])     # "Cairo"
+print(person[1:3])    # (25, "Cairo")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Emphasize immutability - explain WHY we'd want immutable data
+                </div>
+            </section>
+
+            <!-- SLIDE 14: Tuples - Properties -->
+            <section>
+                <h2>Tuples - Properties</h2>
+                <h3>When to Use Tuples</h3>
+                <pre><code class="language-python"># Use as dictionary keys (can't use lists)
+locations = {
+    (10, 20): "Building A",
+    (30, 40): "Building B",
+    (50, 60): "Building C"
+}
+print(locations[(10, 20)])  # "Building A"
+
+# Unpacking values
+person = ("Ahmed", 25, "Cairo")
+name, age, city = person
+print(f"{name} is {age} years old in {city}")
+
+# Return multiple values from function
+def get_coordinates():
+    return (10, 20)
+
+x, y = get_coordinates()
+print(f"X: {x}, Y: {y}")</code></pre>
+                <h3 style="margin-top: 15px;">Tuple Methods (limited):</h3>
+                <pre><code class="language-python">t = (1, 2, 3, 2, 1)
+print(t.count(2))     # 2
+print(t.index(3))     # 2</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show that tuples have fewer methods than lists
+                </div>
+            </section>
+
+            <!-- SLIDE 15: Dictionaries - Introduction -->
+            <section>
+                <h2>Dictionaries - Introduction</h2>
+                <h3>Key-Value Pairs</h3>
+                <p><strong>What is a Dictionary?</strong></p>
+                <ul>
+                    <li>Collection of key-value pairs</li>
+                    <li>Like a real dictionary (word → definition)</li>
+                    <li>Unordered (order doesn't matter)</li>
+                    <li>Mutable (can change)</li>
+                    <li>Each key is unique</li>
+                    <li>Keys must be immutable (strings, numbers, tuples)</li>
+                </ul>
+                <h3 style="margin-top: 15px;">Creating Dictionaries:</h3>
+                <pre><code class="language-python"># Empty dictionary
+empty = {}
+
+# With items
+student = {
+    "name": "Ahmed",
+    "age": 25,
+    "city": "Cairo",
+    "gpa": 3.8
+}
+
+# Alternative syntax
+person = dict(name="Fatima", age=30, city="Riyadh")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Use analogy of real dictionary or phone contacts
+                </div>
+            </section>
+
+            <!-- SLIDE 16: Dictionaries - Accessing & Modifying -->
+            <section>
+                <h2>Dictionaries - Accessing & Modifying</h2>
+                <h3>Work with Key-Value Pairs</h3>
+                <pre><code class="language-python">student = {
+    "name": "Ahmed",
+    "age": 25,
+    "city": "Cairo",
+    "gpa": 3.8
+}
+
+# Access values using keys
+print(student["name"])      # "Ahmed"
+print(student["age"])       # 25
+
+# Safe access (won't error if key missing)
+print(student.get("name"))  # "Ahmed"
+print(student.get("email"))     # None (safe!)
+print(student.get("email", "N/A"))  # "N/A" (with default)
+
+# Add new key-value pair
+student["email"] = "ahmed@university.edu"
+
+# Modify existing value
+student["age"] = 26
+
+# Check if key exists
+if "name" in student:
+    print("Name exists")
+
+# Delete a key-value pair
+del student["email"]
+
+# Get all keys, values, items
+print(student.keys())       # dict_keys(['name', 'age', 'city', 'gpa'])
+print(student.values())     # dict_values(['Ahmed', 26, 'Cairo', 3.8])
+print(student.items())      # dict_items([('name', 'Ahmed'), ...])</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show difference between dict access (KeyError) vs get() (safe)
+                </div>
+            </section>
+
+            <!-- SLIDE 17: Dictionaries - Iterating -->
+            <section>
+                <h2>Dictionaries - Iterating</h2>
+                <h3>Loop Through Dictionary</h3>
+                <pre><code class="language-python">student = {
+    "name": "Ahmed",
+    "age": 25,
+    "city": "Cairo",
+    "gpa": 3.8
+}
+
+# Iterate over keys
+for key in student:
+    print(key)  # Prints: name, age, city, gpa
+
+# Iterate over keys (explicit)
+for key in student.keys():
+    print(key)
+
+# Iterate over values
+for value in student.values():
+    print(value)  # Prints: Ahmed, 25, Cairo, 3.8
+
+# Iterate over both (best practice)
+for key, value in student.items():
+    print(f"{key}: {value}")
+    # Output:
+    # name: Ahmed
+    # age: 25
+    # city: Cairo
+    # gpa: 3.8
+
+# Count grades
+grades = {"Ahmed": 85, "Fatima": 92, "Ali": 78}
+for student_name, grade in grades.items():
+    print(f"{student_name} scored {grade}")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Live demo the iteration to show output
+                </div>
+            </section>
+
+            <!-- SLIDE 18: Sets - Introduction -->
+            <section>
+                <h2>Sets - Introduction</h2>
+                <h3>Unique Values Only</h3>
+                <p><strong>What is a Set?</strong></p>
+                <ul>
+                    <li>Unordered collection of unique items</li>
+                    <li>No duplicates allowed (automatically removes them)</li>
+                    <li>Mutable but items must be immutable</li>
+                    <li>Fast membership checking (x in set)</li>
+                    <li>Mathematical set operations (union, intersection)</li>
+                </ul>
+                <h3 style="margin-top: 15px;">Creating Sets:</h3>
+                <pre><code class="language-python"># Empty set (use set(), NOT {})
+empty = set()
+
+# Set with items
+colors = {"red", "green", "blue"}
+numbers = {1, 2, 3, 4, 5}
+
+# Set removes duplicates automatically
+items = {1, 2, 2, 3, 3, 3, 4}
+print(items)  # {1, 2, 3, 4}
+
+# From list (removes duplicates)
+numbers_list = [1, 1, 2, 2, 3, 4, 4, 5]
+unique = set(numbers_list)
+print(unique)  # {1, 2, 3, 4, 5}</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain that order is NOT preserved in sets
+                </div>
+            </section>
+
+            <!-- SLIDE 19: Sets - Operations -->
+            <section>
+                <h2>Sets - Operations</h2>
+                <h3>Mathematical Set Operations</h3>
+                <pre><code class="language-python"># Create sets
+fruits1 = {"apple", "banana", "cherry", "date"}
+fruits2 = {"banana", "date", "elderberry", "fig"}
+
+# Union (all items from both)
+all_fruits = fruits1 | fruits2
+print(all_fruits)
+# {"apple", "banana", "cherry", "date", "elderberry", "fig"}
+
+# Intersection (items in both)
+common = fruits1 & fruits2
+print(common)  # {"banana", "date"}
+
+# Difference (items in first but not second)
+only_in_first = fruits1 - fruits2
+print(only_in_first)  # {"apple", "cherry"}
+
+# Symmetric difference (items in either but not both)
+unique_to_each = fruits1 ^ fruits2
+print(unique_to_each)  # {"apple", "cherry", "elderberry", "fig"}
+
+# Check subsets and supersets
+small = {1, 2}
+large = {1, 2, 3, 4}
+print(small.issubset(large))      # True
+print(large.issuperset(small))    # True
+print(small.isdisjoint({5, 6}))   # True (no common elements)</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Draw Venn diagrams for visual learners
+                </div>
+            </section>
+
+            <!-- SLIDE 20: Sets - Methods -->
+            <section>
+                <h2>Sets - Methods</h2>
+                <h3>Adding and Removing</h3>
+                <pre><code class="language-python">colors = {"red", "green", "blue"}
+
+# Add single item
+colors.add("yellow")
+print(colors)  # {"red", "green", "blue", "yellow"}
+
+# Add won't duplicate
+colors.add("red")
+print(colors)  # Still {"red", "green", "blue", "yellow"}
+
+# Remove item (error if not exists)
+colors.remove("yellow")
+
+# Discard (safe remove - no error if missing)
+colors.discard("purple")  # No error!
+
+# Pop removes arbitrary item
+colors.pop()  # Removes a random item
+
+# Clear all items
+colors.clear()  # Set is now empty</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show remove vs discard difference with examples
+                </div>
+            </section>
+
+            <!-- SLIDE 21: Day 2 - Functions -->
+            <section>
+                <h2>Day 2 - Functions</h2>
+                <h3>Why Functions?</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <p><strong class="error">Without Functions (repetitive):</strong></p>
+                        <pre><code class="language-python"># Calculate area - Method 1
+length = 5
+width = 3
+area = length * width
+print(f"Area: {area}")
+
+# Calculate area - Method 2
+length = 10
+width = 4
+area = length * width
+print(f"Area: {area}")
+
+# ... repeating same code</code></pre>
+                    </div>
+                    <div>
+                        <p><strong class="success">With Functions (clean):</strong></p>
+                        <pre><code class="language-python">def calculate_area(length, width):
+    return length * width
+
+print(calculate_area(5, 3))  # 15
+print(calculate_area(10, 4)) # 40
+print(calculate_area(7, 2))  # 14</code></pre>
+                    </div>
+                </div>
+                <h3 style="margin-top: 20px;">Benefits:</h3>
+                <ul>
+                    <li>Don't Repeat Yourself (DRY principle)</li>
+                    <li>Reusable code</li>
+                    <li>Easier to maintain and test</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show the contrast - repetition vs elegance
+                </div>
+            </section>
+
+            <!-- SLIDE 22: Functions - Defining & Calling -->
+            <section>
+                <h2>Functions - Defining & Calling</h2>
+                <h3>Basic Syntax</h3>
+                <pre><code class="language-python"># Define a function
+def greet():
+    print("Hello, World!")
+
+# Call the function
+greet()         # Output: Hello, World!
+greet()         # Can call multiple times
+greet()</code></pre>
+                <h3 style="margin-top: 15px;">Function with Parameters:</h3>
+                <pre><code class="language-python">def greet_person(name):
+    print(f"Hello, {name}!")
+
+# Call with arguments
+greet_person("Ahmed")      # Output: Hello, Ahmed!
+greet_person("Fatima")     # Output: Hello, Fatima!</code></pre>
+                <h3>Multiple Parameters:</h3>
+                <pre><code class="language-python">def add(num1, num2):
+    print(f"{num1} + {num2} = {num1 + num2}")
+
+add(5, 3)   # Output: 5 + 3 = 8
+add(10, 7)  # Output: 10 + 7 = 17</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain difference between parameters and arguments
+                </div>
+            </section>
+
+            <!-- SLIDE 23: Functions - Return Values -->
+            <section>
+                <h2>Functions - Return Values</h2>
+                <h3>Returning Results</h3>
+                <pre><code class="language-python"># Function that returns a value
+def add(num1, num2):
+    result = num1 + num2
+    return result
+
+# Use the returned value
+total = add(5, 3)
+print(f"Total: {total}")  # Output: Total: 8
+
+# Return multiple values (as tuple)
+def get_name():
+    first = "Ahmed"
+    last = "Ali"
+    return first, last
+
+first, last = get_name()
+print(f"Full name: {first} {last}")
+
+# Function can return different types
+def describe(age):
+    if age < 13:
+        return "child"
+    elif age < 18:
+        return "teenager"
+    else:
+        return "adult"
+
+print(describe(10))   # child
+print(describe(16))   # teenager
+print(describe(25))   # adult</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain docstrings (""") are documentation
+                </div>
+            </section>
+
+            <!-- SLIDE 24: Functions - Default Parameters -->
+            <section>
+                <h2>Functions - Default Parameters</h2>
+                <h3>Parameters with Default Values</h3>
+                <pre><code class="language-python"># Function with default parameters
+def greet(name, greeting="Hello"):
+    print(f"{greeting}, {name}!")
+
+# Call with all parameters
+greet("Ahmed", "Hi")        # Output: Hi, Ahmed!
+
+# Call using default
+greet("Fatima")             # Output: Hello, Fatima!
+
+# Real example
+def create_profile(name, age, city="Unknown", country="Unknown"):
+    return {
+        "name": name,
+        "age": age,
+        "city": city,
+        "country": country
+    }
+
+# Required parameters must be provided
+profile1 = create_profile("Ahmed", 25)
+# {'name': 'Ahmed', 'age': 25, 'city': 'Unknown', 'country': 'Unknown'}
+
+# Override defaults
+profile2 = create_profile("Fatima", 28, "Cairo", "Egypt")
+# {'name': 'Fatima', 'age': 28, 'city': 'Cairo', 'country': 'Egypt'}
+
+# Override only some
+profile3 = create_profile("Ali", 30, country="Saudi Arabia")
+# {'name': 'Ali', 'age': 30, 'city': 'Unknown', 'country': 'Saudi Arabia'}</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show keyword arguments - very useful!
+                </div>
+            </section>
+
+            <!-- SLIDE 25: Functions - Variable Arguments -->
+            <section>
+                <h2>Functions - *args and **kwargs</h2>
+                <h3>Variable Arguments</h3>
+                <p><strong class="highlight">*args - Variable Number of Arguments:</strong></p>
+                <pre><code class="language-python">def add(*args):
+    total = 0
+    for num in args:
+        total += num
+    return total
+
+print(add(5, 3))              # 8
+print(add(5, 3, 2))           # 10
+print(add(5, 3, 2, 1, 4))     # 15</code></pre>
+                <p style="margin-top: 15px;"><strong class="highlight">**kwargs - Keyword Arguments:</strong></p>
+                <pre><code class="language-python">def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_info(name="Ahmed", age=25, city="Cairo")
+# Output:
+# name: Ahmed
+# age: 25
+# city: Cairo
+
+# Real example
+def create_user(**kwargs):
+    return kwargs
+
+user = create_user(name="Ahmed", email="ahmed@email.com", role="admin")
+print(user)  # {'name': 'Ahmed', 'email': 'ahmed@email.com', 'role': 'admin'}</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain order matters: positional, default, *args, **kwargs
+                </div>
+            </section>
+
+            <!-- SLIDE 26: Functions - Scope -->
+            <section>
+                <h2>Functions - Scope</h2>
+                <h3>Variable Scope - Where Variables Exist</h3>
+                <pre><code class="language-python"># Global scope
+x = 10  # Global variable
+
+def outer():
+    y = 20  # Local to outer()
+
+    def inner():
+        z = 30  # Local to inner()
+        print(x)  # Can access global
+        print(y)  # Can access from enclosing scope
+        print(z)  # Can access own local
+
+    inner()
+    # print(z)  # ERROR! z doesn't exist here
+
+outer()
+# print(y)  # ERROR! y doesn't exist here</code></pre>
+                <h3 style="margin-top: 15px;">Best Practice - Avoid global variables:</h3>
+                <pre><code class="language-python"># ✗ Bad - uses global
+counter = 0
+def increment():
+    global counter
+    counter += 1
+
+# ✓ Good - uses parameter and return
+def increment(count):
+    return count + 1
+
+counter = 0
+counter = increment(counter)  # counter is now 1</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain that globals make code harder to understand
+                </div>
+            </section>
+
+            <!-- SLIDE 27: Day 3 - Modules & Packages -->
+            <section>
+                <h2>Day 3 - Modules & Packages</h2>
+                <h3>Organizing Code</h3>
+                <p><strong>What is a Module?</strong></p>
+                <ul>
+                    <li>A Python file containing code</li>
+                    <li>Can contain variables, functions, classes</li>
+                    <li>Extension is <code>.py</code></li>
+                </ul>
+                <p style="margin-top: 15px;"><strong>What is a Package?</strong></p>
+                <ul>
+                    <li>A directory containing Python modules</li>
+                    <li>Must have <code>__init__.py</code> file</li>
+                    <li>Like a folder of related modules</li>
+                </ul>
+                <h3 style="margin-top: 15px;">Real Example - Standard Library:</h3>
+                <pre><code class="language-python">import math              # Module
+from datetime import datetime  # Class from module
+
+print(math.pi)          # Using module
+print(math.sqrt(16))    # Using module function
+
+now = datetime.now()    # Using imported class
+print(now)</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Standard library is HUGE - 70+ built-in modules
+                </div>
+            </section>
+
+            <!-- SLIDE 28: Importing Modules -->
+            <section>
+                <h2>Importing Modules</h2>
+                <h3>Different Import Styles</h3>
+                <pre><code class="language-python"># Style 1: Import entire module
+import math
+print(math.sqrt(9))     # 3.0
+print(math.pi)          # 3.141592653589793
+
+# Style 2: Import specific item
+from math import sqrt, pi
+print(sqrt(9))          # 3.0
+print(pi)               # 3.141592653589793
+
+# Style 3: Import with alias
+from math import sqrt as square_root
+print(square_root(16))  # 4.0
+
+# Working with dates
+from datetime import datetime, timedelta
+
+now = datetime.now()
+print(f"Today: {now.date()}")
+
+tomorrow = now + timedelta(days=1)
+print(f"Tomorrow: {tomorrow.date()}")
+
+# Working with random
+import random
+
+print(random.randint(1, 10))      # Random integer 1-10
+print(random.choice([1, 2, 3]))   # Random choice from list</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Discuss which import style is best (usually Style 2)
+                </div>
+            </section>
+
+            <!-- SLIDE 29: Creating Your Own Module -->
+            <section>
+                <h2>Creating Your Own Module</h2>
+                <h3>Reusable Code</h3>
+                <p><strong>File: calculator.py</strong></p>
+                <pre><code class="language-python">"""Simple calculator module"""
+
+def add(a, b):
+    """Add two numbers"""
+    return a + b
+
+def subtract(a, b):
+    """Subtract two numbers"""
+    return a - b
+
+def multiply(a, b):
+    """Multiply two numbers"""
+    return a * b
+
+def divide(a, b):
+    """Divide two numbers"""
+    if b == 0:
+        return "Cannot divide by zero"
+    return a / b</code></pre>
+                <p style="margin-top: 15px;"><strong>File: main.py (in same directory)</strong></p>
+                <pre><code class="language-python">import calculator
+
+# Use functions from calculator module
+result1 = calculator.add(10, 5)
+result2 = calculator.multiply(4, 7)
+
+print(result1)  # 15
+print(result2)  # 28
+
+# Alternative import
+from calculator import add, multiply
+
+result3 = add(8, 2)
+result4 = multiply(6, 3)
+
+print(result3)  # 10
+print(result4)  # 18</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Create this together, show that code is now reusable
+                </div>
+            </section>
+
+            <!-- SLIDE 30: Error Handling - Why It Matters -->
+            <section>
+                <h2>Error Handling - Why It Matters</h2>
+                <h3>Programs Break - Handle Gracefully</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <p><strong class="error">Without Error Handling:</strong></p>
+                        <pre><code class="language-python">user_input = input("Enter a number: ")
+result = 100 / int(user_input)
+print(f"Result: {result}")
+
+# If user enters "abc", program CRASHES:
+# ValueError: invalid literal for int()</code></pre>
+                    </div>
+                    <div>
+                        <p><strong class="success">With Error Handling:</strong></p>
+                        <pre><code class="language-python">try:
+    user_input = input("Enter a number: ")
+    result = 100 / int(user_input)
+    print(f"Result: {result}")
+except ValueError:
+    print("Error: Please enter a valid number!")
+except ZeroDivisionError:
+    print("Error: Cannot divide by zero!")</code></pre>
+                    </div>
+                </div>
+                <h3 style="margin-top: 20px;">Why Handle Errors?</h3>
+                <ul>
+                    <li>Users make mistakes (enter wrong type)</li>
+                    <li>Files might not exist</li>
+                    <li>Network connections fail</li>
+                    <li>Graceful failure beats crashes!</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Emphasize user experience - don't leave them hanging!
+                </div>
+            </section>
+
+            <!-- SLIDE 31: Try-Except Blocks -->
+            <section>
+                <h2>Try-Except Blocks</h2>
+                <h3>Basic Syntax</h3>
+                <pre><code class="language-python">try:
+    # Code that might cause an error
+    risky_code()
+except SomeError:
+    # What to do if that error happens
+    handle_error()</code></pre>
+                <h3 style="margin-top: 15px;">Common Errors:</h3>
+                <pre><code class="language-python"># ValueError - wrong type
+try:
+    age = int(input("Enter age: "))
+except ValueError:
+    print("Age must be a number!")
+
+# ZeroDivisionError - divide by zero
+try:
+    result = 100 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero!")
+
+# IndexError - list index out of range
+try:
+    items = [1, 2, 3]
+    print(items[10])
+except IndexError:
+    print("Item not found in list")
+
+# KeyError - dictionary key missing
+try:
+    student = {"name": "Ahmed", "age": 25}
+    print(student["email"])
+except KeyError:
+    print("Email not in student record")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show how to look up exceptions in Python docs
+                </div>
+            </section>
+
+            <!-- SLIDE 32: Multiple Except Blocks -->
+            <section>
+                <h2>Multiple Except Blocks</h2>
+                <h3>Handle Different Errors</h3>
+                <pre><code class="language-python">def calculator():
+    try:
+        num1 = float(input("First number: "))
+        num2 = float(input("Second number: "))
+        operation = input("Operation (+, -, *, /): ")
+
+        if operation == "+":
+            result = num1 + num2
+        elif operation == "-":
+            result = num1 - num2
+        elif operation == "*":
+            result = num1 * num2
+        elif operation == "/":
+            result = num1 / num2
+        else:
+            print("Unknown operation")
+            return
+
+        print(f"Result: {result}")
+
+    except ValueError:
+        print("Error: Please enter valid numbers")
+    except ZeroDivisionError:
+        print("Error: Cannot divide by zero")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+
+calculator()</code></pre>
+                <h3 style="margin-top: 15px;">Finally Block (runs regardless):</h3>
+                <pre><code class="language-python">try:
+    file = open("data.txt")
+    data = file.read()
+except FileNotFoundError:
+    print("File not found")
+finally:
+    file.close()  # Always runs, even if error</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Use finally for cleanup (closing files, connections, etc.)
+                </div>
+            </section>
+
+            <!-- SLIDE 33: Day 4 - Virtual Environments -->
+            <section>
+                <h2>Day 4 - Virtual Environments</h2>
+                <h3>Keep Projects Isolated</h3>
+                <p><strong>What is a Virtual Environment?</strong></p>
+                <ul>
+                    <li>Isolated Python environment per project</li>
+                    <li>Separate packages per project</li>
+                    <li>No conflicts between projects</li>
+                    <li>Like a sandbox for your project</li>
+                </ul>
+                <h3 style="margin-top: 15px;">Why Use Virtual Environments?</h3>
+                <div class="diagram">
+                    <pre>Project A needs: Django 3.0, Flask 1.1.2
+Project B needs: Django 4.0, Flask 2.0.0
+
+Without Virtual Environments:
+- Can only install one version of each
+- Projects will break!
+
+With Virtual Environments:
+- Project A has its own Python + packages
+- Project B has its own Python + packages
+- No conflicts!</pre>
+                </div>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain this prevents "dependency hell"
+                </div>
+            </section>
+
+            <!-- SLIDE 34: Creating Virtual Environments -->
+            <section>
+                <h2>Creating Virtual Environments</h2>
+                <h3>Step by Step</h3>
+                <p><strong>Windows:</strong></p>
+                <pre><code class="language-bash"># Create virtual environment
+python -m venv venv
+
+# Activate it
+venv\Scripts\activate
+
+# You'll see: (venv) before your command line
+# Install packages (only in this venv)
+pip install django flask requests
+
+# Deactivate when done
+deactivate</code></pre>
+                <p style="margin-top: 15px;"><strong>Mac/Linux:</strong></p>
+                <pre><code class="language-bash"># Create virtual environment
+python3 -m venv venv
+
+# Activate it
+source venv/bin/activate
+
+# You'll see: (venv) before your command line
+# Install packages
+pip install django flask requests
+
+# Deactivate when done
+deactivate</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Step through this SLOWLY, have everyone do it
+                </div>
+            </section>
+
+            <!-- SLIDE 35: Requirements.txt -->
+            <section>
+                <h2>Requirements.txt</h2>
+                <h3>Document Your Dependencies</h3>
+                <p><strong>Creating requirements.txt:</strong></p>
+                <pre><code class="language-bash"># Automatically generate from current environment
+pip freeze > requirements.txt
+
+# This creates a file like:
+# django==4.2.0
+# flask==2.3.0
+# requests==2.31.0
+# numpy==1.24.0</code></pre>
+                <h3 style="margin-top: 15px;">Sharing Projects:</h3>
+                <pre><code class="language-bash"># Person A: Freezes requirements
+pip freeze > requirements.txt
+# Commits to git (shares with team)
+
+# Person B: Sets up project
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install -r requirements.txt  # All same versions!</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Emphasize this is how teams share projects
+                </div>
+            </section>
+
+            <!-- SLIDE 36: Best Practices -->
+            <section>
+                <h2>Best Practices</h2>
+                <h3>Code Quality & Organization</h3>
+                <p><strong>1. Follow PEP 8 (Python Style Guide):</strong></p>
+                <pre><code class="language-python"># ✓ Good
+def calculate_total(items):
+    """Calculate total cost of items"""
+    total = 0
+    for item in items:
+        total += item.price
+    return total
+
+# ✗ Bad
+def calTot(i):
+    t = 0
+    for x in i:t+=x.p
+    return t</code></pre>
+                <p style="margin-top: 15px;"><strong>2. Use Meaningful Names:</strong></p>
+                <pre><code class="language-python"># ✓ Good
+age = 25
+is_student = True
+calculate_average()
+
+# ✗ Bad
+a = 25
+s = True
+calc()</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show linters like pylint, flake8 exist
+                </div>
+            </section>
+
+            <!-- SLIDE 37: Day 5 - Mini Project Overview -->
+            <section>
+                <h2>Day 5 - Mini Project Overview</h2>
+                <h3>To-Do List Application</h3>
+                <p><strong>Project Requirements:</strong></p>
+                <ol>
+                    <li>Create and store to-do items</li>
+                    <li>Mark items as complete/incomplete</li>
+                    <li>Delete items from list</li>
+                    <li>Save to file</li>
+                    <li>Load from file</li>
+                    <li>Display nicely formatted list</li>
+                </ol>
+                <p style="margin-top: 20px;"><strong>What You'll Use:</strong></p>
+                <ul class="checklist">
+                    <li>Lists (store tasks)</li>
+                    <li>Dictionaries (task details)</li>
+                    <li>Functions (organize code)</li>
+                    <li>Error handling (file operations)</li>
+                    <li>File I/O (persistence)</li>
+                    <li>Modules (organized code)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show excitement - this is a real application!
+                </div>
+            </section>
+
+            <!-- SLIDE 38: Project - Planning Phase -->
+            <section>
+                <h2>Project - Planning Phase</h2>
+                <h3>Design Before Coding</h3>
+                <p><strong>Data Structure:</strong></p>
+                <pre><code class="language-python"># Store tasks as list of dictionaries
+tasks = [
+    {
+        "id": 1,
+        "title": "Buy groceries",
+        "completed": False
+    },
+    {
+        "id": 2,
+        "title": "Finish project",
+        "completed": True
+    },
+    {
+        "id": 3,
+        "title": "Call mom",
+        "completed": False
+    }
+]</code></pre>
+                <p style="margin-top: 15px;"><strong>Functions We Need:</strong></p>
+                <ol style="font-size: 0.85em;">
+                    <li><code>add_task(title)</code> - adds new task</li>
+                    <li><code>view_tasks()</code> - displays all tasks</li>
+                    <li><code>mark_complete(task_id)</code> - marks task done</li>
+                    <li><code>delete_task(task_id)</code> - removes task</li>
+                    <li><code>save_tasks()</code> - saves to file</li>
+                    <li><code>load_tasks()</code> - loads from file</li>
+                    <li><code>display_menu()</code> - shows options</li>
+                    <li><code>main()</code> - main loop</li>
+                </ol>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Spend 20 mins on planning, code becomes easy!
+                </div>
+            </section>
+
+            <!-- SLIDE 39: Project - Main Application -->
+            <section>
+                <h2>Project - Main Application</h2>
+                <h3>User Interface & Menu</h3>
+                <pre><code class="language-python">"""To-Do List Application - Main Module"""
+
+import json
+import os
+
+tasks = []
+task_id_counter = 1
+
+def display_menu():
+    """Show main menu"""
+    print("\n" + "="*40)
+    print("        TO-DO LIST APPLICATION")
+    print("="*40)
+    print("1. Add new task")
+    print("2. View all tasks")
+    print("3. Mark task as complete")
+    print("4. Delete task")
+    print("5. Save and exit")
+    print("="*40)
+
+def display_tasks():
+    """Display all tasks nicely formatted"""
+    if not tasks:
+        print("\nNo tasks yet! Add one to get started.")
+        return
+
+    print("\n📋 YOUR TASKS:")
+    print("-" * 50)
+
+    for task in tasks:
+        status = "✓" if task["completed"] else "○"
+        print(f"{status} [{task['id']}] {task['title']}")
+
+    print("-" * 50)
+    completed = len([t for t in tasks if t["completed"]])
+    print(f"Total: {len(tasks)} | Completed: {completed}")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Type this together, explain file I/O with JSON
+                </div>
+            </section>
+
+            <!-- SLIDE 40: Project - File Operations -->
+            <section>
+                <h2>Project - File Operations</h2>
+                <h3>Save and Load Tasks</h3>
+                <pre><code class="language-python">def save_tasks():
+    """Save tasks to file"""
+    try:
+        with open("tasks.json", "w") as f:
+            json.dump(tasks, f, indent=2)
+        print("✓ Tasks saved successfully!")
+    except Exception as e:
+        print(f"Error saving tasks: {e}")
+
+def load_tasks():
+    """Load tasks from file if it exists"""
+    global tasks, task_id_counter
+    try:
+        if os.path.exists("tasks.json"):
+            with open("tasks.json", "r") as f:
+                tasks = json.load(f)
+                # Update counter
+                if tasks:
+                    task_id_counter = max(t["id"] for t in tasks) + 1
+            print("✓ Previous tasks loaded!")
+    except Exception as e:
+        print(f"Error loading tasks: {e}")
+
+def add_task(title):
+    """Add a new task"""
+    global task_id_counter
+    task = {
+        "id": task_id_counter,
+        "title": title,
+        "completed": False
+    }
+    tasks.append(task)
+    task_id_counter += 1
+    print(f"✓ Task added! ID: {task['id']}")</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain JSON format and file handling
+                </div>
+            </section>
+
+            <!-- SLIDE 41: Project - Main Loop -->
+            <section>
+                <h2>Project - Main Loop</h2>
+                <h3>Putting It All Together</h3>
+                <pre><code class="language-python">def main():
+    """Main application loop"""
+    load_tasks()  # Load previous tasks if they exist
+
+    while True:
+        display_menu()
+
+        try:
+            choice = input("\nEnter your choice (1-5): ").strip()
+
+            if choice == "1":
+                title = input("Enter task description: ").strip()
+                if title:
+                    add_task(title)
+                else:
+                    print("Task cannot be empty!")
+            elif choice == "2":
+                display_tasks()
+            elif choice == "3":
+                display_tasks()
+                task_id = int(input("Enter task ID to mark complete: "))
+                mark_complete(task_id)
+            elif choice == "4":
+                display_tasks()
+                task_id = int(input("Enter task ID to delete: "))
+                delete_task(task_id)
+            elif choice == "5":
+                save_tasks()
+                print("✓ Goodbye!")
+                break
+            else:
+                print("Invalid choice! Please try again.")
+
+        except ValueError:
+            print("Invalid input! Please enter a number.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Test the complete application together
+                </div>
+            </section>
+
+            <!-- SLIDE 42: Week 2 Recap -->
+            <section>
+                <h2>Week 2 Recap</h2>
+                <h3>What We Accomplished</h3>
+                <ul class="checklist">
+                    <li>Data Structures (Lists, Tuples, Dictionaries, Sets)</li>
+                    <li>Functions (defining, parameters, return values, scope)</li>
+                    <li>Code Organization (modules, packages)</li>
+                    <li>Error Handling (try-except blocks)</li>
+                    <li>Virtual Environments (isolation, requirements)</li>
+                    <li>Best Practices (PEP 8, code quality)</li>
+                    <li>Built a Real Application (To-Do List!)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Massive progress in one week!
+                </div>
+            </section>
+
+            <!-- SLIDE 43: Common Mistakes Week 2 -->
+            <section>
+                <h2>Common Mistakes Week 2</h2>
+                <h3>Learn From These</h3>
+                <ol>
+                    <li><span class="error">❌</span> Forgetting parentheses when calling function</li>
+                    <li><span class="error">❌</span> Using list index out of bounds</li>
+                    <li><span class="error">❌</span> Modifying list while iterating</li>
+                    <li><span class="error">❌</span> Forgetting to return from function</li>
+                    <li><span class="error">❌</span> Using wrong exception type</li>
+                    <li><span class="error">❌</span> Not activating virtual environment</li>
+                </ol>
+                <p style="margin-top: 30px; font-size: 1.2em;"><strong class="highlight">Remember:</strong> Errors are learning opportunities!</p>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Normalize mistakes - they're learning!
+                </div>
+            </section>
+
+            <!-- SLIDE 44: Tips for Success -->
+            <section>
+                <h2>Tips for Success - Week 2</h2>
+                <h3>Keep Improving</h3>
+                <ol>
+                    <li><strong class="highlight">Practice data structure operations</strong> - Create lists, access elements, modify</li>
+                    <li><strong class="highlight">Write functions for everything</strong> - Break code into small, reusable functions</li>
+                    <li><strong class="highlight">Use modules and packages</strong> - Organize code across files</li>
+                    <li><strong class="highlight">Handle errors properly</strong> - Always think "what could go wrong?"</li>
+                    <li><strong class="highlight">Use virtual environments</strong> - ALWAYS create venv for projects</li>
+                    <li><strong class="highlight">Read error messages carefully</strong> - Error message tells you what AND where</li>
+                    <li><strong class="highlight">Test your code</strong> - Test happy path, edge cases, and error cases</li>
+                </ol>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Share your own learning journey
+                </div>
+            </section>
+
+            <!-- SLIDE 45: Next Week Preview -->
+            <section>
+                <h2>Next Week Preview</h2>
+                <h3>Week 3: Web Fundamentals</h3>
+                <ul>
+                    <li>HTML & CSS (Structure & Style)</li>
+                    <li>Building static websites</li>
+                    <li>Introduction to web design</li>
+                    <li>Responsive design basics</li>
+                    <li>Git & GitHub (Version control)</li>
+                    <li>Deploying to the web</li>
+                </ul>
+                <p style="margin-top: 30px;"><strong class="highlight">Get Ready:</strong></p>
+                <ul>
+                    <li>Review Week 2 - especially functions and modules</li>
+                    <li>Think about what websites you like and WHY</li>
+                    <li>Come with ideas for your first website</li>
+                    <li>Questions about Week 2?</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Build excitement - web development is next!
+                </div>
+            </section>
+
+            <!-- SLIDE 46: Resources & Support -->
+            <section>
+                <h2>Resources & Support</h2>
+                <h3>Continue Learning</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <p><strong>Python Documentation:</strong></p>
+                        <ul>
+                            <li>Python.org/docs</li>
+                            <li>Real Python (realpython.com)</li>
+                            <li>W3Schools Python</li>
+                            <li>DataCamp (interactive)</li>
+                        </ul>
+                        <p style="margin-top: 20px;"><strong>Practice Platforms:</strong></p>
+                        <ul>
+                            <li>HackerRank (Python challenges)</li>
+                            <li>LeetCode (beginner problems)</li>
+                            <li>Codewars (gamified learning)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="contact-info">
+                            <p><strong>Communication:</strong></p>
+                            <ul style="list-style: none; padding-left: 0;">
+                                <li>📧 Email: waledmet@gmail.com</li>
+                                <li>📱 Phone: +966536037348 (Saudi)</li>
+                                <li>📱 Phone: +201111564174 (Egypt)</li>
+                                <li>🕐 Office hours: After each Monday session (11:30 AM+) and by appointment</li>
+                                <li>💻 Additional online sessions can be scheduled as needed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Share resources in group chat, bookmark links
+                </div>
+            </section>
+
+            <!-- SLIDE 47: Final Words -->
+            <section class="title-slide">
+                <h1>You're Becoming a Developer!</h1>
+                <blockquote style="font-size: 1.3em; font-style: italic; margin: 40px 0;">
+                    "Code is poetry, and you're becoming a poet."
+                </blockquote>
+                <h3>Remember:</h3>
+                <ul style="text-align: left; display: inline-block; margin: 30px auto;">
+                    <li>Every expert was once a beginner</li>
+                    <li>Mistakes are proof you're learning</li>
+                    <li>Ask questions - that's how you grow</li>
+                    <li>Help each other - teaching reinforces learning</li>
+                    <li>Be patient with yourself - this is challenging!</li>
+                </ul>
+                <h2 style="margin-top: 50px; color: var(--accent-color);">See you next week!</h2>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> End with genuine encouragement and energy! They've accomplished A LOT!
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            width: 1280,
+            height: 800,
+            margin: 0.02,
+            minScale: 0.5,
+            maxScale: 2.0,
+            plugins: []
+        });
+
+        // Keyboard shortcuts info
+        console.log('%c Presentation Controls:', 'font-size: 16px; font-weight: bold; color: #42affa;');
+        console.log('%c → or Space: Next slide', 'font-size: 14px;');
+        console.log('%c ← : Previous slide', 'font-size: 14px;');
+        console.log('%c F : Fullscreen', 'font-size: 14px;');
+        console.log('%c ESC : Overview mode', 'font-size: 14px;');
+        console.log('%c S : Speaker notes (if available)', 'font-size: 14px;');
+    </script>
+</body>
+</html>
