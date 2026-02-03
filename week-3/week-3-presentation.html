@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 - Django Web Development Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+    <style>
+        :root {
+            --main-color: #42affa;
+            --accent-color: #e7ad52;
+            --bg-color: #1a1a1a;
+            --text-color: #eee;
+        }
+
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 32px;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--main-color);
+            text-transform: none;
+            margin-top: 0;
+        }
+
+        .reveal h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-bottom: 0.3em;
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            padding: 15px 30px;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .reveal .title-slide {
+            text-align: center;
+        }
+
+        .reveal ul {
+            margin-left: 0;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal ol {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal li {
+            margin-bottom: 0.3em;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .reveal p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #42affa;
+        }
+
+        .reveal pre {
+            background-color: #2d2d2d;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .reveal pre code {
+            background-color: transparent;
+            padding: 0;
+            max-height: 400px;
+            font-size: 0.75em;
+            line-height: 1.3;
+        }
+
+        .trainer-note {
+            background-color: rgba(231, 173, 82, 0.2);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 12px;
+            margin-top: 12px;
+            font-size: 0.75em;
+            border-radius: 5px;
+        }
+
+        .trainer-note strong {
+            color: var(--accent-color);
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .warning {
+            color: #ff9800;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        .diagram {
+            text-align: center;
+            font-family: monospace;
+            font-size: 0.9em;
+            margin: 15px 0;
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .visual-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .diagram-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 3px solid var(--main-color);
+            border-radius: 10px;
+            padding: 25px 20px;
+            min-width: 200px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .diagram-box h4 {
+            color: white;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .diagram-box p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.8em;
+            margin: 5px 0;
+        }
+
+        .diagram-arrow {
+            font-size: 2em;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .arrow-label {
+            font-size: 0.7em;
+            color: var(--accent-color);
+            margin-top: -10px;
+        }
+
+        .flow-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .git-timeline {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .git-commit {
+            background: rgba(66, 175, 250, 0.2);
+            border: 2px solid var(--main-color);
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .git-commit h5 {
+            color: var(--main-color);
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .git-commit p {
+            font-size: 0.7em;
+            color: #ccc;
+            margin: 3px 0;
+        }
+
+        .box-model-demo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .box-margin {
+            background-color: rgba(231, 173, 82, 0.3);
+            padding: 30px;
+            border: 3px dashed var(--accent-color);
+            text-align: center;
+        }
+
+        .box-border {
+            background-color: rgba(66, 175, 250, 0.3);
+            padding: 25px;
+            border: 4px solid var(--main-color);
+        }
+
+        .box-padding {
+            background-color: rgba(118, 75, 162, 0.3);
+            padding: 25px;
+            border: 3px dashed #764ba2;
+        }
+
+        .box-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 40px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            border: 2px solid white;
+        }
+
+        .box-label {
+            font-size: 0.7em;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .box {
+            background-color: rgba(66, 175, 250, 0.1);
+            border: 2px solid var(--main-color);
+            padding: 15px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SLIDE 1: Title -->
+            <section class="title-slide">
+                <h1>Django Web Development Training</h1>
+                <h2>Week 3: Web Concepts, HTML/CSS & Git</h2>
+                <p style="margin-top: 50px;">
+                    <strong>From Python to the Web</strong><br>
+                    Building Your First Website
+                </p>
+            </section>
+
+            <!-- SLIDE 2: Week 3 Agenda -->
+            <section>
+                <h2>Week 3 Agenda</h2>
+                <h3>What We'll Cover This Week</h3>
+                <ul>
+                    <li><strong>Day 1:</strong> How the Web Works + HTML Basics</li>
+                    <li><strong>Day 2:</strong> More HTML + Forms</li>
+                    <li><strong>Day 3:</strong> CSS Fundamentals + Styling</li>
+                    <li><strong>Day 4:</strong> Git & GitHub</li>
+                    <li><strong>Day 5:</strong> Portfolio Project + Deployment</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> This is an exciting visual week - students will see their code in a browser!
+                </div>
+            </section>
+
+            <!-- SLIDE 3: How the Web Works -->
+            <section>
+                <h2>How the Web Works</h2>
+                <h3>Client-Server Architecture</h3>
+                <div class="flow-vertical">
+                    <div class="visual-diagram">
+                        <div class="diagram-box">
+                            <h4>CLIENT</h4>
+                            <p>Your Browser</p>
+                            <p>Chrome / Firefox</p>
+                            <p>Safari / Edge</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div class="diagram-arrow">→</div>
+                            <div class="arrow-label">1. HTTP Request</div>
+                            <div class="arrow-label">"Give me example.com"</div>
+                        </div>
+                        <div class="diagram-box">
+                            <h4>SERVER</h4>
+                            <p>Web Hosting</p>
+                            <p>Stores Website</p>
+                            <p>Files & Data</p>
+                        </div>
+                    </div>
+                    <div class="visual-diagram">
+                        <div style="text-align: center;">
+                            <div class="diagram-arrow">←</div>
+                            <div class="arrow-label">2. HTTP Response</div>
+                            <div class="arrow-label">"HTML, CSS, Images"</div>
+                        </div>
+                    </div>
+                    <div class="diagram-box" style="max-width: 300px;">
+                        <h4>3. DISPLAY</h4>
+                        <p>Browser Renders</p>
+                        <p>& Shows Page</p>
+                    </div>
+                </div>
+                <ul style="margin-top: 20px;">
+                    <li><span class="highlight">Client:</span> Your web browser (Chrome, Firefox, Safari)</li>
+                    <li><span class="highlight">Server:</span> Computer that stores and serves websites</li>
+                    <li><span class="highlight">Request:</span> Browser asks for a resource</li>
+                    <li><span class="highlight">Response:</span> Server sends back HTML, CSS, images, data</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Demo:</strong> Open browser DevTools (F12) and show Network tab while loading a website
+                </div>
+            </section>
+
+            <!-- SLIDE 4: HTTP Protocol -->
+            <section>
+                <h2>HTTP Protocol</h2>
+                <h3>HyperText Transfer Protocol</h3>
+                <div class="two-column">
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">HTTP Methods</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li><code>GET</code> - Retrieve data</li>
+                            <li><code>POST</code> - Send/create data</li>
+                            <li><code>PUT</code> - Update data</li>
+                            <li><code>DELETE</code> - Remove data</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Status Codes</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li><span class="success">200</span> - OK (Success)</li>
+                            <li><span class="warning">404</span> - Not Found</li>
+                            <li><span class="error">500</span> - Server Error</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.85em;">
+                    <strong>HTTPS:</strong> Secure version of HTTP (encrypted)
+                </p>
+                <div class="trainer-note">
+                    <strong>Interactive:</strong> Visit any website and check status codes in DevTools Network tab
+                </div>
+            </section>
+
+            <!-- SLIDE 5: What is HTML -->
+            <section>
+                <h2>What is HTML?</h2>
+                <h3>HyperText Markup Language</h3>
+                <ul class="checklist">
+                    <li>Structure of web pages</li>
+                    <li>Uses tags to mark up content</li>
+                    <li>Not a programming language - it's a markup language</li>
+                    <li>Foundation of every website</li>
+                </ul>
+                <pre><code class="language-html">&lt;h1&gt;Hello, World!&lt;/h1&gt;
+&lt;p&gt;This is my first web page.&lt;/p&gt;
+&lt;a href="https://google.com"&gt;Visit Google&lt;/a&gt;</code></pre>
+                <div class="trainer-note">
+                    <strong>Live Code:</strong> Create first.html together - show immediate results in browser
+                </div>
+            </section>
+
+            <!-- SLIDE 6: HTML Document Structure -->
+            <section>
+                <h2>HTML Document Structure</h2>
+                <h3>Every HTML Page Needs This</h3>
+                <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My First Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to My Website&lt;/h1&gt;
+    &lt;p&gt;This is the content&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                <ul style="font-size: 0.85em;">
+                    <li><code>&lt;!DOCTYPE html&gt;</code> - Tells browser this is HTML5</li>
+                    <li><code>&lt;head&gt;</code> - Metadata (not visible on page)</li>
+                    <li><code>&lt;body&gt;</code> - Visible content</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 7: Common HTML Tags -->
+            <section>
+                <h2>Common HTML Tags</h2>
+                <h3>Building Blocks of Web Pages</h3>
+                <pre><code class="language-html">&lt;!-- Headings --&gt;
+&lt;h1&gt;Main Heading&lt;/h1&gt;
+&lt;h2&gt;Subheading&lt;/h2&gt;
+
+&lt;!-- Paragraph --&gt;
+&lt;p&gt;This is a paragraph of text.&lt;/p&gt;
+
+&lt;!-- Link --&gt;
+&lt;a href="https://google.com"&gt;Click here&lt;/a&gt;
+
+&lt;!-- Image --&gt;
+&lt;img src="photo.jpg" alt="Description"&gt;
+
+&lt;!-- Lists --&gt;
+&lt;ul&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                <div class="trainer-note">
+                    <strong>Practice:</strong> Students create an "About Me" page with all these tags
+                </div>
+            </section>
+
+            <!-- SLIDE 8: Semantic HTML -->
+            <section>
+                <h2>Semantic HTML</h2>
+                <h3>Tags with Meaning</h3>
+                <pre><code class="language-html">&lt;header&gt;
+    &lt;h1&gt;My Website&lt;/h1&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;
+    &lt;a href="#home"&gt;Home&lt;/a&gt;
+    &lt;a href="#about"&gt;About&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;main&gt;
+    &lt;section id="about"&gt;
+        &lt;h2&gt;About Us&lt;/h2&gt;
+        &lt;p&gt;Content here...&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;&copy; 2025 My Website&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+                <p style="font-size: 0.85em;"><span class="highlight">Benefits:</span> Better structure, accessibility, SEO</p>
+            </section>
+
+            <!-- SLIDE 9: HTML Forms -->
+            <section>
+                <h2>HTML Forms</h2>
+                <h3>Collecting User Input</h3>
+                <pre><code class="language-html">&lt;form action="/submit" method="POST"&gt;
+    &lt;label for="name"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" id="name" name="name" required&gt;
+
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email" required&gt;
+
+    &lt;label for="message"&gt;Message:&lt;/label&gt;
+    &lt;textarea id="message" name="message"&gt;&lt;/textarea&gt;
+
+    &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                <ul style="font-size: 0.85em;">
+                    <li><code>action</code> - Where to send form data</li>
+                    <li><code>method</code> - GET or POST</li>
+                    <li><code>required</code> - Field must be filled</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 10: What is CSS -->
+            <section>
+                <h2>What is CSS?</h2>
+                <h3>Cascading Style Sheets</h3>
+                <ul class="checklist">
+                    <li>Controls the appearance of HTML elements</li>
+                    <li>Separates content (HTML) from presentation (CSS)</li>
+                    <li>Makes websites beautiful and professional</li>
+                </ul>
+                <div class="two-column" style="margin-top: 20px;">
+                    <div class="box">
+                        <strong>Without CSS:</strong>
+                        <p style="font-size: 0.8em; color: #999;">Plain, ugly text with no styling</p>
+                    </div>
+                    <div class="box" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+                        <strong>With CSS:</strong>
+                        <p style="font-size: 0.8em;">Beautiful, styled, professional website!</p>
+                    </div>
+                </div>
+                <div class="trainer-note">
+                    <strong>Demo:</strong> Show the same HTML page before and after adding CSS
+                </div>
+            </section>
+
+            <!-- SLIDE 11: Adding CSS to HTML -->
+            <section>
+                <h2>Three Ways to Add CSS</h2>
+                <h3>1. Inline (Not Recommended)</h3>
+                <pre><code class="language-html">&lt;p style="color: red; font-size: 20px;"&gt;Red text&lt;/p&gt;</code></pre>
+
+                <h3>2. Internal (In &lt;head&gt;)</h3>
+                <pre><code class="language-html">&lt;style&gt;
+    p { color: blue; }
+&lt;/style&gt;</code></pre>
+
+                <h3>3. External (Best Practice) <span class="success">✓</span></h3>
+                <pre><code class="language-html">&lt;link rel="stylesheet" href="style.css"&gt;</code></pre>
+                <p style="font-size: 0.85em;"><span class="highlight">Why external?</span> Separation of concerns, reusability, caching</p>
+            </section>
+
+            <!-- SLIDE 12: CSS Selectors -->
+            <section>
+                <h2>CSS Selectors</h2>
+                <h3>Targeting HTML Elements</h3>
+                <pre><code class="language-css">/* Element Selector */
+p {
+    color: blue;
+    font-size: 16px;
+}
+
+/* Class Selector (reusable) */
+.highlight {
+    background-color: yellow;
+    padding: 10px;
+}
+
+/* ID Selector (unique) */
+#header {
+    background-color: navy;
+    color: white;
+}</code></pre>
+                <pre><code class="language-html">&lt;p class="highlight"&gt;Highlighted text&lt;/p&gt;
+&lt;div id="header"&gt;Header content&lt;/div&gt;</code></pre>
+            </section>
+
+            <!-- SLIDE 13: CSS Box Model -->
+            <section>
+                <h2>CSS Box Model</h2>
+                <h3>Every Element is a Box</h3>
+                <div class="box-model-demo">
+                    <div class="box-margin">
+                        <div class="box-label">↑ MARGIN (Outside Space) ↑</div>
+                        <div class="box-border">
+                            <div class="box-label">↑ BORDER ↑</div>
+                            <div class="box-padding">
+                                <div class="box-label">↑ PADDING (Inside Space) ↑</div>
+                                <div class="box-content">
+                                    CONTENT
+                                </div>
+                                <div class="box-label">↓ PADDING ↓</div>
+                            </div>
+                            <div class="box-label">↓ BORDER ↓</div>
+                        </div>
+                        <div class="box-label">↓ MARGIN ↓</div>
+                    </div>
+                </div>
+                <pre><code class="language-css">.box {
+    width: 300px;
+    height: 200px;
+    padding: 20px;    /* Inside space */
+    border: 2px solid black;
+    margin: 10px;     /* Outside space */
+}</code></pre>
+                <p style="text-align: center; font-size: 0.85em; margin-top: 15px;">
+                    <span class="highlight">Total width</span> = margin + border + padding + content + padding + border + margin
+                </p>
+                <div class="trainer-note">
+                    <strong>Demo:</strong> Show box model in browser DevTools - hover over elements
+                </div>
+            </section>
+
+            <!-- SLIDE 14: Common CSS Properties -->
+            <section>
+                <h2>Common CSS Properties</h2>
+                <pre><code class="language-css">/* Text Styling */
+.text-demo {
+    color: #333;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Background */
+.bg-demo {
+    background-color: lightblue;
+    background-image: url('image.jpg');
+}
+
+/* Spacing */
+.spacing-demo {
+    padding: 20px;
+    margin: 10px;
+}
+
+/* Border */
+.border-demo {
+    border: 2px solid black;
+    border-radius: 10px;  /* Rounded corners */
+}</code></pre>
+            </section>
+
+            <!-- SLIDE 15: What is Git -->
+            <section>
+                <h2>What is Git?</h2>
+                <h3>Version Control System</h3>
+                <ul class="checklist">
+                    <li>Track changes to your code over time</li>
+                    <li>Collaborate with other developers</li>
+                    <li>Revert to previous versions if needed</li>
+                    <li>Work on features without breaking main code</li>
+                </ul>
+                <div class="git-timeline">
+                    <div class="git-commit">
+                        <h5>v1.0</h5>
+                        <p>Initial</p>
+                        <p>Dec 1</p>
+                    </div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="git-commit">
+                        <h5>v1.1</h5>
+                        <p>Feature Added</p>
+                        <p>Dec 5</p>
+                    </div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="git-commit">
+                        <h5>v1.2</h5>
+                        <p>Bug Fix</p>
+                        <p>Dec 10</p>
+                    </div>
+                    <div class="diagram-arrow">→</div>
+                    <div class="git-commit" style="border-color: var(--accent-color); border-width: 3px;">
+                        <h5 style="color: var(--accent-color);">v2.0</h5>
+                        <p><strong>Current</strong></p>
+                        <p>Dec 15</p>
+                    </div>
+                </div>
+                <p style="font-size: 0.85em; margin-top: 20px;"><span class="highlight">⬆ You can go back to any version! Like a time machine for your code!</span></p>
+            </section>
+
+            <!-- SLIDE 16: Git Workflow -->
+            <section>
+                <h2>Git Basic Workflow</h2>
+                <h3>Three Stages</h3>
+                <div class="visual-diagram">
+                    <div class="diagram-box">
+                        <h4>WORKING DIRECTORY</h4>
+                        <p>Edit files</p>
+                        <p>Make changes</p>
+                        <p style="margin-top: 10px; color: var(--accent-color);">(modify)</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="diagram-arrow">→</div>
+                        <div class="arrow-label">git add .</div>
+                    </div>
+                    <div class="diagram-box">
+                        <h4>STAGING AREA</h4>
+                        <p>Ready to save</p>
+                        <p>Prepared</p>
+                        <p style="margin-top: 10px; color: var(--accent-color);">(staged)</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="diagram-arrow">→</div>
+                        <div class="arrow-label">git commit -m ""</div>
+                    </div>
+                    <div class="diagram-box">
+                        <h4>REPOSITORY</h4>
+                        <p>Permanent</p>
+                        <p>History</p>
+                        <p style="margin-top: 10px; color: var(--accent-color);">(committed)</p>
+                    </div>
+                </div>
+                <pre><code class="language-bash">git init              # Create repository
+git status            # Check status
+git add .             # Stage all files
+git commit -m "msg"   # Save snapshot
+git log               # View history</code></pre>
+                <div class="trainer-note">
+                    <strong>Live Demo:</strong> Walk through entire workflow with a real example
+                </div>
+            </section>
+
+            <!-- SLIDE 17: GitHub -->
+            <section>
+                <h2>GitHub</h2>
+                <h3>Git Hosting Platform (Cloud Backup)</h3>
+                <div class="flow-vertical">
+                    <div class="visual-diagram">
+                        <div class="diagram-box">
+                            <h4>YOUR COMPUTER</h4>
+                            <p>Local Repository</p>
+                            <p>.git folder</p>
+                            <p>All commits</p>
+                            <p>Full history</p>
+                            <p style="margin-top: 10px; color: var(--accent-color);">Offline Work</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div class="diagram-arrow" style="font-size: 3em;">⇄</div>
+                            <div class="arrow-label">git push ↑</div>
+                            <div class="arrow-label">git pull ↓</div>
+                        </div>
+                        <div class="diagram-box">
+                            <h4>GITHUB</h4>
+                            <p>Cloud Repository</p>
+                            <p>Remote storage</p>
+                            <p>All commits</p>
+                            <p>Shared access</p>
+                            <p style="margin-top: 10px; color: var(--accent-color);">Online Backup</p>
+                        </div>
+                    </div>
+                </div>
+                <ul style="font-size: 0.85em; margin-top: 20px;">
+                    <li><span class="highlight">Git:</span> Version control software (local)</li>
+                    <li><span class="highlight">GitHub:</span> Hosting service for Git repos (cloud)</li>
+                    <li>Benefits: Backup, collaboration, portfolio, sharing</li>
+                </ul>
+                <pre><code class="language-bash">git remote add origin https://github.com/user/repo.git
+git push -u origin main</code></pre>
+            </section>
+
+            <!-- SLIDE 18: JSON Introduction -->
+            <section>
+                <h2>JSON Basics</h2>
+                <h3>JavaScript Object Notation</h3>
+                <pre><code class="language-json">{
+    "name": "Ahmed",
+    "age": 25,
+    "city": "Riyadh",
+    "skills": ["Python", "HTML", "CSS"],
+    "is_student": true
+}</code></pre>
+                <ul style="font-size: 0.85em;">
+                    <li>Data format for APIs and web communication</li>
+                    <li>Easy for humans to read and write</li>
+                    <li>Easy for machines to parse</li>
+                    <li>Language independent (works with Python, JavaScript, etc.)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Note:</strong> We'll use JSON extensively when working with APIs in Week 7
+                </div>
+            </section>
+
+            <!-- SLIDE 19: Week 3 Project -->
+            <section>
+                <h2>Week 3 Project</h2>
+                <h3>Portfolio Website</h3>
+                <ul class="checklist">
+                    <li>Personal portfolio with multiple sections</li>
+                    <li>Header with your name and title</li>
+                    <li>Navigation bar (About, Skills, Contact)</li>
+                    <li>About Me section</li>
+                    <li>Skills list</li>
+                    <li>Contact form</li>
+                    <li>Footer with copyright</li>
+                    <li>Professional CSS styling</li>
+                    <li>Deployed to GitHub</li>
+                </ul>
+                <p style="margin-top: 15px;"><span class="highlight">Goal:</span> Build it from scratch, make it yours!</p>
+            </section>
+
+            <!-- SLIDE 20: Portfolio Example Structure -->
+            <section>
+                <h2>Portfolio Structure</h2>
+                <h3>What We're Building</h3>
+                <pre><code class="language-html">&lt;header&gt;
+    &lt;h1&gt;Ahmed Ali&lt;/h1&gt;
+    &lt;p&gt;Python Developer&lt;/p&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;
+    &lt;a href="#about"&gt;About&lt;/a&gt;
+    &lt;a href="#skills"&gt;Skills&lt;/a&gt;
+    &lt;a href="#contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;
+
+&lt;main&gt;
+    &lt;section id="about"&gt;...&lt;/section&gt;
+    &lt;section id="skills"&gt;...&lt;/section&gt;
+    &lt;section id="contact"&gt;...&lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+    &lt;p&gt;&copy; 2025 Ahmed Ali&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+            </section>
+
+            <!-- SLIDE 21: Key Tools -->
+            <section>
+                <h2>Development Tools</h2>
+                <h3>What We Use</h3>
+                <div class="two-column">
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Code Editor</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li>VS Code</li>
+                            <li>Live Server extension</li>
+                            <li>Auto-reload on save</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Browser Tools</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li>Chrome/Firefox</li>
+                            <li>DevTools (F12)</li>
+                            <li>Inspect elements</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="two-column" style="margin-top: 15px;">
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Version Control</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li>Git (local)</li>
+                            <li>GitHub (remote)</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Resources</h4>
+                        <ul style="font-size: 0.8em;">
+                            <li>MDN Web Docs</li>
+                            <li>W3Schools</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 22: Best Practices -->
+            <section>
+                <h2>Best Practices</h2>
+                <div class="two-column">
+                    <div>
+                        <h3 style="color: #4caf50;">✓ Do</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>Use semantic HTML tags</li>
+                            <li>External CSS files</li>
+                            <li>Proper indentation</li>
+                            <li>Close all tags</li>
+                            <li>Test in browser often</li>
+                            <li>Use DevTools</li>
+                            <li>Commit to Git frequently</li>
+                            <li>Write clear commit messages</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="color: #f44336;">✗ Don't</h3>
+                        <ul style="font-size: 0.85em;">
+                            <li>Inline styles everywhere</li>
+                            <li>Forget to close tags</li>
+                            <li>Skip alt attributes on images</li>
+                            <li>Use <code>&lt;br&gt;</code> for spacing</li>
+                            <li>Copy code without understanding</li>
+                            <li>Vague commit messages</li>
+                            <li>Forget to push to GitHub</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 23: Common Challenges -->
+            <section>
+                <h2>Common Challenges</h2>
+                <h3>And How to Fix Them</h3>
+                <ul style="font-size: 0.85em;">
+                    <li><span class="error">CSS not showing?</span>
+                        <ul>
+                            <li>Check file path in <code>&lt;link&gt;</code></li>
+                            <li>Ensure file is saved</li>
+                            <li>Hard refresh: Ctrl+F5</li>
+                        </ul>
+                    </li>
+                    <li><span class="error">HTML tags not closing?</span>
+                        <ul>
+                            <li>Use VS Code auto-close</li>
+                            <li>Check indentation</li>
+                            <li>Use W3C validator</li>
+                        </ul>
+                    </li>
+                    <li><span class="error">Git authentication failing?</span>
+                        <ul>
+                            <li>Use personal access token (not password)</li>
+                            <li>Check token hasn't expired</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 24: What We Learned -->
+            <section>
+                <h2>Week 3 Summary</h2>
+                <h3>Key Concepts</h3>
+                <div class="two-column">
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Web Fundamentals</h4>
+                        <ul style="font-size: 0.75em;">
+                            <li>Client-Server architecture</li>
+                            <li>HTTP protocol & methods</li>
+                            <li>Status codes</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">HTML</h4>
+                        <ul style="font-size: 0.75em;">
+                            <li>Document structure</li>
+                            <li>Semantic tags</li>
+                            <li>Forms & inputs</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="two-column" style="margin-top: 15px;">
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">CSS</h4>
+                        <ul style="font-size: 0.75em;">
+                            <li>Selectors & properties</li>
+                            <li>Box model</li>
+                            <li>Layouts & styling</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Git & GitHub</h4>
+                        <ul style="font-size: 0.75em;">
+                            <li>Version control</li>
+                            <li>Commits & history</li>
+                            <li>Remote repositories</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 25: Skills Progression -->
+            <section>
+                <h2>Your Journey So Far</h2>
+                <h3>9-Week Training Progress</h3>
+                <ul style="font-size: 0.85em;">
+                    <li><span class="success">✓</span> <strong>Week 1:</strong> Python Basics & Web Intro</li>
+                    <li><span class="success">✓</span> <strong>Week 2:</strong> Python Data Structures & Functions</li>
+                    <li><span class="success">✓</span> <strong>Week 3:</strong> HTML/CSS/Git <span class="highlight">← You are here!</span></li>
+                    <li><strong>Week 4:</strong> Django Framework Basics</li>
+                    <li><strong>Week 5:</strong> Django Models & Database</li>
+                    <li><strong>Week 6:</strong> Django Forms & Authentication</li>
+                    <li><strong>Week 7:</strong> APIs & JavaScript Integration</li>
+                    <li><strong>Week 8:</strong> Final Project Development</li>
+                    <li><strong>Week 9:</strong> Testing & Deployment</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 26: What's Next -->
+            <section>
+                <h2>Week 4 Preview</h2>
+                <h3>Django Framework</h3>
+                <p>Next week, we bring it all together:</p>
+                <ul class="checklist">
+                    <li>Install Django framework</li>
+                    <li>Create Django projects and apps</li>
+                    <li>Build dynamic web pages (not static anymore!)</li>
+                    <li>URL routing and views</li>
+                    <li>Django templates with data from Python</li>
+                    <li>Static files management</li>
+                </ul>
+                <p style="margin-top: 20px; font-size: 0.9em;">
+                    <span class="highlight">From static HTML to dynamic Python-powered websites!</span>
+                </p>
+                <div class="trainer-note">
+                    <strong>Preparation:</strong> Ensure Python and pip are working; we'll install Django together
+                </div>
+            </section>
+
+            <!-- SLIDE 27: Resources -->
+            <section>
+                <h2>Learning Resources</h2>
+                <h3>Continue Your Journey</h3>
+                <div class="two-column">
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Documentation</h4>
+                        <ul style="font-size: 0.75em;">
+                            <li>MDN Web Docs</li>
+                            <li>W3Schools</li>
+                            <li>CSS-Tricks</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Practice</h4>
+                        <ul style="font-size: 0.75em;">
+                            <li>freeCodeCamp</li>
+                            <li>Codecademy</li>
+                            <li>Frontend Mentor</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="two-column" style="margin-top: 15px;">
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Tools</h4>
+                        <ul style="font-size: 0.75em;">
+                            <li>CodePen (online editor)</li>
+                            <li>Can I Use (compatibility)</li>
+                            <li>Color Picker</li>
+                        </ul>
+                    </div>
+                    <div class="box">
+                        <h4 style="color: var(--accent-color); font-size: 1em;">Community</h4>
+                        <ul style="font-size: 0.75em;">
+                            <li>Stack Overflow</li>
+                            <li>Reddit r/webdev</li>
+                            <li>Dev.to</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 28: Practice Exercises -->
+            <section>
+                <h2>Weekend Challenge</h2>
+                <h3>Keep Building!</h3>
+                <ul style="font-size: 0.85em;">
+                    <li>🎯 Improve your portfolio design</li>
+                    <li>🎯 Add a "Projects" section (placeholder for now)</li>
+                    <li>🎯 Experiment with different color schemes</li>
+                    <li>🎯 Try adding hover effects to links</li>
+                    <li>🎯 Make navigation sticky (stays at top when scrolling)</li>
+                    <li>🎯 Add social media links to footer</li>
+                    <li>🎯 Try CSS animations (optional challenge)</li>
+                    <li>🎯 Practice Git: Make 5 meaningful commits</li>
+                </ul>
+                <p style="margin-top: 20px;"><span class="highlight">Share your GitHub repo link in our group!</span></p>
+            </section>
+
+            <!-- SLIDE 29: Q&A -->
+            <section>
+                <h2>Questions & Answers</h2>
+                <h3>Common Questions</h3>
+                <ul style="font-size: 0.85em;">
+                    <li><strong>Q:</strong> Should I memorize all HTML tags?<br>
+                        <span class="highlight">A:</span> No! Reference MDN when needed. You'll remember common ones with practice.
+                    </li>
+                    <li><strong>Q:</strong> Which is better, classes or IDs?<br>
+                        <span class="highlight">A:</span> Classes for styling (reusable). IDs for unique elements.
+                    </li>
+                    <li><strong>Q:</strong> Do I need to learn Git CLI?<br>
+                        <span class="highlight">A:</span> Yes! It's the industry standard. GUI tools are okay later, but learn CLI first.
+                    </li>
+                    <li><strong>Q:</strong> How do I get better at CSS?<br>
+                        <span class="highlight">A:</span> Practice, practice, practice! Build real projects, copy designs you like.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 30: Thank You -->
+            <section class="title-slide">
+                <h1>Congratulations!</h1>
+                <h2>You've Completed Week 3!</h2>
+                <p style="margin-top: 40px; font-size: 1.2em;">
+                    You can now:
+                </p>
+                <ul class="checklist" style="text-align: left; display: inline-block; font-size: 0.9em;">
+                    <li>Build web pages from scratch</li>
+                    <li>Style them professionally with CSS</li>
+                    <li>Use Git for version control</li>
+                    <li>Deploy to GitHub</li>
+                    <li>Understand how the web works</li>
+                </ul>
+                <p style="margin-top: 40px; font-size: 1.1em;">
+                    <strong>Keep building! See you in Week 4! 🚀</strong>
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            progress: true,
+            center: false,
+            width: 1280,
+            height: 800,
+            margin: 0.02,
+            minScale: 0.5,
+            maxScale: 2.0,
+            plugins: []
+        });
+
+        // Keyboard shortcuts info
+        console.log('%c Presentation Controls:', 'font-size: 16px; font-weight: bold; color: #42affa;');
+        console.log('%c → or Space: Next slide', 'font-size: 14px;');
+        console.log('%c ← : Previous slide', 'font-size: 14px;');
+        console.log('%c F : Fullscreen', 'font-size: 14px;');
+        console.log('%c ESC : Overview mode', 'font-size: 14px;');
+        console.log('%c S : Speaker notes (if available)', 'font-size: 14px;');
+    </script>
+</body>
+</html>
