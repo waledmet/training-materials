@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 - Django Basics - Django Web Development Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+    <style>
+        :root {
+            --main-color: #42affa;
+            --accent-color: #e7ad52;
+            --bg-color: #1a1a1a;
+            --text-color: #eee;
+        }
+
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 32px;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--main-color);
+            text-transform: none;
+            margin-top: 0;
+        }
+
+        .reveal h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-bottom: 0.3em;
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            padding: 15px 30px;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .reveal .title-slide {
+            text-align: center;
+        }
+
+        .reveal ul {
+            margin-left: 0;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal ol {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal li {
+            margin-bottom: 0.3em;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .reveal p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #42affa;
+        }
+
+        .reveal pre {
+            background-color: #2d2d2d;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .reveal pre code {
+            background-color: transparent;
+            padding: 0;
+            max-height: 400px;
+            font-size: 0.75em;
+            line-height: 1.3;
+        }
+
+        .trainer-note {
+            background-color: rgba(231, 173, 82, 0.2);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 12px;
+            margin-top: 12px;
+            font-size: 0.75em;
+            border-radius: 5px;
+        }
+
+        .trainer-note strong {
+            color: var(--accent-color);
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .warning {
+            color: #ff9800;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        .diagram {
+            text-align: center;
+            font-family: monospace;
+            font-size: 1em;
+            margin: 15px 0;
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SLIDE 1: Title -->
+            <section class="title-slide">
+                <h1>Week 4: Django Basics</h1>
+                <h2>From Static to Dynamic Web Applications</h2>
+                <p style="margin-top: 50px;">
+                    <strong>Project, Apps, Views & Templates</strong>
+                </p>
+            </section>
+
+            <!-- SLIDE 2: Agenda -->
+            <section>
+                <h2>Today's Topics</h2>
+                <ol>
+                    <li>Introduction to Django</li>
+                    <li>Installing Django & Creating Projects</li>
+                    <li>Django Apps</li>
+                    <li>Views and URLs</li>
+                    <li>Django Templates</li>
+                    <li>Template Inheritance</li>
+                    <li>Static Files (CSS/Images)</li>
+                    <li>Mini-Project Demo</li>
+                </ol>
+            </section>
+
+            <!-- SLIDE 3: What is Django? -->
+            <section>
+                <h2>What is Django?</h2>
+                <h3>Django: A Python Web Framework</h3>
+                <blockquote style="font-style: italic; font-size: 1.1em; margin: 20px 0;">
+                    "The web framework for perfectionists with deadlines"
+                </blockquote>
+                <ul class="checklist">
+                    <li>Written in Python</li>
+                    <li>Batteries included (everything you need)</li>
+                    <li>Fast development</li>
+                    <li>Secure by default</li>
+                    <li>Scalable</li>
+                    <li>Great documentation</li>
+                </ul>
+                <p style="margin-top: 20px;"><strong class="highlight">Used by:</strong> Instagram, Pinterest, Mozilla, Spotify, NASA</p>
+            </section>
+
+            <!-- SLIDE 4: Web Framework - Why? -->
+            <section>
+                <h2>Web Framework - Why?</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h3>Without Framework:</h3>
+                        <ul>
+                            <li class="error">❌ Handle HTTP manually</li>
+                            <li class="error">❌ Parse URLs yourself</li>
+                            <li class="error">❌ Generate HTML by hand</li>
+                            <li class="error">❌ Manage database</li>
+                            <li class="error">❌ Handle security</li>
+                            <li class="error">❌ Write everything</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>With Django:</h3>
+                        <ul class="checklist">
+                            <li>HTTP handled</li>
+                            <li>URL routing built-in</li>
+                            <li>Template engine</li>
+                            <li>ORM included</li>
+                            <li>Security features</li>
+                            <li>Focus on your app</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; text-align: center; font-size: 1.2em;">
+                    <strong class="highlight">Framework = Foundation + Tools</strong>
+                </p>
+            </section>
+
+            <!-- SLIDE 5: MTV Pattern -->
+            <section>
+                <h2>MTV Pattern</h2>
+                <h3>Django uses MTV:</h3>
+                <div class="diagram">
+                    <pre style="font-size: 1.2em; line-height: 1.8;">
+M = Model   (Database layer)      ← Week 5
+T = Template (Presentation layer)  ← Week 4
+V = View    (Business logic)       ← Week 4
+                    </pre>
+                </div>
+                <p style="margin-top: 20px;"><strong>Similar to MVC (Model-View-Controller)</strong></p>
+                <div class="diagram" style="margin-top: 20px;">
+                    <pre style="font-size: 1em;">
+User Request → URL → View → Template → Response
+                    </pre>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: Installing Django -->
+            <section>
+                <h2>Installing Django</h2>
+                <h3>Step 1: Create Virtual Environment</h3>
+                <pre><code class="language-bash">python -m venv venv
+venv\Scripts\activate  (Windows)
+source venv/bin/activate  (Mac/Linux)</code></pre>
+                <h3 style="margin-top: 15px;">Step 2: Install Django</h3>
+                <pre><code class="language-bash">pip install django</code></pre>
+                <h3 style="margin-top: 15px;">Step 3: Verify</h3>
+                <pre><code class="language-bash">django-admin --version</code></pre>
+                <p style="margin-top: 20px; font-size: 1.2em;"><strong class="success">That's it! Django is ready.</strong></p>
+            </section>
+
+            <!-- SLIDE 7: Create Django Project -->
+            <section>
+                <h2>Create Django Project</h2>
+                <pre><code class="language-bash"># Create project
+django-admin startproject mysite
+
+# Navigate in
+cd mysite
+
+# Run server
+python manage.py runserver
+
+# Visit http://localhost:8000
+# See Django welcome page!</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Live demo - show the Django welcome page in browser
+                </div>
+            </section>
+
+            <!-- SLIDE 8: Project Structure -->
+            <section>
+                <h2>Project Structure</h2>
+                <div class="diagram">
+                    <pre style="text-align: left;">
+mysite/
+├── mysite/
+│   ├── __init__.py
+│   ├── settings.py    ← Configuration
+│   ├── urls.py        ← URL routing
+│   └── wsgi.py        ← Server config
+└── manage.py          ← Command tool
+                    </pre>
+                </div>
+                <h3 style="margin-top: 20px;">Key files:</h3>
+                <ul>
+                    <li><strong>settings.py:</strong> Project configuration</li>
+                    <li><strong>urls.py:</strong> URL routing</li>
+                    <li><strong>manage.py:</strong> Django commands</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 9: Create Django App -->
+            <section>
+                <h2>Create Django App</h2>
+                <pre><code class="language-bash"># Create an app
+python manage.py startapp core</code></pre>
+                <h3 style="margin-top: 15px;">Register in settings.py</h3>
+                <pre><code class="language-python">INSTALLED_APPS = [
+    ...
+    'core',  # Add your app
+]</code></pre>
+                <h3 style="margin-top: 20px;">Project vs App:</h3>
+                <ul>
+                    <li><strong>Project:</strong> The entire website</li>
+                    <li><strong>App:</strong> A component (blog, users, store)</li>
+                    <li>One project can have many apps</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 10: What is a View? -->
+            <section>
+                <h2>What is a View?</h2>
+                <h3>A View is a Python function that:</h3>
+                <ol>
+                    <li>Receives a request</li>
+                    <li>Processes it (fetch data, logic)</li>
+                    <li>Returns a response (HTML, JSON, etc.)</li>
+                </ol>
+                <h3 style="margin-top: 20px;">Example:</h3>
+                <pre><code class="language-python">from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Hello, Django!")</code></pre>
+            </section>
+
+            <!-- SLIDE 11: URL Routing -->
+            <section>
+                <h2>URL Routing</h2>
+                <h3>URLs connect web addresses to views:</h3>
+                <pre><code class="language-python"># core/urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('about/', views.about, name='about'),
+]</code></pre>
+                <pre><code class="language-python"># mysite/urls.py
+from django.urls import include
+
+urlpatterns = [
+    path('', include('core.urls')),
+]</code></pre>
+            </section>
+
+            <!-- SLIDE 12: Request-Response Cycle -->
+            <section>
+                <h2>Request-Response Cycle</h2>
+                <div class="diagram" style="font-size: 1.1em;">
+                    <pre>
+User visits URL
+      ↓
+Browser sends HTTP request
+      ↓
+Django checks urls.py
+      ↓
+Finds matching URL pattern
+      ↓
+Calls view function
+      ↓
+View returns HTTP response
+      ↓
+Browser displays page
+                    </pre>
+                </div>
+            </section>
+
+            <!-- SLIDE 13: Django Templates -->
+            <section>
+                <h2>Django Templates</h2>
+                <h3>Templates = HTML + Django Template Language</h3>
+                <h3 style="margin-top: 20px;">Why templates?</h3>
+                <ul>
+                    <li class="error">❌ return HttpResponse("HTML as string")  # Hard to maintain</li>
+                    <li class="success">✓ return render(request, 'template.html') # Separate & clean</li>
+                </ul>
+                <h3 style="margin-top: 20px;">Template features:</h3>
+                <ul>
+                    <li>Variables: <code>{{ name }}</code></li>
+                    <li>Logic: <code>{% if %}</code>, <code>{% for %}</code></li>
+                    <li>Inheritance: <code>{% extends %}</code></li>
+                    <li>Include: <code>{% include %}</code></li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 14: Template Variables -->
+            <section>
+                <h2>Template Variables</h2>
+                <h3>In views.py</h3>
+                <pre><code class="language-python">def home(request):
+    context = {
+        'name': 'Ahmed',
+        'age': 25,
+        'skills': ['Python', 'Django', 'HTML']
+    }
+    return render(request, 'home.html', context)</code></pre>
+                <h3 style="margin-top: 15px;">In home.html</h3>
+                <pre><code class="language-html">&lt;!-- In home.html --&gt;
+&lt;h1&gt;Welcome, {{ name }}!&lt;/h1&gt;
+&lt;p&gt;Age: {{ age }}&lt;/p&gt;</code></pre>
+            </section>
+
+            <!-- SLIDE 15: Template Tags - If/Else -->
+            <section>
+                <h2>Template Tags - If/Else</h2>
+                <pre><code class="language-html">{% if user_logged_in %}
+    &lt;p&gt;Welcome back, {{ username }}!&lt;/p&gt;
+{% else %}
+    &lt;p&gt;Please log in.&lt;/p&gt;
+{% endif %}</code></pre>
+                <p style="margin-top: 20px;">
+                    Template tags use <code>{% ... %}</code><br>
+                    Conditions work like Python
+                </p>
+            </section>
+
+            <!-- SLIDE 16: Template Tags - For Loops -->
+            <section>
+                <h2>Template Tags - For Loops</h2>
+                <pre><code class="language-html">&lt;h2&gt;My Skills:&lt;/h2&gt;
+&lt;ul&gt;
+    {% for skill in skills %}
+        &lt;li&gt;{{ skill }}&lt;/li&gt;
+    {% empty %}
+        &lt;li&gt;No skills listed&lt;/li&gt;
+    {% endfor %}
+&lt;/ul&gt;</code></pre>
+                <p style="margin-top: 20px;">
+                    Loops through lists, displays each item<br>
+                    <code>{% empty %}</code> handles empty lists
+                </p>
+            </section>
+
+            <!-- SLIDE 17: Template Inheritance -->
+            <section>
+                <h2>Template Inheritance</h2>
+                <h3>base.html</h3>
+                <pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;{% block title %}My Site{% endblock %}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;My Website&lt;/h1&gt;
+    &lt;/header&gt;
+    &lt;nav&gt;&lt;!-- navigation --&gt;&lt;/nav&gt;
+
+    {% block content %}
+    {% endblock %}
+
+    &lt;footer&gt;© 2025&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            </section>
+
+            <!-- SLIDE 18: Extending Base Template -->
+            <section>
+                <h2>Extending Base Template</h2>
+                <h3>home.html</h3>
+                <pre><code class="language-html">&lt;!-- home.html --&gt;
+{% extends 'base.html' %}
+
+{% block title %}Home - My Site{% endblock %}
+
+{% block content %}
+    &lt;h2&gt;Welcome!&lt;/h2&gt;
+    &lt;p&gt;This is the home page.&lt;/p&gt;
+{% endblock %}</code></pre>
+                <h3 style="margin-top: 20px;">Benefits:</h3>
+                <ul class="checklist">
+                    <li>No code duplication</li>
+                    <li>Consistent design</li>
+                    <li>Easy to maintain</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 19: Static Files -->
+            <section>
+                <h2>Static Files</h2>
+                <h3>Static Files = Files that don't change:</h3>
+                <ul>
+                    <li>CSS stylesheets</li>
+                    <li>JavaScript files</li>
+                    <li>Images</li>
+                    <li>Fonts</li>
+                </ul>
+                <h3 style="margin-top: 20px;">Setup:</h3>
+                <div class="diagram">
+                    <pre style="text-align: left;">
+core/
+└── static/
+    └── core/
+        ├── css/
+        │   └── style.css
+        └── images/
+            └── logo.png
+                    </pre>
+                </div>
+            </section>
+
+            <!-- SLIDE 20: Using Static Files -->
+            <section>
+                <h2>Using Static Files</h2>
+                <pre><code class="language-html">{% load static %}  &lt;!-- At top of template --&gt;
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;link rel="stylesheet" href="{% static 'core/css/style.css' %}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;img src="{% static 'core/images/logo.png' %}" alt="Logo"&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                <p style="margin-top: 20px;">
+                    <code>{% static %}</code> generates correct URL<br>
+                    Always use <code>{% load static %}</code> first
+                </p>
+            </section>
+
+            <!-- SLIDE 21: Week 4 Mini-Project -->
+            <section>
+                <h2>Week 4 Mini-Project</h2>
+                <h3>Build a 3-Page Portfolio Site:</h3>
+                <h3 style="margin-top: 20px;">Pages:</h3>
+                <ol>
+                    <li>Home - Welcome message</li>
+                    <li>About - Your information, skills</li>
+                    <li>Contact - Contact details</li>
+                </ol>
+                <h3 style="margin-top: 20px;">Features:</h3>
+                <ul class="checklist">
+                    <li>Django views and URLs</li>
+                    <li>Template inheritance (base.html)</li>
+                    <li>Dynamic content</li>
+                    <li>Custom CSS styling</li>
+                    <li>Navigation menu</li>
+                    <li>Git version control</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 22: Key Concepts Learned -->
+            <section>
+                <h2>Key Concepts Learned</h2>
+                <h3>Week 4 Skills:</h3>
+                <ul class="checklist">
+                    <li>Django installation & setup</li>
+                    <li>Projects vs Apps</li>
+                    <li>Views (Python functions)</li>
+                    <li>URL routing</li>
+                    <li>Templates (HTML + Django tags)</li>
+                    <li>Template variables & logic</li>
+                    <li>Template inheritance</li>
+                    <li>Static files (CSS, images)</li>
+                    <li>Building complete Django sites</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 23: What's Next? Week 5 -->
+            <section>
+                <h2>What's Next? Week 5</h2>
+                <h3>Django Models & Database</h3>
+                <h3 style="margin-top: 20px;">Learn:</h3>
+                <ul>
+                    <li>Create database models</li>
+                    <li>Django ORM (Object-Relational Mapping)</li>
+                    <li>Migrations</li>
+                    <li>CRUD operations</li>
+                    <li>Django Admin interface</li>
+                    <li>Querying data</li>
+                </ul>
+                <h3 style="margin-top: 20px;">Project:</h3>
+                <ul>
+                    <li>Build a blog with database</li>
+                    <li>Create, read, update, delete posts</li>
+                    <li>Admin interface for managing content</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 24: Thank You! -->
+            <section class="title-slide">
+                <h1>Great Work This Week!</h1>
+                <h3 style="margin-top: 30px;">You've learned:</h3>
+                <ul class="checklist" style="text-align: left; display: inline-block; margin: 20px auto;">
+                    <li>Django framework fundamentals</li>
+                    <li>Building dynamic web applications</li>
+                    <li>Professional web development workflow</li>
+                </ul>
+                <h3 style="margin-top: 30px;">Next Steps:</h3>
+                <ul style="text-align: left; display: inline-block; margin: 20px auto; list-style: none;">
+                    <li>→ Complete mini-project</li>
+                    <li>→ Practice with exercises</li>
+                    <li>→ Push to GitHub</li>
+                    <li>→ Prepare for Week 5 (Models!)</li>
+                </ul>
+                <h2 style="margin-top: 50px; color: var(--accent-color);">See you next week!</h2>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            width: 1280,
+            height: 800,
+            margin: 0.02,
+            minScale: 0.5,
+            maxScale: 2.0,
+            plugins: []
+        });
+
+        // Keyboard shortcuts info
+        console.log('%c Presentation Controls:', 'font-size: 16px; font-weight: bold; color: #42affa;');
+        console.log('%c → or Space: Next slide', 'font-size: 14px;');
+        console.log('%c ← : Previous slide', 'font-size: 14px;');
+        console.log('%c F : Fullscreen', 'font-size: 14px;');
+        console.log('%c ESC : Overview mode', 'font-size: 14px;');
+        console.log('%c S : Speaker notes (if available)', 'font-size: 14px;');
+    </script>
+</body>
+</html>
