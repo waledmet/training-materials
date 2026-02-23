@@ -2,9 +2,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    context={}
+    context = {
+        'name': 'Ahmed',
+        'age': 25,
+        'skills': ['Python', 'Django', 'HTML'],
+        'is_student':False,
+    }
+    
     return render(request, 'home.html', context)
 
 
-def index(request):
-    return HttpResponse("Hello, Django!")
+def about(request):
+    return HttpResponse("about!")
