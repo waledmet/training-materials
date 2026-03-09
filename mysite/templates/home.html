@@ -3,6 +3,23 @@
 {% block title %}Home - My Site{% endblock %}
 
 {% block content %}
-    <h2>Welcome!</h2>
-    <p>This is the home page.</p>
+    <h2>Welcome to My Site</h2>
+    <p>This site demonstrates Django Week 5 concepts: Models, ORM, Migrations &amp; Admin.</p>
+
+    <section>
+        <h3>Recent Posts</h3>
+        {% for post in recent_posts %}
+            <article class="post-card">
+                <h4><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h4>
+                <p class="meta">{{ post.created_at|date:"F j, Y" }}</p>
+                <p>{{ post.content|truncatewords:20 }}</p>
+            </article>
+        {% empty %}
+            <p>No posts yet. Add some from the <a href="/admin/">admin panel</a>.</p>
+        {% endfor %}
+
+        {% if recent_posts %}
+            <a href="{% url 'post_list' %}" class="btn">View All Posts</a>
+        {% endif %}
+    </section>
 {% endblock %}
