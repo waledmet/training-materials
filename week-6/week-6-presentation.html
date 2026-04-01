@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 - Forms Models, ORM & Admin Authentication - Django Web Development Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+    <style>
+        :root {
+            --main-color: #42affa;
+            --accent-color: #e7ad52;
+            --bg-color: #1a1a1a;
+            --text-color: #eee;
+        }
+
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 32px;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--main-color);
+            text-transform: none;
+            margin-top: 0;
+        }
+
+        .reveal h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-bottom: 0.3em;
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            padding: 15px 30px;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .reveal .title-slide {
+            text-align: center;
+        }
+
+        .reveal ul {
+            margin-left: 0;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal li {
+            margin-bottom: 0.3em;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .reveal p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #42affa;
+        }
+
+        .reveal pre {
+            background-color: #2d2d2d;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .reveal pre code {
+            background-color: transparent;
+            padding: 0;
+            max-height: 400px;
+            font-size: 0.75em;
+            line-height: 1.3;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        table {
+            font-size: 0.8em;
+            margin: 10px 0;
+        }
+
+        th {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+        }
+
+        td, th {
+            padding: 8px;
+            border: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide">
+                <h1>Week 6</h1>
+                <h2>Django Models, ORM, Migrations & Admin</h2>
+                <p><strong>Making Your App Interactive</strong></p>
+            </section>
+
+            <!-- This Week's Journey -->
+            <section>
+                <h2>What We'll Learn</h2>
+                <ul>
+                    <li><span class="emoji">📊</span> <strong>Database Basics</strong> - Where data lives</li>
+                    <li><span class="emoji">🏗️</span> <strong>Django Models</strong> - Define your data structure</li>
+                    <li><span class="emoji">🔄</span> <strong>Migrations</strong> - Evolve your database</li>
+                    <li><span class="emoji">🔍</span> <strong>Django ORM</strong> - Query without SQL</li>
+                    <li><span class="emoji">⚙️</span> <strong>Django Admin</strong> - Free management interface</li>
+                </ul>
+            </section>
+
+            <!-- Why Databases Matter -->
+            <section>
+                <h2>The Problem Without Databases</h2>
+                <pre><code class="python"># Without database
+posts = [
+    {"title": "Post 1", "content": "Hello"},
+    {"title": "Post 2", "content": "World"}
+]</code></pre>
+                <p><strong>When server restarts... 💥 All data GONE!</strong></p>
+            </section>
+
+            <!-- With Database -->
+            <section>
+                <h2>The Solution: Databases</h2>
+                <pre><code class="python"># With database
+Post.objects.all()</code></pre>
+                <ul>
+                    <li>✅ Data persists forever</li>
+                    <li>✅ Handle millions of records</li>
+                    <li>✅ Fast searching & filtering</li>
+                    <li>✅ Multiple users, no conflicts</li>
+                </ul>
+            </section>
+
+            <!-- Database Analogy -->
+            <section>
+                <h2>Think of it like a Filing Cabinet</h2>
+                <pre>Database = Filing Cabinet
+Table = Drawer
+Row = Folder
+Column = Field in Document</pre>
+                <p><strong>Each drawer (table) holds related information</strong></p>
+            </section>
+
+            <!-- What is a Model? -->
+            <section>
+                <h2>Django Model = Python Class</h2>
+                <pre><code class="python">class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    pages = models.IntegerField()</code></pre>
+                <p><strong>This creates a database table!</strong></p>
+            </section>
+
+            <!-- Field Types -->
+            <section>
+                <h2>Common Field Types</h2>
+                <pre><code class="python"># Text
+CharField(max_length=200)    # Short text
+TextField()                   # Long text
+
+# Numbers
+IntegerField()               # Whole numbers
+DecimalField()               # Precise decimals
+
+# Date/Time
+DateTimeField()              # Date and time
+DateField()                  # Date only
+
+# Boolean
+BooleanField()               # True/False</code></pre>
+            </section>
+
+            <!-- Auto Timestamps -->
+            <section>
+                <h2>Auto Timestamps</h2>
+                <pre><code class="python">class Post(models.Model):
+    # Set once when created
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # Update every save
+    updated_at = models.DateTimeField(auto_now=True)</code></pre>
+                <p><strong>Django handles these automatically!</strong></p>
+            </section>
+
+            <!-- The __str__ Method -->
+            <section>
+                <h2>Making Models Readable</h2>
+                <pre><code class="python">class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title</code></pre>
+                <p><strong>Without __str__:</strong> "Book object (1)"<br>
+                   <strong>With __str__:</strong> "The Great Gatsby"</p>
+            </section>
+
+            <!-- Migrations -->
+            <section>
+                <h2>What Are Migrations?</h2>
+                <p><strong>Version control for your database</strong></p>
+                <pre>1. Change Model → 2. makemigrations → 3. migrate → 4. Database Updated</pre>
+                <p>Think of migrations as <strong>moving instructions</strong> for your database</p>
+            </section>
+
+            <!-- Migration Commands -->
+            <section>
+                <h2>Two-Step Process</h2>
+                <pre><code class="bash"># Step 1: Create migration (plan)
+python manage.py makemigrations
+
+# Step 2: Apply migration (execute)
+python manage.py migrate</code></pre>
+                <p><strong>Always in this order!</strong></p>
+            </section>
+
+            <!-- Django ORM -->
+            <section>
+                <h2>What is ORM?</h2>
+                <p><strong>Object-Relational Mapping</strong></p>
+                <p><strong>Write Python, not SQL!</strong></p>
+                <pre><code class="python"># Instead of SQL:
+SELECT * FROM books WHERE pages > 300;
+
+# Write Python:
+Book.objects.filter(pages__gt=300)</code></pre>
+            </section>
+
+            <!-- CRUD Operations -->
+            <section>
+                <h2>Create, Read, Update, Delete</h2>
+                <pre><code class="python"># Create
+Book.objects.create(title="Django Book", pages=400)
+
+# Read
+books = Book.objects.all()
+book = Book.objects.get(id=1)
+
+# Update
+book.title = "New Title"
+book.save()
+
+# Delete
+book.delete()</code></pre>
+            </section>
+
+            <!-- Filtering Data -->
+            <section>
+                <h2>QuerySet Methods</h2>
+                <pre><code class="python"># All records
+Book.objects.all()
+
+# Filter (multiple results)
+Book.objects.filter(pages__gt=300)
+
+# Get (single result)
+Book.objects.get(id=1)
+
+# Exclude
+Book.objects.exclude(pages__lt=100)
+
+# Order
+Book.objects.order_by('-pages')</code></pre>
+            </section>
+
+            <!-- Field Lookups -->
+            <section>
+                <h2>Powerful Filtering</h2>
+                <pre><code class="python"># Greater than
+Book.objects.filter(pages__gt=300)
+
+# Contains (case-insensitive)
+Book.objects.filter(title__icontains="django")
+
+# Starts with
+Book.objects.filter(title__startswith="The")
+
+# Range
+Book.objects.filter(pages__range=(100, 300))</code></pre>
+                <p><strong>Double underscores are the magic!</strong></p>
+            </section>
+
+            <!-- Django Shell -->
+            <section>
+                <h2>Your Testing Playground</h2>
+                <pre><code class="bash">python manage.py shell</code></pre>
+                <pre><code class="python">>>> from blog.models import Post
+>>> Post.objects.create(title="Test")
+>>> Post.objects.all()
+<QuerySet [<Post: Test>]>
+>>> Post.objects.count()
+1</code></pre>
+                <p><strong>Practice ORM here before writing views!</strong></p>
+            </section>
+
+            <!-- Django Admin -->
+            <section>
+                <h2>Free Management Interface!</h2>
+                <ul>
+                    <li>✨ <strong>Automatically generated</strong></li>
+                    <li>🔐 <strong>Secure and authenticated</strong></li>
+                    <li>🎨 <strong>Professional looking</strong></li>
+                    <li>⚡ <strong>No code needed</strong></li>
+                </ul>
+                <p><strong>Access:</strong> <code>http://localhost:8000/admin/</code></p>
+            </section>
+
+            <!-- Setting Up Admin -->
+            <section>
+                <h2>Three Steps</h2>
+                <pre><code class="bash"># 1. Create superuser
+python manage.py createsuperuser</code></pre>
+                <pre><code class="python"># 2. Register model
+from django.contrib import admin
+from .models import Book
+
+admin.site.register(Book)</code></pre>
+                <p><strong>3. Login and use!</strong></p>
+            </section>
+
+            <!-- Customizing Admin -->
+            <section>
+                <h2>Make Admin Powerful</h2>
+                <pre><code class="python">@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'pages')
+    list_filter = ('author',)
+    search_fields = ('title', 'author')
+    ordering = ('-pages',)</code></pre>
+                <p><strong>Now you have search, filters, and sorting!</strong></p>
+            </section>
+
+            <!-- ForeignKey -->
+            <section>
+                <h2>ForeignKey - Many to One</h2>
+                <pre><code class="python">class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)</code></pre>
+                <p><strong>Many books → One author</strong></p>
+            </section>
+
+            <!-- Querying Relationships -->
+            <section>
+                <h2>Forward and Backward</h2>
+                <pre><code class="python"># Forward (book → author)
+book = Book.objects.get(id=1)
+print(book.author.name)
+
+# Backward (author → books)
+author = Author.objects.get(id=1)
+for book in author.books.all():
+    print(book.title)
+
+# Filter by related
+books = Book.objects.filter(author__name="Austen")</code></pre>
+            </section>
+
+            <!-- ManyToMany -->
+            <section>
+                <h2>Many to Many Relationships</h2>
+                <pre><code class="python">class Student(models.Model):
+    name = models.CharField(max_length=100)
+    courses = models.ManyToManyField('Course')
+
+class Course(models.Model):
+    name = models.CharField(max_length=100)</code></pre>
+                <p><strong>Many students ↔ Many courses</strong></p>
+            </section>
+
+            <!-- Best Practices -->
+            <section>
+                <h2>Model Best Practices</h2>
+                <ul>
+                    <li>✅ Always add <code>__str__()</code> method</li>
+                    <li>✅ Use descriptive field names</li>
+                    <li>✅ Add <code>related_name</code> to relationships</li>
+                    <li>✅ Use <code>blank=True</code> for optional fields</li>
+                    <li>✅ Add <code>Meta</code> class for ordering</li>
+                    <li>✅ Keep models focused and simple</li>
+                </ul>
+            </section>
+
+            <!-- Week 6 Project -->
+            <section>
+                <h2>Build a Blog!</h2>
+                <p><strong>Requirements:</strong></p>
+                <ul>
+                    <li>Post, Category, Tag models</li>
+                    <li>Relationships (ForeignKey, ManyToMany)</li>
+                    <li>Full CRUD via admin</li>
+                    <li>List and detail views</li>
+                    <li>Professional admin interface</li>
+                </ul>
+                <p><strong>Goal:</strong> Complete working blog by Friday!</p>
+            </section>
+
+            <!-- Common Mistakes -->
+            <section>
+                <h2>Watch Out For</h2>
+                <ul>
+                    <li>❌ Forgetting <code>INSTALLED_APPS</code></li>
+                    <li>❌ Not running migrations</li>
+                    <li>❌ Missing <code>max_length</code> on CharField</li>
+                    <li>❌ Forgetting <code>__str__()</code> method</li>
+                    <li>❌ Using <code>get()</code> without error handling</li>
+                    <li>❌ Not using <code>related_name</code></li>
+                </ul>
+                <p><strong>Learn from these! Everyone makes them.</strong></p>
+            </section>
+
+            <!-- Key Commands -->
+            <section>
+                <h2>Essential Django Commands</h2>
+                <pre><code class="bash"># Migrations
+python manage.py makemigrations
+python manage.py migrate
+python manage.py showmigrations
+
+# Admin
+python manage.py createsuperuser
+
+# Development
+python manage.py runserver
+python manage.py shell</code></pre>
+                <p><strong>Memorize these!</strong></p>
+            </section>
+
+            <!-- This Week's Goals -->
+            <section>
+                <h2>By End of Week 6</h2>
+                <ul>
+                    <li>✅ Create Django models</li>
+                    <li>✅ Understand migrations</li>
+                    <li>✅ Use Django ORM confidently</li>
+                    <li>✅ Perform CRUD operations</li>
+                    <li>✅ Set up Django admin</li>
+                    <li>✅ Customize admin interface</li>
+                    <li>✅ Work with relationships</li>
+                    <li>✅ Build complete blog application</li>
+                </ul>
+            </section>
+
+            <!-- Next Week Preview -->
+            <section>
+                <h2>Week 6: Forms & Authentication</h2>
+                <p><strong>What's coming:</strong></p>
+                <ul>
+                    <li>Django Forms</li>
+                    <li>User input handling</li>
+                    <li>Form validation</li>
+                    <li>User authentication</li>
+                    <li>Login/Logout</li>
+                    <li>User registration</li>
+                </ul>
+                <p><strong>Building on our data foundation!</strong></p>
+            </section>
+
+            <!-- Success Tips -->
+            <section>
+                <h2>Tips for Success</h2>
+                <ul>
+                    <li>💡 <strong>Start simple</strong> - walk before you run</li>
+                    <li>💡 <strong>Practice daily</strong> - consistency is key</li>
+                    <li>💡 <strong>Make mistakes</strong> - they're learning opportunities</li>
+                    <li>💡 <strong>Ask for help</strong> - when you're stuck</li>
+                    <li>💡 <strong>Build projects</strong> - apply what you learn</li>
+                    <li>💡 <strong>Stay curious</strong> - explore beyond lessons</li>
+                </ul>
+            </section>
+
+            <!-- Motivation -->
+            <section>
+                <h2>You're Making Amazing Progress!</h2>
+                <p><strong>4 weeks ago:</strong> No web knowledge<br>
+                   <strong>3 weeks ago:</strong> Basic HTML/CSS<br>
+                   <strong>2 weeks ago:</strong> Git and web concepts<br>
+                   <strong>1 week ago:</strong> Django basics<br>
+                   <strong>This week:</strong> Building with databases!</p>
+                <p><strong>You're now a web developer!</strong> 🎉</p>
+            </section>
+
+            <!-- Thank You -->
+            <section class="title-slide">
+                <h1>Week 6 Complete! 🎉</h1>
+                <h2>Questions?</h2>
+                <p><strong>Remember:</strong></p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>Practice daily</li>
+                    <li>Build projects</li>
+                    <li>Ask questions</li>
+                    <li>Help each other</li>
+                    <li>Have fun coding!</li>
+                </ul>
+                <p><strong>See you in Week 6!</strong></p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            slideNumber: true,
+            transition: 'slide',
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>
