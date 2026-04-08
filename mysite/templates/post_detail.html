@@ -6,6 +6,8 @@
     <article>
         <h2>{{ post.title }}</h2>
         <p class="meta">
+            By {{ post.author.username|default:"Unknown" }}
+            &nbsp;|&nbsp;
             Published: {{ post.created_at|date:"F j, Y" }}
             &nbsp;|&nbsp;
             Last updated: {{ post.updated_at|date:"F j, Y" }}
@@ -15,5 +17,10 @@
         </div>
     </article>
 
-    <a href="{% url 'post_list' %}" class="btn">← Back to all posts</a>
+    <div class="post-actions">
+        <a href="{% url 'post_list' %}" class="btn">← Back to all posts</a>
+        {% if user.is_authenticated and user == post.author %}
+            <a href="{% url 'post_edit' post.id %}" class="btn">Edit Post</a>
+        {% endif %}
+    </div>
 {% endblock %}

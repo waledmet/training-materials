@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 - Forms, Validation & Authentication - Django Web Development Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+    <style>
+        :root {
+            --main-color: #42affa;
+            --accent-color: #e7ad52;
+            --bg-color: #1a1a1a;
+            --text-color: #eee;
+        }
+
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 32px;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--main-color);
+            text-transform: none;
+            margin-top: 0;
+        }
+
+        .reveal h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-bottom: 0.3em;
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            padding: 15px 30px;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .reveal .title-slide {
+            text-align: center;
+        }
+
+        .reveal ul {
+            margin-left: 0;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal li {
+            margin-bottom: 0.3em;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .reveal p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #42affa;
+        }
+
+        .reveal pre {
+            background-color: #2d2d2d;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .reveal pre code {
+            background-color: transparent;
+            padding: 0;
+            max-height: 400px;
+            font-size: 0.75em;
+            line-height: 1.3;
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        table {
+            font-size: 0.8em;
+            margin: 10px 0;
+        }
+
+        th {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+        }
+
+        td, th {
+            padding: 8px;
+            border: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Title Slide -->
+            <section class="title-slide">
+                <h1>Week 6</h1>
+                <h2>Forms, Validation & Authentication</h2>
+                <p><strong>Let Users Interact With Your App</strong></p>
+            </section>
+
+            <!-- What We'll Learn -->
+            <section>
+                <h2>What We'll Learn</h2>
+                <ul>
+                    <li><span class="emoji">📝</span> <strong>Django Forms</strong> - Handle user input safely</li>
+                    <li><span class="emoji">✅</span> <strong>Form Validation</strong> - Keep data clean</li>
+                    <li><span class="emoji">🔐</span> <strong>Authentication</strong> - Login & logout system</li>
+                    <li><span class="emoji">👤</span> <strong>User Registration</strong> - Sign up new users</li>
+                    <li><span class="emoji">🛡️</span> <strong>Protecting Views</strong> - Who can see what</li>
+                    <li><span class="emoji">🏗️</span> <strong>Class-Based Views</strong> - Write less code</li>
+                    <li><span class="emoji">💬</span> <strong>Messages Framework</strong> - User feedback</li>
+                </ul>
+            </section>
+
+            <!-- Why Forms? -->
+            <section>
+                <h2>Why Do We Need Forms?</h2>
+                <p><strong>Without forms — hardcoded data only:</strong></p>
+                <pre><code class="python">post = Post.objects.create(title="Hardcoded", content="Not flexible")</code></pre>
+                <p><strong>With forms — users provide their own data:</strong></p>
+                <pre><code class="html">&lt;form method="post"&gt;
+    &lt;input type="text" name="title"&gt;
+    &lt;textarea name="content"&gt;&lt;/textarea&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            </section>
+
+            <!-- HTML vs Django Forms -->
+            <section>
+                <h2>Plain HTML vs Django Forms</h2>
+                <p><strong>Plain HTML problems:</strong></p>
+                <ul>
+                    <li>❌ No validation</li>
+                    <li>❌ No security (CSRF attacks)</li>
+                    <li>❌ Repetitive error handling</li>
+                    <li>❌ Manual HTML writing</li>
+                </ul>
+                <p><strong>Django Forms solve all of this:</strong></p>
+                <ul>
+                    <li>✅ Automatic HTML generation</li>
+                    <li>✅ Built-in validation</li>
+                    <li>✅ CSRF protection</li>
+                    <li>✅ Clean error handling</li>
+                </ul>
+            </section>
+
+            <!-- Creating a Form -->
+            <section>
+                <h2>Creating a Django Form</h2>
+                <pre><code class="python"># forms.py
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)</code></pre>
+                <p><strong>Common field types:</strong></p>
+                <ul>
+                    <li><code>CharField</code> - text input</li>
+                    <li><code>EmailField</code> - validates email format</li>
+                    <li><code>IntegerField</code> - numbers only</li>
+                    <li><code>BooleanField</code> - checkboxes</li>
+                </ul>
+            </section>
+
+            <!-- ModelForm -->
+            <section>
+                <h2>ModelForm - Auto-Generate from Model</h2>
+                <pre><code class="python"># forms.py
+from django import forms
+from .models import Post
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'category']</code></pre>
+                <p><strong>Why ModelForm?</strong></p>
+                <ul>
+                    <li>✅ No duplication — defined once in model</li>
+                    <li>✅ Automatically saves to database</li>
+                    <li>✅ Inherits model validation rules</li>
+                </ul>
+            </section>
+
+            <!-- Processing Forms in Views -->
+            <section>
+                <h2>Handling Forms in Views</h2>
+                <pre><code class="python">def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            # Safe to use the data
+            name = form.cleaned_data['name']
+            return redirect('success')
+    else:
+        form = ContactForm()
+
+    return render(request, 'contact.html', {'form': form})</code></pre>
+                <p><strong>GET → show empty form | POST → validate & save</strong></p>
+            </section>
+
+            <!-- Rendering Forms in Templates -->
+            <section>
+                <h2>Rendering Forms in Templates</h2>
+                <pre><code class="html">&lt;form method="post"&gt;
+    {% csrf_token %}
+    {{ form.as_p }}
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                <p><strong>Three quick render options:</strong></p>
+                <ul>
+                    <li><code>{{ form.as_p }}</code> - wrapped in &lt;p&gt; tags</li>
+                    <li><code>{{ form.as_ul }}</code> - wrapped in &lt;li&gt; tags</li>
+                    <li><code>{{ form.as_table }}</code> - table layout</li>
+                </ul>
+            </section>
+
+            <!-- CSRF Protection -->
+            <section>
+                <h2>CSRF Protection</h2>
+                <p><strong>Cross-Site Request Forgery - a security attack</strong></p>
+                <pre><code class="html">&lt;form method="post"&gt;
+    {% csrf_token %}   &lt;!-- ALWAYS include this! --&gt;
+    ...
+&lt;/form&gt;</code></pre>
+                <ul>
+                    <li>Django generates a unique secret token per session</li>
+                    <li>Every POST form must include it</li>
+                    <li>Django rejects requests without a valid token</li>
+                </ul>
+                <p><strong>Forgetting this = 403 Forbidden error!</strong></p>
+            </section>
+
+            <!-- Form Validation -->
+            <section>
+                <h2>Form Validation Levels</h2>
+                <ul>
+                    <li><strong>Built-in:</strong> <code>EmailField</code>, <code>IntegerField</code>, <code>required=True</code></li>
+                    <li><strong>Field-level:</strong> custom <code>clean_&lt;fieldname&gt;()</code> method</li>
+                    <li><strong>Form-level:</strong> override <code>clean()</code> for cross-field rules</li>
+                </ul>
+                <pre><code class="python">class ContactForm(forms.Form):
+    email = forms.EmailField()
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not email.endswith('@example.com'):
+            raise forms.ValidationError("Must be a company email!")
+        return email</code></pre>
+            </section>
+
+            <!-- Django Authentication -->
+            <section>
+                <h2>Django's Built-in Auth System</h2>
+                <p><strong>Django ships with everything you need:</strong></p>
+                <ul>
+                    <li>✨ <strong>User model</strong> - username, email, password</li>
+                    <li>🔐 <strong>Password hashing</strong> - never stored in plain text</li>
+                    <li>🔑 <strong>Login / Logout functions</strong></li>
+                    <li>🛡️ <strong>Authentication decorators</strong></li>
+                    <li>⚙️ <strong>Session management</strong></li>
+                </ul>
+                <pre><code class="python">from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout</code></pre>
+            </section>
+
+            <!-- Login View -->
+            <section>
+                <h2>Login View</h2>
+                <pre><code class="python">from django.contrib.auth import authenticate, login
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid credentials')
+    return render(request, 'login.html')</code></pre>
+            </section>
+
+            <!-- Logout View -->
+            <section>
+                <h2>Logout View</h2>
+                <pre><code class="python">from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')</code></pre>
+                <p><strong>Checking login status in templates:</strong></p>
+                <pre><code class="html">{% if user.is_authenticated %}
+    &lt;a href="/logout/"&gt;Logout, {{ user.username }}&lt;/a&gt;
+{% else %}
+    &lt;a href="/login/"&gt;Login&lt;/a&gt;
+{% endif %}</code></pre>
+            </section>
+
+            <!-- User Registration -->
+            <section>
+                <h2>User Registration</h2>
+                <pre><code class="python">from django.contrib.auth.models import User
+
+def register_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = User.objects.create_user(
+            username=username,
+            password=password
+        )
+        login(request, user)
+        return redirect('home')
+    return render(request, 'register.html')</code></pre>
+                <p><strong>Use <code>create_user()</code> — never <code>create()</code> — it hashes the password!</strong></p>
+            </section>
+
+            <!-- UserCreationForm -->
+            <section>
+                <h2>Built-in UserCreationForm</h2>
+                <pre><code class="python">from django.contrib.auth.forms import UserCreationForm
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})</code></pre>
+                <p><strong>Includes username, password, and confirm password!</strong></p>
+            </section>
+
+            <!-- Protecting Views -->
+            <section>
+                <h2>Protecting Views with @login_required</h2>
+                <pre><code class="python">from django.contrib.auth.decorators import login_required
+
+@login_required
+def create_post(request):
+    # Only logged-in users can access this
+    pass
+
+@login_required
+def dashboard(request):
+    posts = Post.objects.filter(author=request.user)
+    return render(request, 'dashboard.html', {'posts': posts})</code></pre>
+                <p><strong>Unauthenticated users are redirected to the login page automatically!</strong></p>
+            </section>
+
+            <!-- Accessing the Current User -->
+            <section>
+                <h2>Accessing the Current User</h2>
+                <pre><code class="python"># In views
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user   # attach current user
+            post.save()
+            return redirect('home')</code></pre>
+                <p><strong><code>request.user</code> gives you the logged-in user object</strong></p>
+            </section>
+
+            <!-- Class-Based Views -->
+            <section>
+                <h2>Class-Based Views (CBVs)</h2>
+                <p><strong>Write less code for common patterns:</strong></p>
+                <table>
+                    <tr><th>CBV</th><th>Purpose</th></tr>
+                    <tr><td><code>ListView</code></td><td>Show list of objects</td></tr>
+                    <tr><td><code>DetailView</code></td><td>Show single object</td></tr>
+                    <tr><td><code>CreateView</code></td><td>Create new object</td></tr>
+                    <tr><td><code>UpdateView</code></td><td>Edit existing object</td></tr>
+                    <tr><td><code>DeleteView</code></td><td>Delete an object</td></tr>
+                </table>
+            </section>
+
+            <!-- CBV Example -->
+            <section>
+                <h2>CBV vs Function-Based View</h2>
+                <pre><code class="python"># Function-based (verbose)
+def post_list(request):
+    posts = Post.objects.all()
+    return render(request, 'post_list.html', {'posts': posts})
+
+# Class-based (concise)
+from django.views.generic import ListView
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'post_list.html'
+    context_object_name = 'posts'</code></pre>
+            </section>
+
+            <!-- LoginRequiredMixin for CBVs -->
+            <section>
+                <h2>Protecting CBVs</h2>
+                <pre><code class="python">from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['title', 'content']
+    template_name = 'post_form.html'
+    success_url = '/posts/'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)</code></pre>
+                <p><strong>Use <code>LoginRequiredMixin</code> instead of <code>@login_required</code> for CBVs</strong></p>
+            </section>
+
+            <!-- Messages Framework -->
+            <section>
+                <h2>Messages Framework</h2>
+                <p><strong>Give users feedback after actions:</strong></p>
+                <pre><code class="python">from django.contrib import messages
+
+def create_post(request):
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Post created successfully!')
+        return redirect('home')
+    else:
+        messages.error(request, 'Please fix the errors below.')</code></pre>
+                <pre><code class="html">&lt;!-- In base template --&gt;
+{% for message in messages %}
+    &lt;div class="alert alert-{{ message.tags }}"&gt;
+        {{ message }}
+    &lt;/div&gt;
+{% endfor %}</code></pre>
+            </section>
+
+            <!-- Message Levels -->
+            <section>
+                <h2>Message Levels</h2>
+                <pre><code class="python">messages.debug(request, 'Debug info')
+messages.info(request, 'FYI — something happened')
+messages.success(request, 'Great! It worked.')
+messages.warning(request, 'Be careful!')
+messages.error(request, 'Something went wrong.')</code></pre>
+                <ul>
+                    <li>Maps to Bootstrap alert classes automatically</li>
+                    <li>Messages disappear after one page load</li>
+                    <li>Perfect for form submission feedback</li>
+                </ul>
+            </section>
+
+            <!-- Security Best Practices -->
+            <section>
+                <h2>Security Best Practices</h2>
+                <ul>
+                    <li>🔒 <strong>Always use <code>{% csrf_token %}</code></strong> in POST forms</li>
+                    <li>🔒 <strong>Never store plain passwords</strong> — use <code>create_user()</code></li>
+                    <li>🔒 <strong>Validate all input</strong> — client-side is not enough</li>
+                    <li>🔒 <strong>Use <code>@login_required</code></strong> on protected views</li>
+                    <li>🔒 <strong>Check object ownership</strong> before allowing edits</li>
+                    <li>🔒 <strong>Use HTTPS</strong> in production</li>
+                </ul>
+            </section>
+
+            <!-- Common Mistakes -->
+            <section>
+                <h2>Watch Out For</h2>
+                <ul>
+                    <li>❌ Forgetting <code>{% csrf_token %}</code> → 403 error</li>
+                    <li>❌ Using <code>User.objects.create()</code> instead of <code>create_user()</code></li>
+                    <li>❌ Not checking <code>form.is_valid()</code> before using data</li>
+                    <li>❌ Missing <code>@login_required</code> on sensitive views</li>
+                    <li>❌ Not showing validation errors in templates</li>
+                    <li>❌ Forgetting <code>commit=False</code> when setting extra fields</li>
+                </ul>
+                <p><strong>Everyone makes these — learn from them!</strong></p>
+            </section>
+
+            <!-- Week 6 Project -->
+            <section>
+                <h2>Week 6 Project: Blog with Auth</h2>
+                <p><strong>Build on your Week 5 blog and add:</strong></p>
+                <ul>
+                    <li>User registration and login pages</li>
+                    <li>Create/edit/delete posts (logged-in only)</li>
+                    <li>Author shown on each post</li>
+                    <li>Only the author can edit their own post</li>
+                    <li>Success/error messages after actions</li>
+                    <li>Navigation changes based on login state</li>
+                </ul>
+                <p><strong>Goal:</strong> Complete blog with real user accounts by Friday!</p>
+            </section>
+
+            <!-- By End of Week 6 -->
+            <section>
+                <h2>By End of Week 6</h2>
+                <ul>
+                    <li>✅ Create Django forms and ModelForms</li>
+                    <li>✅ Validate user input (built-in and custom)</li>
+                    <li>✅ Handle GET and POST in views</li>
+                    <li>✅ Use CSRF protection correctly</li>
+                    <li>✅ Implement login and logout</li>
+                    <li>✅ Register new users</li>
+                    <li>✅ Protect views with <code>@login_required</code></li>
+                    <li>✅ Use class-based views</li>
+                    <li>✅ Show messages to users</li>
+                </ul>
+            </section>
+
+            <!-- Next Week Preview -->
+            <section>
+                <h2>Week 7: REST APIs & Django REST Framework</h2>
+                <p><strong>What's coming:</strong></p>
+                <ul>
+                    <li>What is a REST API?</li>
+                    <li>Django REST Framework (DRF)</li>
+                    <li>Serializers</li>
+                    <li>API Views and ViewSets</li>
+                    <li>Token Authentication</li>
+                    <li>Connecting frontend to backend</li>
+                </ul>
+                <p><strong>Building on our authentication foundation!</strong></p>
+            </section>
+
+            <!-- Tips for Success -->
+            <section>
+                <h2>Tips for Success</h2>
+                <ul>
+                    <li>💡 <strong>Test forms in the browser</strong> - submit empty, submit wrong data</li>
+                    <li>💡 <strong>Read error messages</strong> - Django tells you exactly what's wrong</li>
+                    <li>💡 <strong>Use Django shell</strong> - test <code>User.objects.create_user()</code></li>
+                    <li>💡 <strong>Build step by step</strong> - forms first, auth second</li>
+                    <li>💡 <strong>Ask for help</strong> - when you're stuck</li>
+                    <li>💡 <strong>Stay curious</strong> - explore the Django docs</li>
+                </ul>
+            </section>
+
+            <!-- Progress Motivation -->
+            <section>
+                <h2>Look How Far You've Come!</h2>
+                <p><strong>5 weeks ago:</strong> No web knowledge<br>
+                   <strong>4 weeks ago:</strong> Basic HTML/CSS<br>
+                   <strong>3 weeks ago:</strong> Git and web concepts<br>
+                   <strong>2 weeks ago:</strong> Django basics & templates<br>
+                   <strong>Last week:</strong> Models, ORM & Admin<br>
+                   <strong>This week:</strong> Forms, auth & real user accounts!</p>
+                <p><strong>You're building real web applications!</strong></p>
+            </section>
+
+            <!-- Thank You -->
+            <section class="title-slide">
+                <h1>Week 6 Complete!</h1>
+                <h2>Questions?</h2>
+                <p><strong>Remember:</strong></p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>Practice daily</li>
+                    <li>Build projects</li>
+                    <li>Ask questions</li>
+                    <li>Help each other</li>
+                    <li>Have fun coding!</li>
+                </ul>
+                <p><strong>See you in Week 7!</strong></p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            center: false,
+            slideNumber: true,
+            transition: 'slide',
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>

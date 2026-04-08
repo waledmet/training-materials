@@ -5,15 +5,23 @@
 {% block content %}
     <h2>All Posts</h2>
 
+    {% if user.is_authenticated %}
+        <a href="{% url 'post_create' %}" class="btn">+ New Post</a>
+    {% endif %}
+
     {% for post in posts %}
         <article class="post-card">
             <h3><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h3>
-            <p class="meta">Published: {{ post.created_at|date:"F j, Y" }}</p>
+            <p class="meta">
+                By {{ post.author.username|default:"Unknown" }}
+                &nbsp;|&nbsp;
+                {{ post.created_at|date:"F j, Y" }}
+            </p>
             <p>{{ post.content|truncatewords:30 }}</p>
             <a href="{% url 'post_detail' post.id %}">Read more →</a>
         </article>
         <hr>
     {% empty %}
-        <p>No published posts yet. Add some from the <a href="/admin/">admin panel</a>.</p>
+        <p>No published posts yet.</p>
     {% endfor %}
 {% endblock %}

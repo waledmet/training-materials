@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Post - My Site{% endblock %}
+
+{% block content %}
+    <h2>{{ action }} Post</h2>
+
+    <form method="post" class="post-form">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="help-text">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="field-errors">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            <div class="field-errors">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn">{{ action }} Post</button>
+            {% if post %}
+                <a href="{% url 'post_detail' post.id %}" class="btn btn-secondary">Cancel</a>
+            {% else %}
+                <a href="{% url 'post_list' %}" class="btn btn-secondary">Cancel</a>
+            {% endif %}
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - My Site{% endblock %}
+
+{% block content %}
+    <h2>Create an Account</h2>
+
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="help-text">{{ field.help_text }}</small>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="field-errors">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+            <div class="field-errors">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <button type="submit" class="btn">Register</button>
+    </form>
+
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+{% endblock %}
