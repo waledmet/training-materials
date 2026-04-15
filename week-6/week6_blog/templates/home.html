@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}Home – Week 6 Blog Demo{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+
+        <!-- Hero -->
+        <div class="card mb-4 border-0 bg-primary text-white">
+            <div class="card-body py-5">
+                <h1 class="display-5 fw-bold">
+                    <i class="bi bi-journal-code"></i> Week 6 Demo Blog
+                </h1>
+                <p class="lead">
+                    A full Django application demonstrating every topic from
+                    <strong>Week 6: Forms, Validation &amp; Authentication</strong>.
+                </p>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'post_create' %}" class="btn btn-light btn-lg me-2">
+                        <i class="bi bi-plus-circle"></i> Create a Post
+                    </a>
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="btn btn-light btn-lg me-2">
+                        <i class="bi bi-person-plus"></i> Create Account
+                    </a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Recent posts -->
+        <h2 class="mb-3">Recent Posts</h2>
+        {% if recent_posts %}
+            {% for post in recent_posts %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none">
+                            {{ post.title }}
+                        </a>
+                    </h5>
+                    <p class="text-muted small">
+                        By <strong>{{ post.author.username }}</strong>
+                        &bull; {{ post.created_at|date:"F j, Y" }}
+                    </p>
+                    <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                    <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">
+                        Read More
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            <a href="{% url 'post_list' %}" class="btn btn-primary">
+                View All Posts <i class="bi bi-arrow-right"></i>
+            </a>
+        {% else %}
+            <div class="alert alert-info">
+                No posts yet. <a href="{% url 'register' %}">Register</a> and create the first one!
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Sidebar: lesson topics -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-dark text-white fw-bold">
+                <i class="bi bi-list-check"></i> Week 6 Topics Covered
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L2</span>
+                        <a href="{% url 'contact' %}" class="ms-2 text-decoration-none">
+                            Django Forms (ContactForm)
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L3</span>
+                        <a href="{% url 'post_create' %}" class="ms-2 text-decoration-none">
+                            ModelForm (PostForm)
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L4</span>
+                        <span class="ms-2 text-muted">Form Validation (in forms.py)</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L5</span>
+                        <span class="ms-2 text-muted">GET/POST processing (in views.py)</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L6</span>
+                        <span class="ms-2 text-muted">CSRF &#123;% csrf_token %&#125; in every form</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L7</span>
+                        <span class="ms-2 text-muted">Django Auth System (User model)</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L8</span>
+                        <a href="{% url 'login' %}" class="ms-2 text-decoration-none">
+                            Login &amp; Logout
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L9</span>
+                        <a href="{% url 'register' %}" class="ms-2 text-decoration-none">
+                            User Registration
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L10</span>
+                        <a href="{% url 'dashboard' %}" class="ms-2 text-decoration-none">
+                            @login_required (Dashboard)
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L11</span>
+                        <a href="{% url 'post_list' %}" class="ms-2 text-decoration-none">
+                            Class-Based Views (CBVs)
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="lesson-badge">L12</span>
+                        <span class="ms-2 text-muted">Messages (in nav bar above)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

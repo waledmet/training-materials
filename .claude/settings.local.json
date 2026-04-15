@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /d/CCDS/repositories/training-materials/week-6/week6_blog/week6_blog)",
+      "Bash(mkdir -p /d/CCDS/repositories/training-materials/week-6/week6_blog/blog)",
+      "Bash(mkdir -p /d/CCDS/repositories/training-materials/week-6/week6_blog/templates/blog)",
+      "Bash(mkdir -p /d/CCDS/repositories/training-materials/week-6/week6_blog/templates/registration)",
+      "Bash(mkdir -p /d/CCDS/repositories/training-materials/week-6/week6_blog/static/css)"
+    ]
+  }
+}

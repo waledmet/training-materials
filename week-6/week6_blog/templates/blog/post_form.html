@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ form_title|default:"Post Form" }} – Week 6 Demo{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-lg-8">
+
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">
+                <i class="bi bi-file-earmark-text"></i>
+                {{ form_title|default:"Post Form" }}
+                <span class="lesson-badge ms-2">Lessons 3, 10, 11</span>
+            </h4>
+        </div>
+        <div class="card-body">
+
+            <div class="alert alert-secondary small mb-4">
+                <strong>What this demonstrates:</strong>
+                <ul class="mb-0 mt-1">
+                    <li>
+                        <strong>L3</strong> – <code>PostForm(ModelForm)</code> with
+                        <code>Meta</code> labels, help_texts, widgets
+                    </li>
+                    <li>
+                        <strong>L4</strong> – <code>clean_title()</code> field validation
+                    </li>
+                    <li>
+                        <strong>L10</strong> – Protected by <code>LoginRequiredMixin</code>
+                    </li>
+                    <li>
+                        <strong>L11</strong> – Rendered by
+                        <code>Post{% if post %}Update{% else %}Create{% endif %}View</code>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Lesson 6: csrf_token required on every POST form -->
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- Non-field errors -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Render all ModelForm fields with Bootstrap styling -->
+                {% for field in form %}
+                <div class="mb-4">
+                    <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                            <span class="text-danger" title="required">*</span>
+                        {% endif %}
+                    </label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="form-text text-muted">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="text-danger small mt-1">
+                                <i class="bi bi-exclamation-circle"></i> {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <hr>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i>
+                        {{ submit_label|default:"Save Post" }}
+                    </button>
+                    {% if post %}
+                        <a href="{% url 'post_detail' post.pk %}"
+                           class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+                    {% else %}
+                        <a href="{% url 'post_list' %}"
+                           class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Post – Week 6 Demo{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-md-6">
+
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">
+                <i class="bi bi-trash"></i> Confirm Delete
+                <span class="lesson-badge ms-2">Lesson 11: DeleteView</span>
+            </h4>
+        </div>
+        <div class="card-body">
+            <p class="lead">
+                Are you sure you want to delete
+                <strong>"{{ post.title }}"</strong>?
+            </p>
+            <p class="text-muted">This action cannot be undone.</p>
+
+            <!-- Lesson 6: CSRF required even for delete confirmation -->
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger me-2">
+                    <i class="bi bi-trash"></i> Yes, Delete
+                </button>
+                <a href="{% url 'post_detail' post.pk %}"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+            </form>
+
+            <div class="alert alert-secondary small mt-4 mb-0">
+                <strong>How DeleteView works:</strong><br>
+                GET → shows this confirmation page.<br>
+                POST → calls <code>object.delete()</code> and redirects to
+                <code>success_url</code>.
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}

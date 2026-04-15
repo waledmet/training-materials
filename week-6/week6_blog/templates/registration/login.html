@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Login – Week 6 Demo{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-md-5">
+
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+                <span class="lesson-badge ms-2">Lesson 8</span>
+            </h4>
+        </div>
+        <div class="card-body">
+
+            <div class="alert alert-secondary small mb-3">
+                <strong>Demonstrates:</strong> <code>authenticate()</code> +
+                <code>login()</code>, manual POST handling, <code>messages.error</code>
+            </div>
+
+            <!-- Lesson 5: GET/POST pattern handled in login_view -->
+            <form method="post" novalidate>
+                {% csrf_token %}  {# Lesson 6 #}
+
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Username</label>
+                    <input type="text" name="username" id="id_username"
+                           class="form-control" required autofocus
+                           value="{{ request.POST.username|default:'' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_password" class="form-label">Password</label>
+                    <input type="password" name="password" id="id_password"
+                           class="form-control" required>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </button>
+                </div>
+            </form>
+
+            <hr>
+            <p class="text-center mb-0">
+                Don't have an account?
+                <a href="{% url 'register' %}">Register here</a>
+            </p>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}

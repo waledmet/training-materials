@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Register – Week 6 Demo{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+<div class="col-md-7">
+
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">
+                <i class="bi bi-person-plus"></i> Create Account
+                <span class="lesson-badge ms-2">Lesson 9</span>
+            </h4>
+        </div>
+        <div class="card-body">
+
+            <div class="alert alert-secondary small mb-3">
+                <strong>Demonstrates:</strong>
+                Custom <code>RegisterForm</code> extending <code>UserCreationForm</code>,
+                <code>clean_username()</code>, <code>clean_email()</code>,
+                <code>form.save()</code>, auto-login after registration
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}  {# Lesson 6 #}
+
+                <!-- Show non-field errors -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Render all fields using as_p for brevity,
+                     or render manually for full control (shown in contact.html) -->
+                {% for field in form %}
+                <div class="mb-3">
+                    <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                        {{ field.label }}
+                        {% if field.field.required %}
+                            <span class="text-danger">*</span>
+                        {% endif %}
+                    </label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="form-text">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="text-danger small">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="bi bi-person-check"></i> Create Account
+                    </button>
+                </div>
+            </form>
+
+            <hr>
+            <p class="text-center mb-0">
+                Already have an account? <a href="{% url 'login' %}">Login</a>
+            </p>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}

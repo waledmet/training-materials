@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}All Posts – Week 6 Demo{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-lg-8">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>
+                <i class="bi bi-newspaper"></i> All Posts
+                <span class="lesson-badge ms-2">Lesson 11: ListView</span>
+            </h2>
+            <p class="text-muted mb-0">
+                Rendered by <code>PostListView(ListView)</code> with
+                <code>paginate_by = 5</code>
+            </p>
+        </div>
+        {% if user.is_authenticated %}
+        <a href="{% url 'post_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> New Post
+        </a>
+        {% endif %}
+    </div>
+
+    {% for post in posts %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">
+                <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none">
+                    {{ post.title }}
+                </a>
+            </h5>
+            <p class="text-muted small">
+                By <strong>{{ post.author.username }}</strong>
+                &bull; {{ post.created_at|date:"F j, Y" }}
+                &bull; <span class="badge bg-success">Published</span>
+            </p>
+            <p class="card-text">{{ post.content|truncatewords:40 }}</p>
+            <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">
+                Read More <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info">
+        No published posts yet.
+        {% if user.is_authenticated %}
+            <a href="{% url 'post_create' %}">Be the first to post!</a>
+        {% else %}
+            <a href="{% url 'register' %}">Register</a> to create posts.
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <!-- Lesson 11: built-in ListView pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Posts pagination">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                        &laquo; Previous
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </span>
+            </li>
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                        Next &raquo;
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+</div>
+<div class="col-lg-4">
+    <div class="card">
+        <div class="card-header fw-bold">
+            <i class="bi bi-info-circle"></i> How ListView Works
+        </div>
+        <div class="card-body small">
+            <pre><code>class PostListView(ListView):
+    model = Post
+    template_name = \
+      'blog/post_list.html'
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Post.objects.filter(
+            status='published'
+        )</code></pre>
+            <p class="mb-0 text-muted">
+                CBVs provide pagination, queryset filtering,
+                and template context automatically.
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

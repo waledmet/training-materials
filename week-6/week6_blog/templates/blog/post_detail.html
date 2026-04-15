@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} – Week 6 Demo{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-lg-8">
+
+    <!-- Lesson 11: DetailView – post is passed as 'post' via context_object_name -->
+    <article class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                    <h1 class="card-title h2">{{ post.title }}</h1>
+                    <p class="text-muted">
+                        By <strong>{{ post.author.username }}</strong>
+                        &bull; {{ post.created_at|date:"F j, Y \a\t g:i A" }}
+                        &bull;
+                        {% if post.is_published %}
+                            <span class="badge bg-success">Published</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Draft</span>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <!-- Lesson 10: Only the author sees Edit/Delete buttons -->
+                {% if user == post.author %}
+                <div class="btn-group">
+                    <a href="{% url 'post_edit' post.pk %}"
+                       class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                    <a href="{% url 'post_delete' post.pk %}"
+                       class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i> Delete
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <hr>
+            <div class="post-content" style="white-space: pre-wrap; line-height: 1.8;">
+                {{ post.content }}
+            </div>
+
+            {% if post.updated_at != post.created_at %}
+            <hr>
+            <p class="text-muted small">
+                <i class="bi bi-pencil-square"></i>
+                Last updated: {{ post.updated_at|date:"F j, Y \a\t g:i A" }}
+            </p>
+            {% endif %}
+        </div>
+    </article>
+
+    <div class="mt-3">
+        <a href="{% url 'post_list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Posts
+        </a>
+    </div>
+
+</div>
+<div class="col-lg-4">
+    <div class="card">
+        <div class="card-header fw-bold">
+            <i class="bi bi-info-circle"></i> How DetailView Works
+        </div>
+        <div class="card-body small">
+            <pre><code>class PostDetailView(DetailView):
+    model = Post
+    template_name = \
+      'blog/post_detail.html'
+    context_object_name = 'post'</code></pre>
+            <p class="mb-0 text-muted">
+                URL: <code>/posts/{{ post.pk }}/</code><br>
+                Django fetches <code>Post.objects.get(pk={{ post.pk }})</code>
+                automatically.
+            </p>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="card mt-3">
+        <div class="card-body">
+            <h6>Quick Actions</h6>
+            <a href="{% url 'post_create' %}" class="btn btn-sm btn-primary w-100 mb-2">
+                <i class="bi bi-plus-circle"></i> New Post
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-sm btn-outline-secondary w-100">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+</div>
+{% endblock %}
