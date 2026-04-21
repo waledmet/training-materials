@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Task Manager – Week 7{% endblock %}</title>
+
+    <!-- Bootstrap 5 for quick styling (same CDN as Week 6) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --primary:   #0d6efd;
+            --success:   #198754;
+            --warning:   #ffc107;
+            --danger:    #dc3545;
+            --secondary: #6c757d;
+        }
+
+        body { background-color: #f8f9fa; }
+
+        /* ── Navbar ── */
+        .navbar-brand { font-weight: 700; letter-spacing: 1px; }
+
+        /* ── API Explorer bar (shown at top for easy lecture demo) ── */
+        .api-bar {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            font-family: 'Courier New', monospace;
+            font-size: 0.82rem;
+            padding: 6px 16px;
+        }
+        .api-bar a { color: #89b4fa; text-decoration: none; }
+        .api-bar a:hover { text-decoration: underline; }
+        .api-badge {
+            background: #313244;
+            border-radius: 4px;
+            padding: 2px 8px;
+            margin-right: 6px;
+        }
+
+        /* ── Stats cards ── */
+        .stat-card {
+            border-radius: 12px;
+            text-align: center;
+            padding: 20px 10px;
+            transition: transform 0.15s;
+        }
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .stat-label { font-size: 0.85rem; opacity: 0.85; }
+
+        /* ── Task cards ── */
+        .task-card {
+            border-radius: 10px;
+            transition: box-shadow 0.15s;
+            border-left: 4px solid var(--primary);
+        }
+        .task-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+        .task-card.completed-card {
+            border-left-color: var(--success);
+            opacity: 0.75;
+        }
+        .task-card.completed-card .task-title {
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+
+        /* Priority badges */
+        .priority-high   { background-color: #f8d7da; color: #842029; }
+        .priority-medium { background-color: #fff3cd; color: #664d03; }
+        .priority-low    { background-color: #d1e7dd; color: #0f5132; }
+
+        /* ── Loading spinner ── */
+        #loading-spinner { display: none; }
+
+        /* ── Flash message ── */
+        #flash-message { display: none; }
+
+        /* ── Form card ── */
+        .form-card { border-radius: 12px; }
+
+        /* ── Filters bar ── */
+        .filter-btn.active { font-weight: 600; }
+
+        /* ── Empty state ── */
+        .empty-state {
+            text-align: center;
+            padding: 60px 0;
+            color: #6c757d;
+        }
+        .empty-state i { font-size: 4rem; opacity: 0.3; }
+    </style>
+</head>
+<body>
+
+<!-- ── API Explorer Bar (lecture aid: quick links to all API endpoints) ── -->
+<div class="api-bar d-flex align-items-center flex-wrap gap-2 py-2 px-3">
+    <span class="text-warning fw-bold me-2"><i class="bi bi-broadcast-pin"></i> API:</span>
+
+    <span class="api-badge"><a href="/api/tasks/" target="_blank">GET /api/tasks/</a></span>
+    <span class="api-badge"><a href="/api/tasks/stats/" target="_blank">GET /api/tasks/stats/</a></span>
+    <span class="api-badge"><a href="/api/tasks-json/" target="_blank">GET /api/tasks-json/ (manual)</a></span>
+    <span class="api-badge"><a href="/api/v1/tasks/" target="_blank">GET /api/v1/tasks/ (@api_view)</a></span>
+    <span class="api-badge"><a href="/admin/" target="_blank">Admin</a></span>
+</div>
+
+<!-- ── Navbar ── -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-check2-square me-2"></i>Task Manager
+        </a>
+        <span class="navbar-text text-white-50 small">
+            Week 7 – DRF + JavaScript
+        </span>
+    </div>
+</nav>
+
+<!-- ── Flash message ── -->
+<div class="container mt-2">
+    <div id="flash-message" class="alert alert-dismissible" role="alert">
+        <span id="flash-text"></span>
+        <button type="button" class="btn-close" onclick="hideFlash()"></button>
+    </div>
+</div>
+
+{% block content %}{% endblock %}
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ── Global JS utilities (reused on every page) ── -->
+<script>
+    /**
+     * Lesson 11 (JavaScript) / Day 4:
+     * getCookie() reads the CSRF token from the browser cookie.
+     * Django requires this token in every POST/PUT/PATCH/DELETE request.
+     */
+    function getCookie(name) {
+        let value = null;
+        if (document.cookie && document.cookie !== '') {
+            document.cookie.split(';').forEach(cookie => {
+                const trimmed = cookie.trim();
+                if (trimmed.startsWith(name + '=')) {
+                    value = decodeURIComponent(trimmed.slice(name.length + 1));
+                }
+            });
+        }
+        return value;
+    }
+
+    // The CSRF token needed for every write operation
+    const CSRF = getCookie('csrftoken');
+
+    /**
+     * Lesson 11: showFlash() updates the DOM to display success/error messages
+     * without reloading the page.
+     */
+    function showFlash(message, type = 'success') {
+        const el   = document.getElementById('flash-message');
+        const text = document.getElementById('flash-text');
+        el.className = `alert alert-${type} alert-dismissible`;
+        text.textContent = message;
+        el.style.display = 'block';
+        // Auto-hide after 3 seconds
+        setTimeout(hideFlash, 3000);
+    }
+
+    function hideFlash() {
+        document.getElementById('flash-message').style.display = 'none';
+    }
+</script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

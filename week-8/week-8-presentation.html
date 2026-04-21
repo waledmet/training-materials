@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 - Final Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        .slide h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            color: #ffd700;
+            text-align: center;
+        }
+        .slide h2 {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            color: #fff;
+            background: rgba(255,215,0,0.2);
+            padding: 10px 30px;
+            border-radius: 5px;
+        }
+        .slide p, .slide li {
+            font-size: 1.4em;
+            line-height: 1.8;
+            max-width: 900px;
+        }
+        .slide ul {
+            list-style-position: inside;
+            text-align: left;
+        }
+        .slide li {
+            margin: 15px 0;
+        }
+        pre {
+            background: rgba(0,0,0,0.3);
+            padding: 25px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            overflow-x: auto;
+            margin: 20px 0;
+            max-width: 100%;
+            border-left: 4px solid #ffd700;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #90EE90;
+        }
+        .highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 800px;
+        }
+        .card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .card h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        .checklist {
+            text-align: left;
+            max-width: 600px;
+        }
+        .checklist li {
+            list-style: none;
+            margin: 10px 0;
+        }
+        .checklist li::before {
+            content: "☐ ";
+            color: #ffd700;
+        }
+        .timeline {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 30px;
+        }
+        .day {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            min-width: 150px;
+        }
+        .day h4 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="icon">🏗️</div>
+        <h1>Week 8</h1>
+        <h2>Final Project: Design & Build</h2>
+        <p>Build a complete Django application from scratch!</p>
+    </div>
+
+    <div class="slide">
+        <h2>This Week's Goals</h2>
+        <p>By Friday, you will have:</p>
+        <ul>
+            <li>A complete working application</li>
+            <li>User authentication</li>
+            <li>Full CRUD functionality</li>
+            <li>Clean user interface</li>
+            <li>Ready to present!</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>Project Options</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>Task Manager</h3>
+                <p>Personal task tracking with categories</p>
+            </div>
+            <div class="card">
+                <h3>Student Management</h3>
+                <p>Students, courses & enrollments</p>
+            </div>
+            <div class="card">
+                <h3>Support Tickets</h3>
+                <p>Help desk ticket system</p>
+            </div>
+            <div class="card">
+                <h3>Personal Blog</h3>
+                <p>Posts with comments</p>
+            </div>
+        </div>
+        <p style="margin-top: 30px;">Choose one or propose your own!</p>
+    </div>
+
+    <div class="slide">
+        <h2>Week Timeline</h2>
+        <div class="timeline">
+            <div class="day">
+                <h4>Day 1</h4>
+                <p>Planning</p>
+            </div>
+            <div class="day">
+                <h4>Day 2</h4>
+                <p>Models</p>
+            </div>
+            <div class="day">
+                <h4>Day 3</h4>
+                <p>Views</p>
+            </div>
+            <div class="day">
+                <h4>Day 4</h4>
+                <p>Auth</p>
+            </div>
+            <div class="day">
+                <h4>Day 5</h4>
+                <p>Present!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Day 1: Planning</h2>
+        <ul>
+            <li>Choose your project</li>
+            <li>Write requirements</li>
+            <li>Create user stories</li>
+            <li>Design database (ERD)</li>
+            <li>Setup project structure</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>User Stories</h2>
+        <p>Format: "As a [user], I want to [action] so that [benefit]"</p>
+        <br>
+        <pre><code>As a user, I want to create tasks
+    so that I can track my work
+
+As a user, I want to mark tasks complete
+    so that I can see my progress
+
+As a user, I want to filter by status
+    so that I can focus on what needs attention</code></pre>
+    </div>
+
+    <div class="slide">
+        <h2>Database Design</h2>
+        <pre><code>User (Django built-in)
+  |
+  | 1:N
+  v
+Task
+  - title
+  - description
+  - status
+  - due_date
+  - user (FK)
+  - category (FK)
+  |
+  | N:1
+  v
+Category
+  - name
+  - user (FK)</code></pre>
+    </div>
+
+    <div class="slide">
+        <h2>Day 2: Models</h2>
+        <pre><code>class Task(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('done', 'Done'),
+    ]
+
+    title = models.CharField(max_length=200)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    due_date = models.DateField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title</code></pre>
+    </div>
+
+    <div class="slide">
+        <h2>Day 3: Views & Templates</h2>
+        <ul>
+            <li>Base template with navigation</li>
+            <li>Dashboard with statistics</li>
+            <li>List view with filters</li>
+            <li>Detail view</li>
+            <li>Create, Update, Delete views</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>Template Inheritance</h2>
+        <pre><code>&lt;!-- base.html --&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+{% block content %}{% endblock %}
+
+&lt;!-- task_list.html --&gt;
+{% extends 'base.html' %}
+{% block content %}
+    &lt;h1&gt;My Tasks&lt;/h1&gt;
+    {% for task in tasks %}
+        &lt;p&gt;{{ task.title }}&lt;/p&gt;
+    {% endfor %}
+{% endblock %}</code></pre>
+    </div>
+
+    <div class="slide">
+        <h2>Day 4: Authentication</h2>
+        <ul>
+            <li>Login page</li>
+            <li>Logout functionality</li>
+            <li>Registration form</li>
+            <li>Protect views with @login_required</li>
+            <li>Filter data by user</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>View Protection</h2>
+        <pre><code>@login_required
+def task_list(request):
+    # IMPORTANT: Only show this user's tasks!
+    tasks = Task.objects.filter(user=request.user)
+    return render(request, 'task_list.html', {'tasks': tasks})
+
+@login_required
+def task_update(request, pk):
+    # IMPORTANT: Check ownership!
+    task = get_object_or_404(Task, pk=pk, user=request.user)
+    # ... rest of view</code></pre>
+    </div>
+
+    <div class="slide">
+        <h2>Day 5: Present!</h2>
+        <p>Morning: Final testing & polish</p>
+        <br>
+        <p>Afternoon: Presentations!</p>
+        <br>
+        <ul>
+            <li>Introduce your app (30 sec)</li>
+            <li>Demo features (5 min)</li>
+            <li>Show code highlights (2 min)</li>
+            <li>Discuss challenges (1 min)</li>
+            <li>Q&A (1-2 min)</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>Success Criteria</h2>
+        <ul class="checklist">
+            <li>User registration works</li>
+            <li>Login/logout works</li>
+            <li>Create items works</li>
+            <li>List items works</li>
+            <li>Edit items works</li>
+            <li>Delete items works</li>
+            <li>Users only see their own data</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>Tips for Success</h2>
+        <ul>
+            <li>Start with models first</li>
+            <li>Test frequently</li>
+            <li>Keep it simple</li>
+            <li>Ask for help when stuck</li>
+            <li>Use Bootstrap for styling</li>
+            <li>Commit to Git regularly</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>You Have All The Skills!</h2>
+        <ul>
+            <li>✓ Python programming</li>
+            <li>✓ Django Models & ORM</li>
+            <li>✓ Views & Templates</li>
+            <li>✓ Forms & Validation</li>
+            <li>✓ User Authentication</li>
+            <li>✓ REST APIs</li>
+        </ul>
+        <p style="margin-top: 30px; font-size: 1.5em;">Now put it all together!</p>
+    </div>
+
+    <div class="slide">
+        <div class="icon">🚀</div>
+        <h1>Let's Build!</h1>
+        <p style="font-size: 1.5em;">Good luck with your final project!</p>
+        <br>
+        <p>Next Week: Testing & Deployment</p>
+    </div>
+</body>
+</html>

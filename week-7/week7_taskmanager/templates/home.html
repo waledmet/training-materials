@@ -1,0 +1,531 @@
+{% extends "base.html" %}
+
+{% block title %}Task Manager – Week 7 Demo{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         SECTION 1: Stats Dashboard
+         Day 4/5: JavaScript calls GET /api/tasks/stats/ and updates these cards
+         Lesson 12 (DOM): document.getElementById().textContent = value
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <h4 class="mb-3 text-secondary"><i class="bi bi-bar-chart-fill me-2"></i>Dashboard</h4>
+
+    <div class="row g-3 mb-4" id="stats-row">
+        <!-- Total -->
+        <div class="col-6 col-md-3">
+            <div class="stat-card bg-primary text-white shadow-sm">
+                <div class="stat-number" id="stat-total">–</div>
+                <div class="stat-label">Total Tasks</div>
+            </div>
+        </div>
+        <!-- Completed -->
+        <div class="col-6 col-md-3">
+            <div class="stat-card bg-success text-white shadow-sm">
+                <div class="stat-number" id="stat-completed">–</div>
+                <div class="stat-label">Completed</div>
+            </div>
+        </div>
+        <!-- Pending -->
+        <div class="col-6 col-md-3">
+            <div class="stat-card bg-warning text-dark shadow-sm">
+                <div class="stat-number" id="stat-pending">–</div>
+                <div class="stat-label">Pending</div>
+            </div>
+        </div>
+        <!-- High priority -->
+        <div class="col-6 col-md-3">
+            <div class="stat-card bg-danger text-white shadow-sm">
+                <div class="stat-number" id="stat-high">–</div>
+                <div class="stat-label">High Priority</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SECTION 2: Create Task Form
+             Day 4/5: form.addEventListener('submit', ...) + fetch POST
+             Lesson 11 (JS): Template literals, JSON.stringify, fetch()
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div class="col-lg-4">
+            <div class="card form-card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <i class="bi bi-plus-circle me-2"></i>Add New Task
+                </div>
+                <div class="card-body">
+                    <form id="create-form">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="task-title" class="form-label fw-semibold">Title <span class="text-danger">*</span></label>
+                            <input type="text" id="task-title" class="form-control"
+                                   placeholder="e.g. Buy groceries" required minlength="3">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="task-desc" class="form-label fw-semibold">Description</label>
+                            <textarea id="task-desc" class="form-control" rows="3"
+                                      placeholder="Optional details..."></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="task-priority" class="form-label fw-semibold">Priority</label>
+                            <select id="task-priority" class="form-select">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100" id="create-btn">
+                            <i class="bi bi-plus-lg me-1"></i>Create Task
+                        </button>
+                    </form>
+                </div>
+
+                <!-- ── API Explorer hint (lecture aid) ── -->
+                <div class="card-footer text-muted small">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Calls <code>POST /api/tasks/</code> via <code>fetch()</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SECTION 3: Task List
+             Day 4/5: fetch GET → render cards → event delegation for buttons
+             Lesson 12 (DOM): createElement, appendChild, innerHTML
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div class="col-lg-8">
+
+            <!-- Filters & actions bar -->
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                <span class="fw-semibold text-secondary me-1">Filter:</span>
+                <button class="btn btn-sm btn-outline-secondary filter-btn active" data-filter="all">All</button>
+                <button class="btn btn-sm btn-outline-warning filter-btn"  data-filter="pending">Pending</button>
+                <button class="btn btn-sm btn-outline-success filter-btn"  data-filter="completed">Completed</button>
+                <button class="btn btn-sm btn-outline-danger  filter-btn"  data-filter="high">High Priority</button>
+
+                <div class="ms-auto">
+                    <button class="btn btn-sm btn-outline-danger" id="btn-clear-completed"
+                            title="Delete all completed tasks">
+                        <i class="bi bi-trash me-1"></i>Clear Completed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading spinner -->
+            <div id="loading-spinner" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="text-muted mt-2">Loading tasks from API...</p>
+            </div>
+
+            <!-- Tasks container — filled by JavaScript -->
+            <div id="tasks-container"></div>
+
+            <!-- API call hint (lecture aid) -->
+            <p class="text-muted small mt-3 mb-0">
+                <i class="bi bi-info-circle me-1"></i>
+                Tasks loaded from <code>GET /api/tasks/</code> · Toggle calls
+                <code>POST /api/tasks/&lt;id&gt;/toggle/</code>
+            </p>
+        </div>
+
+    </div><!-- /row -->
+</div><!-- /container -->
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * Week 7 – Task Manager JavaScript
+ *
+ * Concepts demonstrated (Day 4 / Day 5):
+ *   - Variables with let / const           (Lesson 10)
+ *   - async / await + try/catch            (Lesson 11)
+ *   - fetch() for GET, POST, PATCH, DELETE (Lesson 11)
+ *   - DOM manipulation                     (Lesson 12)
+ *   - Template literals (`${var}`)         (Lesson 10)
+ *   - forEach, filter, map on arrays       (Lesson 10)
+ *   - Event listeners                      (Lesson 12)
+ *   - CSRF token usage in headers          (Lesson 11 note)
+ *
+ * API endpoints used (all served by TaskViewSet / Router):
+ *   GET    /api/tasks/              – list tasks
+ *   POST   /api/tasks/              – create task
+ *   PATCH  /api/tasks/<id>/         – partial update (edit)
+ *   DELETE /api/tasks/<id>/         – delete task
+ *   POST   /api/tasks/<id>/toggle/  – toggle completion (custom action)
+ *   GET    /api/tasks/stats/        – dashboard numbers
+ *   POST   /api/tasks/clear-completed/ – bulk delete
+ * ════════════════════════════════════════════════════════════════════════════
+ */
+
+// ── State ──────────────────────────────────────────────────────────────────
+// Lesson 10: const for values that won't be reassigned, let for mutable state
+const API_BASE = '/api/tasks/';
+let   allTasks  = [];         // local cache of tasks from the API
+let   activeFilter = 'all';  // currently selected filter button
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// STATS: Load dashboard numbers
+// Lesson 11: fetch() GET request, async/await
+// ══════════════════════════════════════════════════════════════════════════
+
+async function loadStats() {
+    try {
+        const response = await fetch(`${API_BASE}stats/`);
+        const data     = await response.json();
+
+        // Lesson 12: Update DOM text content
+        document.getElementById('stat-total').textContent     = data.total;
+        document.getElementById('stat-completed').textContent = data.completed;
+        document.getElementById('stat-pending').textContent   = data.pending;
+        document.getElementById('stat-high').textContent      = data.by_priority?.high ?? 0;
+
+    } catch (error) {
+        console.error('Stats error:', error);
+    }
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// TASKS: Fetch the task list from the API
+// Lesson 11: GET request with fetch(), async/await
+// ══════════════════════════════════════════════════════════════════════════
+
+async function loadTasks() {
+    showSpinner(true);
+
+    try {
+        // Build URL with optional filter query params
+        let url = API_BASE;
+        if (activeFilter === 'completed') url += '?completed=true';
+        if (activeFilter === 'pending')   url += '?completed=false';
+        if (activeFilter === 'high')      url += '?priority=high';
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // DRF pagination wraps results in { count, results } when PAGE_SIZE is set
+        // Handle both paginated and non-paginated responses
+        allTasks = Array.isArray(data) ? data : (data.results ?? []);
+
+        renderTasks(allTasks);
+
+    } catch (error) {
+        console.error('Load error:', error);
+        document.getElementById('tasks-container').innerHTML =
+            `<div class="alert alert-danger">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                Could not load tasks from API. Is the server running?
+                <br><code>${error.message}</code>
+             </div>`;
+    } finally {
+        showSpinner(false);
+    }
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// RENDER: Build task cards from data (DOM manipulation)
+// Lesson 12: createElement, innerHTML, appendChild, template literals
+// ══════════════════════════════════════════════════════════════════════════
+
+function renderTasks(tasks) {
+    const container = document.getElementById('tasks-container');
+
+    if (tasks.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="bi bi-clipboard-x d-block mb-3"></i>
+                <p class="fs-5">No tasks here yet.</p>
+                <p class="small">Add one using the form on the left!</p>
+            </div>`;
+        return;
+    }
+
+    // Lesson 10: map() transforms the array → array of HTML strings
+    const html = tasks.map(task => buildTaskCard(task)).join('');
+    container.innerHTML = html;
+}
+
+
+/**
+ * Build a single task card HTML string.
+ * Lesson 10: Template literals with ${} interpolation.
+ */
+function buildTaskCard(task) {
+    const completedClass = task.completed ? 'completed-card' : '';
+    const checkIcon      = task.completed
+        ? '<i class="bi bi-check-circle-fill text-success"></i>'
+        : '<i class="bi bi-circle text-muted"></i>';
+
+    const priorityClass = `priority-${task.priority}`;
+    const priorityLabel = task.priority_display || task.priority;
+
+    const dateStr = new Date(task.created_at).toLocaleDateString('en-US', {
+        month: 'short', day: 'numeric', year: 'numeric'
+    });
+
+    return `
+        <div class="card task-card mb-3 shadow-sm ${completedClass}" data-id="${task.id}">
+            <div class="card-body">
+                <div class="d-flex align-items-start gap-3">
+
+                    <!-- Toggle button -->
+                    <button class="btn btn-sm btn-light border-0 mt-1 p-0 flex-shrink-0 btn-toggle"
+                            data-id="${task.id}"
+                            title="${task.completed ? 'Mark as pending' : 'Mark as complete'}">
+                        ${checkIcon}
+                    </button>
+
+                    <!-- Task content -->
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1 task-title">${escapeHtml(task.title)}</h6>
+                        ${task.description
+                            ? `<p class="text-muted small mb-1">${escapeHtml(task.description)}</p>`
+                            : ''}
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <span class="badge rounded-pill ${priorityClass} small">${priorityLabel}</span>
+                            <span class="text-muted" style="font-size:0.75rem;">
+                                <i class="bi bi-calendar3 me-1"></i>${dateStr}
+                            </span>
+                            ${task.completed
+                                ? '<span class="badge bg-success-subtle text-success small">Completed</span>'
+                                : ''}
+                        </div>
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div class="d-flex gap-1 flex-shrink-0">
+                        <button class="btn btn-sm btn-outline-danger btn-delete"
+                                data-id="${task.id}"
+                                title="Delete task">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>`;
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// CREATE: POST a new task to the API
+// Lesson 11: POST request, JSON.stringify, Content-Type, CSRF header
+// ══════════════════════════════════════════════════════════════════════════
+
+async function createTask(title, description, priority) {
+    const btn = document.getElementById('create-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Creating...';
+
+    try {
+        const response = await fetch(API_BASE, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',   // tell the server we're sending JSON
+                'X-CSRFToken':  CSRF,                 // Django CSRF protection
+            },
+            body: JSON.stringify({ title, description, priority }),
+        });
+
+        if (!response.ok) {
+            const errors = await response.json();
+            // Show first validation error from DRF
+            const firstError = Object.values(errors)[0];
+            showFlash(Array.isArray(firstError) ? firstError[0] : firstError, 'danger');
+            return;
+        }
+
+        const newTask = await response.json();
+        showFlash(`Task "${newTask.title}" created!`, 'success');
+
+        // Reset form
+        document.getElementById('create-form').reset();
+
+        // Refresh list and stats
+        await Promise.all([loadTasks(), loadStats()]);
+
+    } catch (error) {
+        showFlash('Network error – could not create task.', 'danger');
+        console.error('Create error:', error);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-plus-lg me-1"></i>Create Task';
+    }
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// TOGGLE: Custom action POST /api/tasks/<id>/toggle/
+// Lesson 8 (DRF): custom @action; Lesson 11 (JS): POST without a body
+// ══════════════════════════════════════════════════════════════════════════
+
+async function toggleTask(id) {
+    try {
+        const response = await fetch(`${API_BASE}${id}/toggle/`, {
+            method: 'POST',
+            headers: { 'X-CSRFToken': CSRF },
+        });
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const data = await response.json();
+        showFlash(data.message, 'success');
+
+        await Promise.all([loadTasks(), loadStats()]);
+
+    } catch (error) {
+        showFlash('Could not toggle task.', 'danger');
+        console.error('Toggle error:', error);
+    }
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// DELETE: DELETE /api/tasks/<id>/
+// Lesson 11: DELETE request, 204 No Content response
+// ══════════════════════════════════════════════════════════════════════════
+
+async function deleteTask(id) {
+    if (!confirm('Delete this task?')) return;
+
+    try {
+        const response = await fetch(`${API_BASE}${id}/`, {
+            method: 'DELETE',
+            headers: { 'X-CSRFToken': CSRF },
+        });
+
+        // 204 No Content = success, no body to parse
+        if (response.status === 204) {
+            showFlash('Task deleted.', 'success');
+            await Promise.all([loadTasks(), loadStats()]);
+        } else {
+            showFlash('Could not delete task.', 'danger');
+        }
+
+    } catch (error) {
+        showFlash('Network error – could not delete.', 'danger');
+        console.error('Delete error:', error);
+    }
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// CLEAR COMPLETED: Custom action POST /api/tasks/clear-completed/
+// Lesson 8 (DRF): collection-level custom action
+// ══════════════════════════════════════════════════════════════════════════
+
+async function clearCompleted() {
+    if (!confirm('Delete ALL completed tasks?')) return;
+
+    try {
+        const response = await fetch(`${API_BASE}clear-completed/`, {
+            method: 'POST',
+            headers: { 'X-CSRFToken': CSRF },
+        });
+        const data = await response.json();
+        showFlash(data.message, 'success');
+        await Promise.all([loadTasks(), loadStats()]);
+
+    } catch (error) {
+        showFlash('Could not clear completed tasks.', 'danger');
+    }
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// EVENT LISTENERS
+// Lesson 12: addEventListener, event delegation, e.preventDefault()
+// ══════════════════════════════════════════════════════════════════════════
+
+// Form submit – create task
+document.getElementById('create-form').addEventListener('submit', async (e) => {
+    e.preventDefault();  // Stop browser from submitting the HTML form normally
+
+    const title       = document.getElementById('task-title').value.trim();
+    const description = document.getElementById('task-desc').value.trim();
+    const priority    = document.getElementById('task-priority').value;
+
+    await createTask(title, description, priority);
+});
+
+
+// Event delegation for task cards (toggle & delete)
+// Lesson 12: We attach ONE listener on the container instead of per-card.
+// This works even for dynamically added cards.
+document.getElementById('tasks-container').addEventListener('click', async (e) => {
+    const toggleBtn = e.target.closest('.btn-toggle');
+    const deleteBtn = e.target.closest('.btn-delete');
+
+    if (toggleBtn) {
+        const id = parseInt(toggleBtn.dataset.id);
+        await toggleTask(id);
+    }
+
+    if (deleteBtn) {
+        const id = parseInt(deleteBtn.dataset.id);
+        await deleteTask(id);
+    }
+});
+
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        await loadTasks();
+    });
+});
+
+
+// Clear completed button
+document.getElementById('btn-clear-completed').addEventListener('click', clearCompleted);
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════════════════════════════
+
+function showSpinner(show) {
+    document.getElementById('loading-spinner').style.display = show ? 'block' : 'none';
+    if (show) document.getElementById('tasks-container').innerHTML = '';
+}
+
+/** Escape user content before inserting into innerHTML (basic XSS prevention) */
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// INIT: Run on page load
+// Lesson 12: DOMContentLoaded event
+// ══════════════════════════════════════════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load stats and tasks in parallel (Promise.all is faster than sequential await)
+    await Promise.all([loadStats(), loadTasks()]);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 - Django Web Development Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/night.min.css">
+    <style>
+        :root {
+            --main-color: #42affa;
+            --accent-color: #e7ad52;
+            --bg-color: #1a1a1a;
+            --text-color: #eee;
+        }
+
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 32px;
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--main-color);
+            text-transform: none;
+            margin-top: 0;
+        }
+
+        .reveal h1 {
+            font-size: 2em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.3em;
+        }
+
+        .reveal h3 {
+            font-size: 1.2em;
+            color: var(--accent-color);
+            margin-bottom: 0.3em;
+        }
+
+        .reveal .slides section {
+            text-align: left;
+            padding: 15px 30px;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .reveal .title-slide {
+            text-align: center;
+        }
+
+        .reveal ul {
+            margin-left: 0;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal ol {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal li {
+            margin-bottom: 0.3em;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+
+        .reveal p {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .reveal code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #42affa;
+        }
+
+        .reveal pre {
+            background-color: #2d2d2d;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+
+        .reveal pre code {
+            background-color: transparent;
+            padding: 0;
+            max-height: 400px;
+            font-size: 0.75em;
+            line-height: 1.3;
+        }
+
+        .trainer-note {
+            background-color: rgba(231, 173, 82, 0.2);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 12px;
+            margin-top: 12px;
+            font-size: 0.75em;
+            border-radius: 5px;
+        }
+
+        .trainer-note strong {
+            color: var(--accent-color);
+        }
+
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .warning {
+            color: #ff9800;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        table {
+            width: 100%;
+            margin: 10px 0;
+            border-collapse: collapse;
+            font-size: 0.85em;
+        }
+
+        table th {
+            background-color: var(--main-color);
+            color: white;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(66, 175, 250, 0.3);
+            padding: 5px 12px;
+            border-radius: 15px;
+            margin: 3px;
+            font-size: 0.8em;
+        }
+
+        .contact-info {
+            background-color: rgba(66, 175, 250, 0.1);
+            border: 2px solid var(--main-color);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SLIDE 1: Title -->
+            <section class="title-slide">
+                <h1>Django Web Development Training</h1>
+                <h2>Week 7: APIs & Django REST Framework</h2>
+                <p style="margin-top: 50px;">
+                    <strong>Instructor:</strong> Waleed Truman<br>
+                    <strong>Building and consuming REST APIs with Django and JavaScript</strong>
+                </p>
+            </section>
+
+            <!-- SLIDE 2: Agenda -->
+            <section>
+                <h2>Week 7 Agenda</h2>
+                <h3>What We'll Cover This Week</h3>
+                <ul>
+                    <li><strong>Day 1:</strong> REST API Concepts & JSON Format</li>
+                    <li><strong>Day 2:</strong> Django REST Framework Setup & Serializers</li>
+                    <li><strong>Day 3:</strong> ViewSets & Routers</li>
+                    <li><strong>Day 4:</strong> JavaScript Basics & Fetch API</li>
+                    <li><strong>Day 5:</strong> Mini-Project (Task Manager with API)</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> This week connects Django backend with frontend JavaScript!
+                </div>
+            </section>
+
+            <!-- SLIDE 3: About Trainer -->
+            <section>
+                <h2>About Your Trainer</h2>
+                <h3>Quick Reminder</h3>
+                <ul>
+                    <li>Started as Junior Python Developer in 2009 (16+ years experience)</li>
+                    <li>Bachelor's in Communication Engineering from Mansoura University</li>
+                    <li>Specialized in Full Stack Web Development (Python/Django & .NET)</li>
+                    <li>Former Team Lead at Mansoura University's IT Center (10 years)</li>
+                    <li>Currently: Senior Software Engineer & Team Lead at ITPS Corporate, Riyadh</li>
+                    <li>Built university systems used by thousands of students</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 4: What is an API? -->
+            <section>
+                <h2>What is an API?</h2>
+                <h3>Application Programming Interface</h3>
+                <p><span class="highlight">API</span> = A way for applications to communicate with each other</p>
+                <pre><code>Mobile App  →  API  →  Database
+Web App     →  API  →  Database
+Other Apps  →  API  →  Database</code></pre>
+                <ul>
+                    <li>APIs allow different applications to share data</li>
+                    <li>Frontend and Backend communicate via API</li>
+                    <li>Mobile apps use the same API as web apps</li>
+                </ul>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Use restaurant analogy - waiter (API) between customer (frontend) and kitchen (backend)
+                </div>
+            </section>
+
+            <!-- SLIDE 5: REST API Principles -->
+            <section>
+                <h2>REST API Principles</h2>
+                <h3>Representational State Transfer</h3>
+                <ul>
+                    <li><span class="highlight">Resources</span> - Data objects (posts, users, products)</li>
+                    <li><span class="highlight">Endpoints</span> - URLs to access resources</li>
+                    <li><span class="highlight">HTTP Methods</span> - Actions on resources (GET, POST, PUT, DELETE)</li>
+                    <li><span class="highlight">Stateless</span> - Each request is independent</li>
+                    <li><span class="highlight">JSON</span> - Standard data format for requests/responses</li>
+                </ul>
+                <p style="margin-top: 15px;">REST is the most common API architecture on the web today.</p>
+            </section>
+
+            <!-- SLIDE 6: HTTP Methods -->
+            <section>
+                <h2>HTTP Methods</h2>
+                <h3>CRUD Operations</h3>
+                <table>
+                    <tr><th>Method</th><th>Action</th><th>Example</th></tr>
+                    <tr><td>GET</td><td>Read / Retrieve</td><td>Get all posts</td></tr>
+                    <tr><td>POST</td><td>Create</td><td>Create new post</td></tr>
+                    <tr><td>PUT</td><td>Update (full)</td><td>Replace entire post</td></tr>
+                    <tr><td>PATCH</td><td>Update (partial)</td><td>Update title only</td></tr>
+                    <tr><td>DELETE</td><td>Remove</td><td>Delete post</td></tr>
+                </table>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> CRUD = Create, Read, Update, Delete
+                </div>
+            </section>
+
+            <!-- SLIDE 7: REST Endpoint Examples -->
+            <section>
+                <h2>REST Endpoint Examples</h2>
+                <h3>URL Patterns</h3>
+                <pre><code>GET    /api/posts/      → List all posts
+POST   /api/posts/      → Create new post
+GET    /api/posts/1/    → Get post with ID 1
+PUT    /api/posts/1/    → Update post with ID 1
+PATCH  /api/posts/1/    → Partial update post #1
+DELETE /api/posts/1/    → Delete post with ID 1</code></pre>
+                <p>Notice the pattern:</p>
+                <ul>
+                    <li><code>/api/posts/</code> - Collection (all posts)</li>
+                    <li><code>/api/posts/1/</code> - Single resource (one post)</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 8: HTTP Status Codes -->
+            <section>
+                <h2>HTTP Status Codes</h2>
+                <h3>Server Responses</h3>
+                <table>
+                    <tr><th>Code</th><th>Meaning</th><th>When</th></tr>
+                    <tr><td>200</td><td>OK</td><td>Successful GET/PUT/PATCH</td></tr>
+                    <tr><td>201</td><td>Created</td><td>Successful POST</td></tr>
+                    <tr><td>204</td><td>No Content</td><td>Successful DELETE</td></tr>
+                    <tr><td>400</td><td>Bad Request</td><td>Invalid input data</td></tr>
+                    <tr><td>401</td><td>Unauthorized</td><td>Not logged in</td></tr>
+                    <tr><td>403</td><td>Forbidden</td><td>No permission</td></tr>
+                    <tr><td>404</td><td>Not Found</td><td>Resource doesn't exist</td></tr>
+                    <tr><td>500</td><td>Server Error</td><td>Bug in code</td></tr>
+                </table>
+            </section>
+
+            <!-- SLIDE 9: JSON Format -->
+            <section>
+                <h2>JSON Format</h2>
+                <h3>JavaScript Object Notation</h3>
+                <pre><code>{
+    "name": "Ahmed",
+    "age": 25,
+    "is_student": true,
+    "skills": ["Python", "Django", "JavaScript"],
+    "address": {
+        "city": "Riyadh",
+        "country": "Saudi Arabia"
+    }
+}</code></pre>
+                <ul>
+                    <li>Standard data format for APIs</li>
+                    <li>Human-readable and machine-parseable</li>
+                    <li>Supports strings, numbers, booleans, arrays, objects</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 10: Django JsonResponse -->
+            <section>
+                <h2>Django JsonResponse</h2>
+                <h3>Basic JSON API in Django</h3>
+                <pre><code>from django.http import JsonResponse
+
+def api_posts(request):
+    posts = Post.objects.all()
+    data = []
+    for post in posts:
+        data.append({
+            'id': post.id,
+            'title': post.title,
+            'content': post.content
+        })
+    return JsonResponse({'posts': data})</code></pre>
+                <p>This works, but becomes tedious with complex models...</p>
+                <p>That's why we use <span class="highlight">Django REST Framework</span>!</p>
+            </section>
+
+            <!-- SLIDE 11: Django REST Framework -->
+            <section>
+                <h2>Django REST Framework</h2>
+                <h3>Powerful Toolkit for Building APIs</h3>
+                <p>DRF provides:</p>
+                <div class="badge">Serializers</div>
+                <div class="badge">Views & ViewSets</div>
+                <div class="badge">Authentication</div>
+                <div class="badge">Permissions</div>
+                <div class="badge">Browsable API</div>
+                <div class="badge">Pagination</div>
+                <div class="badge">Filtering</div>
+                <div class="badge">Throttling</div>
+                <p style="margin-top: 15px;">Industry standard for Django APIs!</p>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Show browsable API demo - it's impressive!
+                </div>
+            </section>
+
+            <!-- SLIDE 12: Installing DRF -->
+            <section>
+                <h2>Installing DRF</h2>
+                <h3>Setup Steps</h3>
+                <pre><code>pip install djangorestframework</code></pre>
+                <pre><code># settings.py
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',  # Add this!
+    'your_app',
+]</code></pre>
+                <p>That's it! DRF is ready to use.</p>
+            </section>
+
+            <!-- SLIDE 13: Serializers -->
+            <section>
+                <h2>Serializers</h2>
+                <h3>Convert Models to/from JSON</h3>
+                <pre><code># serializers.py
+from rest_framework import serializers
+from .models import Post
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'title', 'content', 'author', 'created_at']
+        read_only_fields = ['id', 'created_at']</code></pre>
+                <ul>
+                    <li>Converts Python objects to JSON (serialization)</li>
+                    <li>Converts JSON to Python objects (deserialization)</li>
+                    <li>Handles validation automatically</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 14: API Views -->
+            <section>
+                <h2>API Views</h2>
+                <h3>Function-Based Views</h3>
+                <pre><code>from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['GET', 'POST'])
+def post_list(request):
+    if request.method == 'GET':
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)</code></pre>
+            </section>
+
+            <!-- SLIDE 15: ViewSets -->
+            <section>
+                <h2>ViewSets</h2>
+                <h3>All CRUD in One Class!</h3>
+                <pre><code>from rest_framework import viewsets
+from .models import Post
+from .serializers import PostSerializer
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer</code></pre>
+                <p style="margin-top: 20px;"><span class="highlight">That's it!</span> Full CRUD API ready!</p>
+                <ul>
+                    <li>List all posts (GET /posts/)</li>
+                    <li>Create post (POST /posts/)</li>
+                    <li>Retrieve post (GET /posts/1/)</li>
+                    <li>Update post (PUT/PATCH /posts/1/)</li>
+                    <li>Delete post (DELETE /posts/1/)</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 16: Routers -->
+            <section>
+                <h2>Routers</h2>
+                <h3>Automatic URL Generation</h3>
+                <pre><code># urls.py
+from rest_framework.routers import DefaultRouter
+from .views import PostViewSet
+
+router = DefaultRouter()
+router.register(r'posts', PostViewSet)
+
+urlpatterns = [
+    path('api/', include(router.urls)),
+]</code></pre>
+                <p>This automatically creates:</p>
+                <ul>
+                    <li><code>/api/posts/</code> - List & Create</li>
+                    <li><code>/api/posts/{id}/</code> - Retrieve, Update, Delete</li>
+                </ul>
+                <p>Plus a beautiful <span class="highlight">browsable API</span>!</p>
+            </section>
+
+            <!-- SLIDE 17: Custom Actions -->
+            <section>
+                <h2>Custom Actions</h2>
+                <h3>Add Custom Endpoints</h3>
+                <pre><code>from rest_framework.decorators import action
+from rest_framework.response import Response
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+    @action(detail=True, methods=['post'])
+    def toggle_complete(self, request, pk=None):
+        task = self.get_object()
+        task.completed = not task.completed
+        task.save()
+        return Response({'status': 'toggled', 'completed': task.completed})</code></pre>
+                <p>Creates: <code>POST /api/tasks/1/toggle_complete/</code></p>
+            </section>
+
+            <!-- SLIDE 18: JavaScript Basics -->
+            <section>
+                <h2>JavaScript Basics</h2>
+                <h3>Quick Introduction</h3>
+                <pre><code>// Variables
+let name = 'Ahmed';
+const age = 25;
+
+// Functions
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+// Arrow functions
+const greet = (name) => `Hello, ${name}!`;
+
+// Arrays
+const items = [1, 2, 3];
+items.forEach(item => console.log(item));
+
+// Objects
+const person = { name: 'Ahmed', age: 25 };
+console.log(person.name);</code></pre>
+            </section>
+
+            <!-- SLIDE 19: Fetch API - GET -->
+            <section>
+                <h2>Fetch API - GET Requests</h2>
+                <h3>Calling APIs from JavaScript</h3>
+                <pre><code>// Using Promises
+fetch('/api/posts/')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+
+// Using Async/Await (preferred)
+async function getPosts() {
+    try {
+        const response = await fetch('/api/posts/');
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}</code></pre>
+            </section>
+
+            <!-- SLIDE 20: Fetch API - POST -->
+            <section>
+                <h2>Fetch API - POST Requests</h2>
+                <h3>Sending Data to API</h3>
+                <pre><code>async function createPost(title, content) {
+    const response = await fetch('/api/posts/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            title: title,
+            content: content
+        })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log('Created:', data);
+    }
+}</code></pre>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> Explain CSRF token requirement in Django
+                </div>
+            </section>
+
+            <!-- SLIDE 21: DOM Manipulation -->
+            <section>
+                <h2>DOM Manipulation</h2>
+                <h3>Updating the Page</h3>
+                <pre><code>// Select elements
+const container = document.getElementById('posts');
+const button = document.querySelector('.btn-submit');
+
+// Update content
+container.innerHTML = '&lt;h1&gt;Hello!&lt;/h1&gt;';
+container.textContent = 'Plain text';
+
+// Create elements
+const div = document.createElement('div');
+div.className = 'post-card';
+div.innerHTML = '&lt;h2&gt;New Post&lt;/h2&gt;';
+container.appendChild(div);
+
+// Event listeners
+button.addEventListener('click', () => {
+    console.log('Button clicked!');
+});</code></pre>
+            </section>
+
+            <!-- SLIDE 22: Complete Example -->
+            <section>
+                <h2>Complete Example</h2>
+                <h3>Load and Display Posts</h3>
+                <pre><code>async function loadPosts() {
+    const container = document.getElementById('posts');
+
+    try {
+        const response = await fetch('/api/posts/');
+        const posts = await response.json();
+
+        container.innerHTML = '';
+        posts.forEach(post => {
+            const div = document.createElement('div');
+            div.className = 'post-card';
+            div.innerHTML = `
+                &lt;h2&gt;${post.title}&lt;/h2&gt;
+                &lt;p&gt;${post.content}&lt;/p&gt;
+            `;
+            container.appendChild(div);
+        });
+    } catch (error) {
+        container.innerHTML = '&lt;p&gt;Error loading posts&lt;/p&gt;';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadPosts);</code></pre>
+            </section>
+
+            <!-- SLIDE 23: Week 7 Project -->
+            <section>
+                <h2>Day 5 - Mini Project</h2>
+                <h3>Task Manager with API</h3>
+                <p><strong>Project Requirements:</strong></p>
+                <ol>
+                    <li>Task model with DRF API (ViewSet)</li>
+                    <li>Custom toggle_complete action</li>
+                    <li>JavaScript frontend to list tasks</li>
+                    <li>Create new tasks via API</li>
+                    <li>Toggle task completion</li>
+                    <li>Delete tasks</li>
+                    <li>Stats dashboard (total, completed, pending)</li>
+                </ol>
+                <div class="trainer-note">
+                    <strong>Trainer Note:</strong> This combines everything learned this week!
+                </div>
+            </section>
+
+            <!-- SLIDE 24: Week 7 Summary -->
+            <section>
+                <h2>Week 7 Summary</h2>
+                <h3>What We Learned</h3>
+                <ul>
+                    <li>REST APIs use HTTP methods on resources</li>
+                    <li>JSON is the standard data format for APIs</li>
+                    <li>DRF makes building APIs easy and professional</li>
+                    <li>Serializers convert data to/from JSON</li>
+                    <li>ViewSets provide full CRUD with minimal code</li>
+                    <li>Routers auto-generate URL patterns</li>
+                    <li>JavaScript fetch() calls APIs from frontend</li>
+                    <li>DOM manipulation updates the page dynamically</li>
+                </ul>
+            </section>
+
+            <!-- SLIDE 25: Common Mistakes -->
+            <section>
+                <h2>Common Mistakes Week 7</h2>
+                <h3>Learn From These</h3>
+                <ol>
+                    <li><span class="error">Forgetting CSRF token in POST requests</span></li>
+                    <li><span class="error">Not handling async/await errors</span></li>
+                    <li><span class="error">Missing Content-Type header</span></li>
+                    <li><span class="error">Not serializing data with JSON.stringify()</span></li>
+                    <li><span class="error">Forgetting to add rest_framework to INSTALLED_APPS</span></li>
+                    <li><span class="error">Using wrong HTTP method for action</span></li>
+                </ol>
+            </section>
+
+            <!-- SLIDE 26: Next Week Preview -->
+            <section>
+                <h2>Next Week Preview</h2>
+                <h3>Week 8: Final Project</h3>
+                <ul>
+                    <li>Design and build a complete Django application</li>
+                    <li>Apply everything you've learned</li>
+                    <li>User authentication</li>
+                    <li>Full CRUD functionality</li>
+                    <li>Clean user interface</li>
+                    <li>Presentation at the end!</li>
+                </ul>
+                <p style="margin-top: 20px;"><span class="highlight">Get Ready:</span> Think about what you want to build!</p>
+            </section>
+
+            <!-- SLIDE 27: Resources -->
+            <section>
+                <h2>Resources & Support</h2>
+                <h3>Continue Learning</h3>
+                <p><strong>Documentation:</strong></p>
+                <ul>
+                    <li>Django REST Framework: django-rest-framework.org</li>
+                    <li>MDN JavaScript Guide: developer.mozilla.org</li>
+                    <li>Fetch API: developer.mozilla.org/en-US/docs/Web/API/Fetch_API</li>
+                </ul>
+                <div class="contact-info">
+                    <p><strong>Contact:</strong></p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li>Email: waledmet@gmail.com</li>
+                        <li>Phone: +966536037348 (Saudi) / +201111564174 (Egypt)</li>
+                        <li>Office hours: After Monday sessions</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SLIDE 28: Final Words -->
+            <section class="title-slide">
+                <h1>APIs Connect Everything!</h1>
+                <p style="font-size: 1.3em; margin: 40px 0;">
+                    "APIs are the building blocks of modern applications"
+                </p>
+                <h3>Remember:</h3>
+                <ul style="text-align: left; display: inline-block; margin: 30px auto;">
+                    <li>REST is about resources and HTTP methods</li>
+                    <li>DRF makes Django APIs easy</li>
+                    <li>JavaScript connects frontend to backend</li>
+                    <li>Practice makes perfect!</li>
+                </ul>
+                <h2 style="margin-top: 50px; color: var(--accent-color);">See you next week!</h2>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            transition: 'slide',
+            backgroundTransition: 'fade',
+            controls: true,
+            progress: true,
+            center: false,
+            width: 1280,
+            height: 800,
+            margin: 0.02,
+            minScale: 0.5,
+            maxScale: 2.0
+        });
+    </script>
+</body>
+</html>
